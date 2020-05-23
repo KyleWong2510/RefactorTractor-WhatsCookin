@@ -1,10 +1,15 @@
-import $ from 'jquery';
-import users from './data/users-data';
-import recipeData from  './data/recipe-data';
-import ingredientData from './data/ingredient-data';
+// import users from './data/users-data'; // these will change to API's, get requests
+// import recipeData from  './data/recipe-data';
+// import ingredientsData from './data/ingredient-data';
 
 import './css/base.scss';
 import './css/styles.scss';
+import './images/search.png';
+import './images/apple-logo-outline.png';
+import './images/apple-logo.png';
+import './images/cookbook.png';
+import './images/seasoning.png';
+
 
 import User from './user';
 import Recipe from './recipe';
@@ -13,22 +18,23 @@ let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
-let menuOpen = false;
 let pantryBtn = document.querySelector(".my-pantry-btn");
-let pantryInfo = [];
-let recipes = [];
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
+
+let users;
+let recipeData;
+let ingredientsData;
+
+let menuOpen = false;
+let pantryInfo = [];
+let recipes = [];
 let user;
 
-
-window.addEventListener("load", createCards);
-window.addEventListener("load", findTags);
-window.addEventListener("load", generateUser);
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
@@ -37,6 +43,59 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+
+const onloadHandler = () => {
+	generateUser();
+	findTags();
+	createCards();
+}
+
+const fetchData = () => {
+	users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+		.then(response => response.json())
+		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+	
+	ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+		.then(response => response.json())
+		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+	
+	recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+		.then(response => response.json())
+		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+
+	return Promise.all([users, ingredientsData, recipeData])
+		.then(response => {
+			users = response[0].wcUsersData;
+			ingredientsData = response[1].ingredientsData;
+			recipeData = response[2].recipeData;
+		})
+	.then(onloadHandler)
+	.then(console.log('RECIPE D', recipeData))
+	.catch(error => console.log(error))
+}
+
+window.addEventListener("load", fetchData);
+window.addEventListener("load", adjustPantry);
+
+// adjustPantry()
+
+var adjustPantry = () => {
+	console.log('hi')
+	fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			"userId": 49,
+			"ingredientID": 1124,
+			"ingredientModification": 3
+		})
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(error => console.log(error))
+	}
+}
 
 // GENERATE A USER ON LOAD
 function generateUser() {
@@ -150,7 +209,7 @@ function hideUnselectedRecipes(foundRecipes) {
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
-function addToMyRecipes() {
+function addToMyRecipes() { //what is happening in this fn? it's breaking the open instructions on dom
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     if (!user.favoriteRecipes.includes(cardId)) {
@@ -295,7 +354,7 @@ function showAllRecipes() {
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo() {
+function findPantryInfo() { //all below should go into it's own pantry class
   user.pantry.forEach(item => {
     let itemInfo = ingredientsData.find(ingredient => {
       return ingredient.id === item.ingredient;
