@@ -4,6 +4,12 @@
 
 import './css/base.scss';
 import './css/styles.scss';
+import './images/search.png';
+import './images/apple-logo-outline.png';
+import './images/apple-logo.png';
+import './images/cookbook.png';
+import './images/seasoning.png';
+
 
 import User from './user';
 import Recipe from './recipe';
@@ -64,10 +70,32 @@ const fetchData = () => {
 			recipeData = response[2].recipeData;
 		})
 	.then(onloadHandler)
+	.then(console.log('RECIPE D', recipeData))
 	.catch(error => console.log(error))
 }
 
 window.addEventListener("load", fetchData);
+window.addEventListener("load", adjustPantry);
+
+// adjustPantry()
+
+var adjustPantry = () => {
+	console.log('hi')
+	fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			"userId": 49,
+			"ingredientID": 1124,
+			"ingredientModification": 3
+		})
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(error => console.log(error))
+	}
+}
 
 // GENERATE A USER ON LOAD
 function generateUser() {
@@ -181,7 +209,7 @@ function hideUnselectedRecipes(foundRecipes) {
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
-function addToMyRecipes() {
+function addToMyRecipes() { //what is happening in this fn? it's breaking the open instructions on dom
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     if (!user.favoriteRecipes.includes(cardId)) {
