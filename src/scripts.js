@@ -274,7 +274,9 @@ function addRecipeImage(recipe) {
 
 function generateIngredients(recipe) {
   return recipe && recipe.ingredients.map(i => {
-    return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
+		let foundIngredient = ingredientsData.find(ingredient => 
+			ingredient.id === i.id).name;
+    return `${capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
 }
 
