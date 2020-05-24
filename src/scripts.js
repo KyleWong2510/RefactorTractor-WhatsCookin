@@ -344,8 +344,8 @@ function searchRecipes() {
   showAllRecipes();
   //if we are on all recipes page, arr === x
   //if we are on my recipes page, arr === y
-  let search = searchInput.value.toLowerCase()
-  let results = user.searchForRecipe(search, recipeData)
+  const search = searchInput.value.toLowerCase()
+  const results = user.searchForRecipe(search, recipeData)
   filterNonSearched(createRecipeObject(results));
 }
 
