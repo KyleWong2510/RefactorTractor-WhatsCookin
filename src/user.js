@@ -26,9 +26,7 @@ class User {
       if(recipe.name.includes(keyword)) {
         searchedResults.push(recipe)
       }
-      console.log('recipeIngred', recipe.ingredients)
       recipe.ingredients.forEach(ingred => {
-        console.log('ingredName', ingred.name)
         if(ingred.name.includes(keyword)) {
           searchedResults.push(recipe)
         }

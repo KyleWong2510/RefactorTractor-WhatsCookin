@@ -31,7 +31,6 @@ let recipeData;
 let ingredientsData;
 
 let menuOpen = false;
-// let pantryInfo = [];
 let recipes = [];
 let user;
 let pantry;
@@ -116,30 +115,34 @@ function generateUser() {
 //put instantiation somewhere else, maybe in promise?
 function createCards() {
   recipeData.forEach(recipe => {
-    let recipeInfo = new Recipe(recipe);
-    let shortRecipeName = recipeInfo.name;
-    recipes.push(recipeInfo);
-    if (recipeInfo.name.length > 40) {
-      shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
+    let currentRecipe = new Recipe(recipe);
+    let shortRecipeName = currentRecipe.name;
+    recipes.push(currentRecipe);
+    if (currentRecipe.name.length > 40) {
+      shortRecipeName = currentRecipe.name.substring(0, 40) + "...";
     }
-    addToDom(recipeInfo, shortRecipeName)
+    addToDom(currentRecipe, shortRecipeName)
   });
 }
 
-function addToDom(recipeInfo, shortRecipeName) {
+function addToDom(currentRecipe, shortRecipeName) {
   let cardHtml = `
-    <div class="recipe-card" id=${recipeInfo.id}>
+    <div class="recipe-card" id=${currentRecipe.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
       <div class="card-photo-container">
-        <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
+        <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
         <div class="text">
           <div>Click for Instructions</div>
         </div>
-      </div>
-      <h4>${recipeInfo.tags[0]}</h4>
+			</div>
+			<div>${tagsToList(currentRecipe.tags)}</div>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
+}
+
+function tagsToList(tagsList) {
+	return tagsList.map(tag => `<h4>${tag}</h4>`);
 }
 
 // FILTER BY RECIPE TAGS
@@ -323,23 +326,6 @@ function pressEnterSearch(event) {
   event.preventDefault();
   searchRecipes();
 }
-
-// searchForRecipe(keyword, array) {
-//   let searchedResults = []
-//   this[array].forEach(recipe => {
-//     if(recipe.name.includes(keyword)) {
-//       searchedResults.push(recipe)
-//     }
-//     recipe.ingredients.forEach(ingred => {
-//       if(ingred.name.includes(keyword)) {
-//         searchedResults.push(recipe)
-//       }
-//     })
-//   })
-//   let unique = [... new Set(searchedResults)]
-//   return unique
-// }
-
 
 function searchRecipes() {
   showAllRecipes();

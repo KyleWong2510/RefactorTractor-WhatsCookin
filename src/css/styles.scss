@@ -42,7 +42,8 @@ h4 {
   border-radius: 3px;
   margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
-  width: max-content;
+	width: max-content;
+	display: inline-block
 }
 
 
@@ -241,10 +242,11 @@ main {
   border: 2px solid #C4EB67;
   border-radius: 7px;
   cursor: pointer;
-  height: 270px;
+	height: 329px;
   margin: 20px;
   padding: 15px;
-  width: 250px;
+	width: 250px;
+	position: relative;
 }
 
 .recipe-card:hover .card-photo-preview {
@@ -268,8 +270,12 @@ main {
   cursor: pointer;
   float: right;
   height: 50px;
-  padding-bottom: 10px;
-  width: 45px;
+	padding-bottom: 10px;
+	padding-right: 11px;
+	width: 45px;
+	position: absolute;
+	bottom: 0;
+	right: 0;	
 }
 
 .card-photo-preview {
