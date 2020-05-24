@@ -1,3 +1,5 @@
+import ingredientsData from '../src/data/ingredient-data';
+
 class User {
   constructor(user) {
     this.id = user.id;
@@ -21,22 +23,42 @@ class User {
 	}
 	
   searchForRecipe(keyword, array) {
+    let byName = this.searchByName(keyword, array)
+    let byIngredient = this.searchByIngred(keyword, array)
+    let searchedResults = byName.concat(byIngredient)
+    console.log('results', searchedResults)
+    return [... new Set(searchedResults)]
+  }
+
+  searchByName(keyword, array) {
     let searchedResults = []
     array.forEach(recipe => {
-      if(recipe.name.includes(keyword)) {
+      if(recipe.name.toLowerCase().includes(keyword)) {
         searchedResults.push(recipe)
       }
-      console.log('recipeIngred', recipe.ingredients)
+    })
+    console.log('name', searchedResults)
+    return searchedResults
+  }
+//s&p issue
+  searchByIngred(keyword, array) {
+    let searchedResults = []
+    let ingredientIDs = ingredientsData
+      .filter(ingred => ingred.name)
+      .filter(ingred => ingred.name.toLowerCase().includes(keyword))
+      .map(ingred => ingred.id)
+    
+      array.forEach(recipe => {
       recipe.ingredients.forEach(ingred => {
-        console.log('ingredName', ingred.name)
-        if(ingred.name.includes(keyword)) {
+        if(ingredientIDs.includes(ingred.id)) {
           searchedResults.push(recipe)
         }
-      })
+      })  
     })
-    let unique = [... new Set(searchedResults)]
-    return unique
+    console.log('ingred', searchedResults)
+    return [... new Set(searchedResults)]
   }
+
 }
 
 export default User;
