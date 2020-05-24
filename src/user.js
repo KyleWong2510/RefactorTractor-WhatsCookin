@@ -6,26 +6,37 @@ class User {
     this.favoriteRecipes = [];
     this.recipesToCook = [];
   }
-  saveRecipe(recipe) {
-    this.favoriteRecipes.push(recipe);
+
+  saveRecipe(recipe, array) {
+    this[array].push(recipe);
   }
 
-  removeRecipe(recipe) {
-    let i = this.favoriteRecipes.indexOf(recipe);
-    this.favoriteRecipes.splice(i, 1);
+  removeRecipe(recipe, array) {
+    let i = this[array].indexOf(recipe);
+    this[array].splice(i, 1);
   }
-
-  decideToCook(recipe) {
-    this.recipesToCook.push(recipe);
+	
+  filterRecipes(tag, array) {
+    return this[array].filter(recipe => recipe.tags.includes(tag));
 	}
 	
-  filterRecipes(type) {
-    return this.favoriteRecipes.filter(recipe => recipe.type.includes(type));
-	}
-	
-  searchForRecipe(keyword) {
-    return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
+  searchForRecipe(keyword, array) {
+    let searchedResults = []
+    array.forEach(recipe => {
+      if(recipe.name.includes(keyword)) {
+        searchedResults.push(recipe)
+      }
+      console.log('recipeIngred', recipe.ingredients)
+      recipe.ingredients.forEach(ingred => {
+        console.log('ingredName', ingred.name)
+        if(ingred.name.includes(keyword)) {
+          searchedResults.push(recipe)
+        }
+      })
+    })
+    let unique = [... new Set(searchedResults)]
+    return unique
   }
 }
 
-module.exports = User;
+export default User;

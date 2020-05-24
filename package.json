@@ -32,8 +32,6 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
- feature/fetchCalls
     "jquery": "^3.5.1"
-
   }
 }
