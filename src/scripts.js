@@ -342,15 +342,11 @@ function pressEnterSearch(event) {
 
 function searchRecipes() {
   showAllRecipes();
-  let arr;
   //if we are on all recipes page, arr === x
   //if we are on my recipes page, arr === y
-  let search = recipeData.filter(recipe => {
-    return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
-  });
-  console.log('data', recipeData)
-  user.searchForRecipe(search, recipeData)
-  filterNonSearched(createRecipeObject(search));
+  let search = searchInput.value.toLowerCase()
+  let results = user.searchForRecipe(search, recipeData)
+  filterNonSearched(createRecipeObject(results));
 }
 
 function filterNonSearched(filtered) {
