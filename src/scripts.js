@@ -10,9 +10,9 @@ import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
 
-
 import User from './user';
 import Recipe from './recipe';
+import Pantry from './pantry';
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -31,9 +31,10 @@ let recipeData;
 let ingredientsData;
 
 let menuOpen = false;
-let pantryInfo = [];
+// let pantryInfo = [];
 let recipes = [];
 let user;
+let pantry;
 
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
@@ -70,7 +71,6 @@ const fetchData = () => {
 			recipeData = response[2].recipeData;
 		})
 	.then(onloadHandler)
-	.then(console.log('RECIPE D', recipeData))
 	.catch(error => console.log(error))
 }
 
@@ -101,7 +101,8 @@ var adjustPantry = () => {
 // GENERATE A USER ON LOAD
 function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-  let firstName = user.name.split(" ")[0];
+	pantry = new Pantry(user);
+	let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
       <h1>Welcome ${firstName}!</h1>
@@ -385,58 +386,41 @@ function showAllRecipes() {
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo() { //all below should go into it's own pantry class
-  user.pantry.forEach(item => {
-    let itemInfo = ingredientsData.find(ingredient => {
-      return ingredient.id === item.ingredient;
-    });
-    let originalIngredient = pantryInfo.find(ingredient => {
-      if (itemInfo) {
-        return ingredient.name === itemInfo.name;
-      }
-    });
-    if (itemInfo && originalIngredient) {
-      originalIngredient.count += item.amount;
-    } else if (itemInfo) {
-      pantryInfo.push({name: itemInfo.name, count: item.amount});
-    }
-  });
-  displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
+function findPantryInfo() {
+  displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name));
 }
 
 function displayPantryInfo(pantry) {
   pantry.forEach(ingredient => {
-    let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-      <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
+		const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
+
+    const ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredName}">
+      <label for="${ingredName}">${ingredName}, ${ingredient.amount}</label></li>`;
     document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
       ingredientHtml);
   });
 }
 
 function findCheckedPantryBoxes() {
-  let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
-  let pantryCheckboxInfo = Array.from(pantryCheckboxes)
-  let selectedIngredients = pantryCheckboxInfo.filter(box => {
-    return box.checked;
-  })
-  showAllRecipes();
-  if (selectedIngredients.length > 0) {
+  const pantryCheckboxes = Array.from(document.querySelectorAll(".pantry-checkbox"));
+  const selectedIngredients = pantryCheckboxes.filter(box => box.checked);
+
+	showAllRecipes();
+  if (selectedIngredients.length) {
     findRecipesWithCheckedIngredients(selectedIngredients);
   }
 }
 
 function findRecipesWithCheckedIngredients(selected) {
-  let recipeChecker = (arr, target) => target.every(v => arr.includes(v));
-  let ingredientNames = selected.map(item => {
-    return item.id;
-  })
-  recipes.forEach(recipe => {
-    let allRecipeIngredients = [];
-    recipe.ingredients.forEach(ingredient => {
-      allRecipeIngredients.push(ingredient.name);
-    });
-    if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
-      let domRecipe = document.getElementById(`${recipe.id}`);
+  const recipeChecker = (recipeI, target) => target.every(iName => recipeI.includes(iName));
+  const ingredientNames = selected.map(item => item.id)
+
+	recipeData.forEach(recipe => {
+		const allRecipeI = recipe.ingredients.map(ingred => 
+			ingredientsData.find(i => i.id === ingred.id).name);
+
+    if (!recipeChecker(allRecipeI, ingredientNames)) {
+      const domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     }
   })
