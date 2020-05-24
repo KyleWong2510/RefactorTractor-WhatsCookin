@@ -78,6 +78,7 @@ window.addEventListener("load", fetchData);
 window.addEventListener("load", adjustPantry);
 
 // adjustPantry()
+setTimeout(adjustPantry, 5000)
 
 var adjustPantry = () => {
 	console.log('hi')
@@ -111,6 +112,7 @@ function generateUser() {
 }
 
 // CREATE RECIPE CARDS
+//put instantiation somewhere else, maybe in promise?
 function createCards() {
   recipeData.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
@@ -212,12 +214,15 @@ function hideUnselectedRecipes(foundRecipes) {
 function addToMyRecipes() { //what is happening in this fn? it's breaking the open instructions on dom
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
-    if (!user.favoriteRecipes.includes(cardId)) {
+    let card = recipeData.find(recipe => recipe.id === cardId)
+    if (!user.favoriteRecipes.includes(card)) {
       event.target.src = "../images/apple-logo.png";
-      user.saveRecipe(cardId);
+      console.log('card', card)
+      user.saveRecipe(card, 'favoriteRecipes');
+      console.log('faves', user.favoriteRecipes)
     } else {
       event.target.src = "../images/apple-logo-outline.png";
-      user.removeRecipe(cardId);
+      user.removeRecipe(card, 'favoriteRecipes');
     }
   } else if (event.target.id === "exit-recipe-btn") {
     exitRecipe();
@@ -238,8 +243,10 @@ function isDescendant(parent, child) {
 }
 
 function showSavedRecipes() {
-  let unsavedRecipes = recipes.filter(recipe => {
-    return !user.favoriteRecipes.includes(recipe.id);
+  showAllRecipes()
+  // console.log(recipes)
+  let unsavedRecipes = recipeData.filter(recipe => {
+    return !user.favoriteRecipes.includes(recipe);
   });
   unsavedRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
@@ -316,12 +323,34 @@ function pressEnterSearch(event) {
   searchRecipes();
 }
 
+// searchForRecipe(keyword, array) {
+//   let searchedResults = []
+//   this[array].forEach(recipe => {
+//     if(recipe.name.includes(keyword)) {
+//       searchedResults.push(recipe)
+//     }
+//     recipe.ingredients.forEach(ingred => {
+//       if(ingred.name.includes(keyword)) {
+//         searchedResults.push(recipe)
+//       }
+//     })
+//   })
+//   let unique = [... new Set(searchedResults)]
+//   return unique
+// }
+
+
 function searchRecipes() {
   showAllRecipes();
-  let searchedRecipes = recipeData.filter(recipe => {
+  let arr;
+  //if we are on all recipes page, arr === x
+  //if we are on my recipes page, arr === y
+  let search = recipeData.filter(recipe => {
     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
   });
-  filterNonSearched(createRecipeObject(searchedRecipes));
+  console.log('data', recipeData)
+  user.searchForRecipe(search, recipeData)
+  filterNonSearched(createRecipeObject(search));
 }
 
 function filterNonSearched(filtered) {
