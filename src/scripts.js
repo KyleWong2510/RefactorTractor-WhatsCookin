@@ -9,6 +9,7 @@ import './images/apple-logo-outline.png';
 import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
+import './images/checklistwhite.png';
 
 
 import User from './user';
@@ -322,23 +323,6 @@ function pressEnterSearch(event) {
   event.preventDefault();
   searchRecipes();
 }
-
-// searchForRecipe(keyword, array) {
-//   let searchedResults = []
-//   this[array].forEach(recipe => {
-//     if(recipe.name.includes(keyword)) {
-//       searchedResults.push(recipe)
-//     }
-//     recipe.ingredients.forEach(ingred => {
-//       if(ingred.name.includes(keyword)) {
-//         searchedResults.push(recipe)
-//       }
-//     })
-//   })
-//   let unique = [... new Set(searchedResults)]
-//   return unique
-// }
-
 
 function searchRecipes() {
   showAllRecipes();
