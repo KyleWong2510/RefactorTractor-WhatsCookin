@@ -24,6 +24,10 @@ describe('Pantry', function() {
 		expect(pantry.data.length).to.equal(478);
 		expect(pantry.data[0]).to.deep.equal({ ingredient: 6150, amount: 5 });
 	});
+
+	it('if new Pantry instance is initialized without an argument, an error should throw', function() {
+		expect(() => { const badPantry = new Pantry() }).to.throw(Error);
+	});
 	
 	it('on initialization, user\'s first item should be ingredient #6150 wih a quantity of 5', function() {
 		expect(pantry.data[0]).to.deep.equal({ ingredient: 6150, amount: 5 });

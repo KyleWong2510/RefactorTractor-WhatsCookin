@@ -9,6 +9,7 @@ import './images/apple-logo-outline.png';
 import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
+import './images/checklistwhite.png';
 
 import User from './user';
 import Recipe from './recipe';
@@ -31,9 +32,9 @@ let recipeData;
 let ingredientsData;
 
 let menuOpen = false;
-let recipes = [];
 let user;
 let pantry;
+let allRecipes = [];
 
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
@@ -117,7 +118,7 @@ function createCards() {
   recipeData.forEach(recipe => {
     let currentRecipe = new Recipe(recipe);
     let shortRecipeName = currentRecipe.name;
-    recipes.push(currentRecipe);
+    allRecipes.push(currentRecipe);
     if (currentRecipe.name.length > 40) {
       shortRecipeName = currentRecipe.name.substring(0, 40) + "...";
     }
@@ -185,7 +186,7 @@ function findCheckedBoxes() {
 function findTaggedRecipes(selected) {
   let filteredResults = [];
   selected.forEach(tag => {
-    let allRecipes = recipes.filter(recipe => {
+    let allRecipes = allRecipes.filter(recipe => {
       return recipe.tags.includes(tag.id);
     });
     allRecipes.forEach(recipe => {
@@ -201,7 +202,7 @@ function findTaggedRecipes(selected) {
 }
 
 function filterRecipes(filtered) {
-  let foundRecipes = recipes.filter(recipe => {
+  let foundRecipes = allRecipes.filter(recipe => {
     return !filtered.includes(recipe);
   });
   hideUnselectedRecipes(foundRecipes)
@@ -215,15 +216,13 @@ function hideUnselectedRecipes(foundRecipes) {
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
-function addToMyRecipes() { //what is happening in this fn? it's breaking the open instructions on dom
+function addToMyRecipes() {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     let card = recipeData.find(recipe => recipe.id === cardId)
     if (!user.favoriteRecipes.includes(card)) {
       event.target.src = "../images/apple-logo.png";
-      console.log('card', card)
       user.saveRecipe(card, 'favoriteRecipes');
-      console.log('faves', user.favoriteRecipes)
     } else {
       event.target.src = "../images/apple-logo-outline.png";
       user.removeRecipe(card, 'favoriteRecipes');
@@ -248,7 +247,6 @@ function isDescendant(parent, child) {
 
 function showSavedRecipes() {
   showAllRecipes()
-  // console.log(recipes)
   let unsavedRecipes = recipeData.filter(recipe => {
     return !user.favoriteRecipes.includes(recipe);
   });
@@ -263,41 +261,41 @@ function showSavedRecipes() {
 function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
-  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  generateRecipeTitle(recipe, generateIngredients(recipe));
-  addRecipeImage(recipe);
-  generateInstructions(recipe);
+  let clickedRecipe = allRecipes.find(clickedRecipe => clickedRecipe.id === Number(recipeId));
+  generateRecipeTitle(clickedRecipe, generateIngredients(clickedRecipe));
+  addRecipeImage(clickedRecipe);
+  generateInstructions(clickedRecipe);
   fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
-function generateRecipeTitle(recipe, ingredients) {
-  let recipeTitle = `
+function generateRecipeTitle(clickedRecipe, ingredients) {
+	const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
+	let recipeTitle = `
     <button id="exit-recipe-btn">X</button>
-    <h3 id="recipe-title">${recipe.name}</h3>
+    <h3 id="recipe-title">${clickedRecipe.name}</h3>
     <h4>Ingredients</h4>
-    <p>${ingredients}</p>`
+		<p>${ingredients}</p>
+		<h4>Ingredients Esimated Cost</h4>
+		<p>$${ingredCost}</p>`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
-function addRecipeImage(recipe) {
-  document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
+function addRecipeImage(clickedRecipe) {
+  document.getElementById("recipe-title").style.backgroundImage = `url(${clickedRecipe.image})`;
 }
 
-function generateIngredients(recipe) {
-  return recipe && recipe.ingredients.map(i => {
+function generateIngredients(clickedRecipe) {
+  return clickedRecipe && clickedRecipe.ingredients.map(i => {
 		let foundIngredient = ingredientsData.find(ingredient => 
 			ingredient.id === i.id).name;
     return `${capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
 }
 
-function generateInstructions(recipe) {
+function generateInstructions(clickedRecipe) {
   let instructionsList = "";
-  let instructions = recipe.instructions.map(i => {
-    return i.instruction
-  });
-  instructions.forEach(i => {
-    instructionsList += `<li>${i}</li>`
+  clickedRecipe.instructions.forEach(i => {
+    instructionsList += `<li>${i.instruction}</li>`
   });
   fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
   fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
@@ -329,19 +327,15 @@ function pressEnterSearch(event) {
 
 function searchRecipes() {
   showAllRecipes();
-  let arr;
   //if we are on all recipes page, arr === x
   //if we are on my recipes page, arr === y
-  let search = recipeData.filter(recipe => {
-    return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
-  });
-  console.log('data', recipeData)
-  user.searchForRecipe(search, recipeData)
-  filterNonSearched(createRecipeObject(search));
+  let search = searchInput.value.toLowerCase()
+  let results = user.searchForRecipe(search, recipeData)
+  filterNonSearched(createRecipeObject(results));
 }
 
 function filterNonSearched(filtered) {
-  let found = recipes.filter(recipe => {
+  let found = allRecipes.filter(recipe => {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
   })
@@ -349,8 +343,7 @@ function filterNonSearched(filtered) {
 }
 
 function createRecipeObject(recipes) {
-  recipes = recipes.map(recipe => new Recipe(recipe));
-  return recipes
+  return recipes.map(recipe => new Recipe(recipe));
 }
 
 function toggleMenu() {
@@ -364,7 +357,7 @@ function toggleMenu() {
 }
 
 function showAllRecipes() {
-  recipes.forEach(recipe => {
+	allRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "block";
   });
