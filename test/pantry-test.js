@@ -31,5 +31,6 @@ describe('Pantry', function() {
 	
 	it('on initialization, user\'s first item should be ingredient #6150 wih a quantity of 5', function() {
 		expect(pantry.data[0]).to.deep.equal({ ingredient: 6150, amount: 5 });
+
   });
 });

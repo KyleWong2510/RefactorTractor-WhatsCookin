@@ -29,10 +29,11 @@ class User {
     return [... new Set(searchedResults)]
   }
 
-	searchByName(keyword, array) {
-    let searchedResults = []
+  searchByName(keyword, array) {
+    const word = keyword.toLowerCase()
+    const searchedResults = []
     array.forEach(recipe => {
-      if(recipe.name.toLowerCase().includes(keyword)) {
+      if(recipe.name.toLowerCase().includes(word)) {
         searchedResults.push(recipe)
       }
     })
@@ -40,10 +41,11 @@ class User {
   }
 //s&p issue
   searchByIngred(keyword, array) {
-    let searchedResults = []
-    let ingredientIDs = ingredientsData
+    const word = keyword.toLowerCase()
+    const searchedResults = []
+    const ingredientIDs = ingredientsData
       .filter(ingred => ingred.name)
-      .filter(ingred => ingred.name.toLowerCase().includes(keyword))
+      .filter(ingred => ingred.name.toLowerCase().includes(word))
       .map(ingred => ingred.id)
     
       array.forEach(recipe => {
