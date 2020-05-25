@@ -30,6 +30,7 @@ let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 
+
 let users;
 let recipeData;
 let ingredientsData;
@@ -47,6 +48,7 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+
 
 const onloadHandler = () => {
 	generateUser();
@@ -141,9 +143,7 @@ function addToDom(currentRecipe, shortRecipeName) {
 			</div>
       <div>${tagsToList(currentRecipe.tags)}</div>
       <div class="button-holder">
-      <button class="recipes-to-cook-btn">
       <img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
-      </button>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </div>
     </div>`
@@ -225,6 +225,9 @@ function hideUnselectedRecipes(foundRecipes) {
 
 // FAVORITE RECIPE FUNCTIONALITY
 function addToMyRecipes() { //what is happening in this fn? it's breaking the open instructions on dom
+  if (event.target.className === "recipe-icon-card") {
+    addToRecipes()
+  }
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     let card = recipeData.find(recipe => recipe.id === cardId)
@@ -405,7 +408,6 @@ function findCheckedPantryBoxes() {
 function findRecipesWithCheckedIngredients(selected) {
   const recipeChecker = (recipeI, target) => target.every(iName => recipeI.includes(iName));
   const ingredientNames = selected.map(item => item.id)
-
 	recipeData.forEach(recipe => {
 		const allRecipeI = recipe.ingredients.map(ingred => 
 			ingredientsData.find(i => i.id === ingred.id).name);
@@ -416,3 +418,11 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   })
 }
+
+function addToRecipes() {
+  event.target.src = '../images/recipeblack.png'
+  
+
+}
+
+
