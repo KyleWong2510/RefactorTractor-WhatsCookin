@@ -183,10 +183,13 @@ function findCheckedBoxes() {
   findTaggedRecipes(selectedTags);
 }
 
+//Make these dynamic so we can pass in different arrays to filter through
+//Must have a way to indicate what view we are on => banner?
+
 function findTaggedRecipes(selected) {
   let filteredResults = [];
   selected.forEach(tag => {
-    let allRecipes = recipes.filter(recipe => {
+    let allRecipes = recipesData.filter(recipe => {
       return recipe.tags.includes(tag.id);
     });
     allRecipes.forEach(recipe => {
@@ -202,7 +205,7 @@ function findTaggedRecipes(selected) {
 }
 
 function filterRecipes(filtered) {
-  let foundRecipes = recipes.filter(recipe => {
+  let foundRecipes = recipeData.filter(recipe => {
     return !filtered.includes(recipe);
   });
   hideUnselectedRecipes(foundRecipes)
