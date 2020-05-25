@@ -78,6 +78,6 @@ describe('User', function() {
     user.saveRecipe(recipe2, 'favoriteRecipes');
     user.saveRecipe(recipe3, 'favoriteRecipes');
 
-    expect(user.searchForRecipe('pepper', user.favoriteRecipes)).to.deep.equal([recipe2, recipe3]);
+    expect(user.searchForRecipe('pepper', user.favoriteRecipes)).to.deep.equal([recipe3]);
   });
 });
