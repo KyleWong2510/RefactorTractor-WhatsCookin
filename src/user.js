@@ -26,7 +26,6 @@ class User {
     let byName = this.searchByName(keyword, array)
     let byIngredient = this.searchByIngred(keyword, array)
     let searchedResults = byName.concat(byIngredient)
-    console.log('results', searchedResults)
     return [... new Set(searchedResults)]
   }
 
