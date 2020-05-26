@@ -37,7 +37,7 @@ let pantry;
 let allRecipes = [];
 
 allRecipesBtn.addEventListener("click", showAllRecipes);
-filterBtn.addEventListener("click", findCheckedBoxes);
+filterBtn.addEventListener("click", filterRecipesOnPage);
 main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
@@ -174,38 +174,65 @@ function capitalize(words) {
   }).join(" ");
 }
 
-function findCheckedBoxes() {
+function filterRecipesOnPage() {
+  if (document.querySelector('.welcome-msg').style.display !== 'none') {
+    findCheckedBoxes(allRecipes)
+  }
+  if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
+    findCheckedBoxes(user.favoriteRecipes)
+  }
+  //if banner is cooknext then
+  // findCheckedBoxes(user.recipesToCook)
+}
+
+function findCheckedBoxes(arr) {
   let tagCheckboxes = document.querySelectorAll(".checked-tag");
   let checkboxInfo = Array.from(tagCheckboxes)
   let selectedTags = checkboxInfo.filter(box => {
     return box.checked;
   })
-  findTaggedRecipes(selectedTags);
+  findTaggedRecipes(selectedTags, arr);
 }
 
 //Make these dynamic so we can pass in different arrays to filter through
 //Must have a way to indicate what view we are on => banner?
 
-function findTaggedRecipes(selected) {
+function findTaggedRecipes(selected, arr) {
   let filteredResults = [];
   selected.forEach(tag => {
-    let allRecipes = allRecipes.filter(recipe => {
+    let recipes = arr.filter(recipe => {
       return recipe.tags.includes(tag.id);
     });
-    allRecipes.forEach(recipe => {
+    recipes.forEach(recipe => {
       if (!filteredResults.includes(recipe)) {
         filteredResults.push(recipe);
       }
     })
   });
-  showAllRecipes();
+  showFilteredRecipes(arr)
   if (filteredResults.length > 0) {
-    filterRecipes(filteredResults);
+    filterRecipes(filteredResults, arr);
   }
 }
 
-function filterRecipes(filtered) {
-  let foundRecipes = allRecipes.filter(recipe => {
+function showFilteredRecipes(arr) {
+  showAllRecipes()
+  if (arr !== allRecipes) {
+    let unsavedRecipes = recipeData.filter(recipe => {
+      return !arr.includes(recipe);
+    });
+    unsavedRecipes.forEach(recipe => {
+      let domRecipe = document.getElementById(`${recipe.id}`);
+      domRecipe.style.display = "none";
+    });
+    if (arr === user.favoriteRecipes) {showMyRecipesBanner()}
+    // } else {
+      //show toDoList banner
+  }
+}
+
+function filterRecipes(filtered, arr) {
+  let foundRecipes = arr.filter(recipe => {
     return !filtered.includes(recipe);
   });
   hideUnselectedRecipes(foundRecipes)
