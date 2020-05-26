@@ -10,6 +10,9 @@ import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
 import './images/checklistwhite.png';
+import './images/recipe.png'
+import './images/recipegreen.png'
+import './images/recipeblack.png'
 
 import User from './user';
 import Recipe from './recipe';
@@ -26,6 +29,7 @@ let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
+
 
 let users;
 let recipeData;
@@ -45,33 +49,34 @@ searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
+
 const onloadHandler = () => {
-	generateUser();
-	findTags();
-	createCards();
+  generateUser();
+  findTags();
+  createCards();
 }
 
 const fetchData = () => {
-	users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 	
-	ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 	
-	recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 
-	return Promise.all([users, ingredientsData, recipeData])
-		.then(response => {
-			users = response[0].wcUsersData;
-			ingredientsData = response[1].ingredientsData;
-			recipeData = response[2].recipeData;
-		})
-	.then(onloadHandler)
-	.catch(error => console.log(error))
+  return Promise.all([users, ingredientsData, recipeData])
+    .then(response => {
+      users = response[0].wcUsersData;
+      ingredientsData = response[1].ingredientsData;
+      recipeData = response[2].recipeData;
+    })
+    .then(onloadHandler)
+    .catch(error => console.log(error))
 }
 
 window.addEventListener("load", fetchData);
@@ -81,28 +86,28 @@ window.addEventListener("load", adjustPantry);
 setTimeout(adjustPantry, 5000)
 
 var adjustPantry = () => {
-	console.log('hi')
-	fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			"userId": 49,
-			"ingredientID": 1124,
-			"ingredientModification": 3
-		})
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(error => console.log(error))
-	}
+  console.log('hi')
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "userId": 49,
+      "ingredientID": 1124,
+      "ingredientModification": 3
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.log(error))
+  }
 }
 
 // GENERATE A USER ON LOAD
 function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-	pantry = new Pantry(user);
-	let firstName = user.name.split(" ")[0];
+  pantry = new Pantry(user);
+  let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
       <h1>Welcome ${firstName}!</h1>
@@ -136,14 +141,17 @@ function addToDom(currentRecipe, shortRecipeName) {
           <div>Click for Instructions</div>
         </div>
 			</div>
-			<div>${tagsToList(currentRecipe.tags)}</div>
+      <div>${tagsToList(currentRecipe.tags)}</div>
+      <div class="button-holder">
+      <img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      </div>
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
 }
 
 function tagsToList(tagsList) {
-	return tagsList.map(tag => `<h4>${tag}</h4>`);
+  return tagsList.map(tag => `<h4>${tag}</h4>`);
 }
 
 // FILTER BY RECIPE TAGS
@@ -246,7 +254,11 @@ function hideUnselectedRecipes(foundRecipes) {
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
+
 function addToMyRecipes() {
+   if (event.target.className === "recipe-icon-card") {
+    addToRecipes()
+  }
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     let card = recipeData.find(recipe => recipe.id === cardId)
@@ -314,6 +326,7 @@ function addRecipeImage(clickedRecipe) {
   document.getElementById("recipe-title").style.backgroundImage = `url(${clickedRecipe.image})`;
 }
 
+
 function generateIngredients(clickedRecipe) {
   return clickedRecipe && clickedRecipe.ingredients.map(i => {
 		let foundIngredient = ingredientsData.find(ingredient => 
@@ -333,7 +346,9 @@ function generateInstructions(clickedRecipe) {
 
 function exitRecipe() {
   while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
+    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
+
+  }
   fullRecipeInfo.style.display = "none";
   document.getElementById("overlay").remove();
 }
@@ -401,7 +416,7 @@ function findPantryInfo() {
 
 function displayPantryInfo(pantry) {
   pantry.forEach(ingredient => {
-		const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
+    const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
     const ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredName}">
       <label for="${ingredName}">${ingredName}, ${ingredient.amount}</label></li>`;
@@ -431,3 +446,18 @@ function filterRecipeByIngred(selected) {
     domRecipe.style.display = "none";
 	});
 }
+
+function addToRecipes() {
+  const cardId = event.target.parentNode.parentNode.id
+  let current = recipeData.find(data => data.id == cardId)
+  if (event.target.src.includes('/images/recipeblack.png')) {
+    event.target.src = '../images/recipegreen.png'
+    let position = user.recipesToCook.indexOf(current)
+    user.recipesToCook.splice(position, 1)
+  } else {
+    event.target.src = '../images/recipeblack.png'
+    user.recipesToCook.push(current)
+  }
+}
+
+
