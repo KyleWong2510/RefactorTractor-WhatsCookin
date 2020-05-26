@@ -51,32 +51,32 @@ searchForm.addEventListener("submit", pressEnterSearch);
 
 
 const onloadHandler = () => {
-	generateUser();
-	findTags();
-	createCards();
+  generateUser();
+  findTags();
+  createCards();
 }
 
 const fetchData = () => {
-	users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 	
-	ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 	
-	recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 
-	return Promise.all([users, ingredientsData, recipeData])
-		.then(response => {
-			users = response[0].wcUsersData;
-			ingredientsData = response[1].ingredientsData;
-			recipeData = response[2].recipeData;
-		})
-	.then(onloadHandler)
-	.catch(error => console.log(error))
+  return Promise.all([users, ingredientsData, recipeData])
+    .then(response => {
+      users = response[0].wcUsersData;
+      ingredientsData = response[1].ingredientsData;
+      recipeData = response[2].recipeData;
+    })
+    .then(onloadHandler)
+    .catch(error => console.log(error))
 }
 
 window.addEventListener("load", fetchData);
@@ -86,28 +86,28 @@ window.addEventListener("load", adjustPantry);
 setTimeout(adjustPantry, 5000)
 
 var adjustPantry = () => {
-	console.log('hi')
-	fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			"userId": 49,
-			"ingredientID": 1124,
-			"ingredientModification": 3
-		})
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(error => console.log(error))
-	}
+  console.log('hi')
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "userId": 49,
+      "ingredientID": 1124,
+      "ingredientModification": 3
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.log(error))
+  }
 }
 
 // GENERATE A USER ON LOAD
 function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-	pantry = new Pantry(user);
-	let firstName = user.name.split(" ")[0];
+  pantry = new Pantry(user);
+  let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
       <h1>Welcome ${firstName}!</h1>
@@ -151,7 +151,7 @@ function addToDom(currentRecipe, shortRecipeName) {
 }
 
 function tagsToList(tagsList) {
-	return tagsList.map(tag => `<h4>${tag}</h4>`);
+  return tagsList.map(tag => `<h4>${tag}</h4>`);
 }
 
 // FILTER BY RECIPE TAGS
@@ -233,9 +233,7 @@ function addToMyRecipes() { //what is happening in this fn? it's breaking the op
     let card = recipeData.find(recipe => recipe.id === cardId)
     if (!user.favoriteRecipes.includes(card)) {
       event.target.src = "../images/apple-logo.png";
-      console.log('card', card)
       user.saveRecipe(card, 'favoriteRecipes');
-      console.log('faves', user.favoriteRecipes)
     } else {
       event.target.src = "../images/apple-logo-outline.png";
       user.removeRecipe(card, 'favoriteRecipes');
@@ -297,8 +295,8 @@ function addRecipeImage(recipe) {
 
 function generateIngredients(recipe) {
   return recipe && recipe.ingredients.map(i => {
-		let foundIngredient = ingredientsData.find(ingredient => 
-			ingredient.id === i.id).name;
+    let foundIngredient = ingredientsData.find(ingredient => 
+      ingredient.id === i.id).name;
     return `${capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
 }
@@ -317,7 +315,9 @@ function generateInstructions(recipe) {
 
 function exitRecipe() {
   while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
+    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
+
+  }
   fullRecipeInfo.style.display = "none";
   document.getElementById("overlay").remove();
 }
@@ -386,7 +386,7 @@ function findPantryInfo() {
 
 function displayPantryInfo(pantry) {
   pantry.forEach(ingredient => {
-		const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
+    const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
     const ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredName}">
       <label for="${ingredName}">${ingredName}, ${ingredient.amount}</label></li>`;
@@ -399,7 +399,7 @@ function findCheckedPantryBoxes() {
   const pantryCheckboxes = Array.from(document.querySelectorAll(".pantry-checkbox"));
   const selectedIngredients = pantryCheckboxes.filter(box => box.checked);
 
-	showAllRecipes();
+  showAllRecipes();
   if (selectedIngredients.length) {
     findRecipesWithCheckedIngredients(selectedIngredients);
   }
@@ -408,9 +408,9 @@ function findCheckedPantryBoxes() {
 function findRecipesWithCheckedIngredients(selected) {
   const recipeChecker = (recipeI, target) => target.every(iName => recipeI.includes(iName));
   const ingredientNames = selected.map(item => item.id)
-	recipeData.forEach(recipe => {
-		const allRecipeI = recipe.ingredients.map(ingred => 
-			ingredientsData.find(i => i.id === ingred.id).name);
+  recipeData.forEach(recipe => {
+    const allRecipeI = recipe.ingredients.map(ingred => 
+      ingredientsData.find(i => i.id === ingred.id).name);
 
     if (!recipeChecker(allRecipeI, ingredientNames)) {
       const domRecipe = document.getElementById(`${recipe.id}`);
@@ -420,9 +420,16 @@ function findRecipesWithCheckedIngredients(selected) {
 }
 
 function addToRecipes() {
-  event.target.src = '../images/recipeblack.png'
-  
-
+  const cardId = event.target.parentNode.parentNode.id
+  let current = recipeData.find(data => data.id == cardId)
+  if (event.target.src.includes('/images/recipeblack.png')) {
+    event.target.src = '../images/recipegreen.png'
+    let position = user.recipesToCook.indexOf(current)
+    user.recipesToCook.splice(position, 1)
+  } else {
+    event.target.src = '../images/recipeblack.png'
+    user.recipesToCook.push(current)
+  }
 }
 
 
