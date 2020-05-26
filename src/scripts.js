@@ -421,16 +421,15 @@ function findCheckedPantryBoxes() {
 }
 
 function findRecipesWithCheckedIngredients(selected) {
-  const recipeChecker = (recipeI, target) => target.every(iName => recipeI.includes(iName));
-  const ingredientNames = selected.map(item => item.id)
+	const ingredNames = selected.map(item => item.id);
 
-	recipeData.forEach(recipe => {
-		const allRecipeI = recipe.ingredients.map(ingred => 
-			ingredientsData.find(i => i.id === ingred.id).name);
+	const filteredRecipes = pantry.checkPantry(ingredNames, recipeData, ingredientsData); //should return array of recipes
+	const recipesToHide = recipeData.filter(recipe => {
+		return !filteredRecipes.includes(recipe);
+	})
 
-    if (!recipeChecker(allRecipeI, ingredientNames)) {
-      const domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = "none";
-    }
-  })
+	recipesToHide.forEach(recipe => {
+		const domRecipe = document.getElementById(`${recipe.id}`);
+    domRecipe.style.display = "none";
+	});
 }
