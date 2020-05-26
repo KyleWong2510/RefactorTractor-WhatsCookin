@@ -299,8 +299,8 @@ function openRecipeInfo(event) {
 
 function generateRecipeTitle(clickedRecipe, ingredients) {
 	const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
-	const ownedIngreds = pantry.checkPantry(clickedRecipe, recipeData, ingredientsData);
-	const missingIngreds = pantry.findIngredsMissing(clickedRecipe, recipeData, ingredientsData);
+	const ownedIngreds = pantry.checkPantry(clickedRecipe, ingredientsData);
+	const missingIngreds = pantry.findIngredsMissing(clickedRecipe, ingredientsData);
 	
 	let recipeTitle = `
     <button id="exit-recipe-btn">X</button>

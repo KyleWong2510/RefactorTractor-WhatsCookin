@@ -3,35 +3,28 @@ class Pantry {
     this.data = givenUser.pantry;
   }
 
-  checkPantry(clickedRecipe, dataset1, dataset2) {
-    const foundRecipe = dataset1.find(recipe => {
-      return recipe.id === clickedRecipe.id;
-    })
-
+  checkPantry(clickedRecipe, ingredientData) {
     let ownedIngreds = []
-    foundRecipe.ingredients.forEach(ingred => {
+    clickedRecipe.ingredients.forEach(ingred => {
       this.data.forEach(i => {
-        if (i.ingredient === ingred.id) {
-					ownedIngreds.push(ingred.id);
-				}
+        if (i.ingredient === ingred.id) ownedIngreds.push(ingred.id);
       })
     })
 
-    const parsedNames = ownedIngreds.map(i => dataset2.find(ingred => ingred.id === i).name);
+    const parsedNames = ownedIngreds.map(i => ingredientData.find(ingred => ingred.id === i).name);
 		return [... new Set(parsedNames)];
 	}
 
-  findIngredsMissing(clickedRecipe, dataset1, dataset2) {
-		const ownedIngreds = this.checkPantry(clickedRecipe, dataset1, dataset2)
-		const ownedIngredIDs = ownedIngreds.map(i => dataset2.find(ingred => ingred.name === i).id);
-    const foundRecipe = dataset1.find(recipe => recipe.id === clickedRecipe.id)
+  findIngredsMissing(clickedRecipe, ingredientData) {
+		const ownedIngreds = this.checkPantry(clickedRecipe, ingredientData);
+		const ownedIngredIDs = ownedIngreds.map(i => ingredientData.find(ingred => ingred.name === i).id);
 
 		let missingIngreds = [];
-    foundRecipe.ingredients.forEach(i => {
+    clickedRecipe.ingredients.forEach(i => {
       if (!ownedIngredIDs.includes(i.id)) missingIngreds.push(i.id);
     })
 
-    const parsedNames = missingIngreds.map(i => dataset2.find(ingred => ingred.id === i).name);
+    const parsedNames = missingIngreds.map(i => ingredientData.find(ingred => ingred.id === i).name);
 		return [... new Set(parsedNames)];
 	}
 }
