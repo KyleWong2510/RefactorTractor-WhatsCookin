@@ -415,12 +415,10 @@ function findCheckedPantryBoxes() {
   const selectedIngredients = pantryCheckboxes.filter(box => box.checked);
 
 	showAllRecipes();
-  if (selectedIngredients.length) {
-    findRecipesWithCheckedIngredients(selectedIngredients);
-  }
+  if (selectedIngredients.length) filterRecipeByIngred(selectedIngredients);
 }
 
-function findRecipesWithCheckedIngredients(selected) {
+function filterRecipeByIngred(selected) {
 	const ingredNames = selected.map(item => item.id);
 
 	const filteredRecipes = pantry.checkPantry(ingredNames, recipeData, ingredientsData); //should return array of recipes
