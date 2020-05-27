@@ -10,6 +10,9 @@ import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
 import './images/checklistwhite.png';
+import './images/recipe.png'
+import './images/recipegreen.png'
+import './images/recipeblack.png'
 
 import User from './user';
 import Recipe from './recipe';
@@ -136,11 +139,14 @@ function addToDom(currentRecipe, shortRecipeName) {
           <div>Click for Instructions</div>
         </div>
 			</div>
-			<div>${tagsToList(currentRecipe.tags)}</div>
+      <div>${tagsToList(currentRecipe.tags)}</div>
+      <div class="button-holder">
+      <img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      </div>
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
-}
+  }
 
 function tagsToList(tagsList) {
   return tagsList.map(tag => `<h4>${tag}</h4>`);
