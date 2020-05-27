@@ -9,7 +9,6 @@ import './images/apple-logo-outline.png';
 import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
-import './images/checklistwhite.png';
 import './images/recipe.png'
 import './images/recipegreen.png'
 import './images/recipeblack.png'
