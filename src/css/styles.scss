@@ -153,36 +153,9 @@ span {
 }
 
 .nav-btn img {
-  max-height: 50px;
-  max-width: 50px;
+  max-height: 40px;
+  max-width: 40px;
   padding: 2px 0px;
-}
-
-.recipe-icon {
-  height: 50px;
-  width: auto;
-}
-
-
-
-.recipe-icon-card {
-  height: 50px;
-  width: 50px;
-  bottom: 10px;
-  position: absolute;
-}
-
-.recipe-icon-card:hover {
-  transition: .4s ease;
-  bottom: 20px;
-}
-
-.button-holder {
-  height: 59px;
-  width: 110px;
-  position: absolute;
-  bottom: 0;
-  left: 160px;
 }
 
 .saved-ingredients-btn {
@@ -198,9 +171,6 @@ span {
   border-left: 3px solid #C4EB67;
   padding: 1px 6px 5px 0px;
 }
-
-
-
 
 
 /* BANNER IMAGE*/
