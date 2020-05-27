@@ -76,22 +76,7 @@ const fetchData = () => {
 
 window.addEventListener("load", fetchData);
 
-function adjustPantry() {
-  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userID: 49,
-        ingredientID: 1124,
-        ingredientModification: 3
-      })
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
-}
+
 
 // GENERATE A USER ON LOAD
 function generateUser() {
@@ -450,7 +435,7 @@ function displaySearchedIngredients(ingredients) {
 
   ingredients.forEach(ingred => {
     results.insertAdjacentHTML('afterbegin', `
-      <div class="searched-ingredient" id="${ingred.name}">
+      <div class="searched-ingredient" id="${ingred.id}">
         <div id="add-subtract">
           <button id="minus">-</button>
           <input id="amount" placeholder="0">
@@ -473,6 +458,36 @@ document.addEventListener('click', function(e) {
     createPostForm()
   }
 })
+
+document.addEventListener('click', function(e) {
+  if(e.target && e.target.id === 'save-changes-btn') {
+    let amounts = Array.from(document.querySelectorAll('#amount'))
+    amounts.forEach(amount => {
+      if (amount.value && amount.value !== 0) {
+        let ingredID = amount.parentNode.parentNode.id
+        let ingredMod = amount.value
+        adjustPantry(ingredID, ingredMod)
+      }
+    })
+  }
+})
+
+function adjustPantry(ingredID, ingredMod) {
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userID: user.id,
+        ingredientID: +ingredID,
+        ingredientModification: +ingredMod
+      })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
+}
 
 // document.getElementById('search-ingredients-btn').addEventListener('click', createPostForm)
 document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
