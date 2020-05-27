@@ -39,7 +39,7 @@ describe('Pantry', function() {
 	});
 	
 	it('checkPantry should return the owned items for a given recipe', function() {
-		const ownedItems = pantry.checkPantry(recipe, recipeData, ingredientsData);
+		const ownedItems = pantry.checkPantry(recipe, ingredientsData);
 
 		expect(ownedItems).to.deep.equal([
 			"wheat flour", "bicarbonate of soda", 
@@ -50,11 +50,11 @@ describe('Pantry', function() {
 	});
 
 	it('if checkPantry method is invoked without an argument, an error should throw', function() {
-		expect(() => { pantry.checkPantry(recipeData, ingredientsData) }).to.throw(Error);
+		expect(() => { pantry.checkPantry(ingredientsData) }).to.throw(Error);
 	});
 
 	it('findIngredsMissing should return the ingredients the user does not have for a given recipe', function() {
-		const missingItems = pantry.findIngredsMissing(recipe2, recipeData, ingredientsData);
+		const missingItems = pantry.findIngredsMissing(recipe2, ingredientsData);
 
 		expect(missingItems).to.deep.equal([
 			"graham cracker crust", "ground cinnamon", 
@@ -64,6 +64,6 @@ describe('Pantry', function() {
 	});
 
 	it('if findIngredsMissing method is invoked without an argument, an error should throw', function() {
-		expect(() => { pantry.findIngredsMissing(recipeData, ingredientsData) }).to.throw(Error);
+		expect(() => { pantry.findIngredsMissing(ingredientsData) }).to.throw(Error);
 	});
 });
