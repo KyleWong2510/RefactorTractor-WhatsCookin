@@ -55,7 +55,6 @@ class User {
         }
       })  
     })
-    console.log('ingred', searchedResults)
     return [... new Set(searchedResults)]
   }
 
