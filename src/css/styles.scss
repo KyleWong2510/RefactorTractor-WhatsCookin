@@ -153,13 +153,38 @@ span {
 }
 
 .nav-btn img {
-  max-height: 40px;
-  max-width: 40px;
+   max-height: 50px;
+   max-width: 50px;
   padding: 2px 0px;
 }
 
 .saved-ingredients-btn {
   border-left: 3px solid #C4EB67;
+}
+
+recipe-icon {
+  height: 50px;
+  width: auto;
+}
+
+.recipe-icon-card {
+  height: 50px;
+  width: 50px;
+  bottom: 10px;
+  position: absolute;
+}
+
+.recipe-icon-card:hover {
+  transition: .4s ease;
+  bottom: 20px;
+}
+
+.button-holder {
+  height: 59px;
+  width: 110px;
+  position: absolute;
+  bottom: 0;
+  left: 160px;
 }
 
 .ing-pan-btn {

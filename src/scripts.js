@@ -9,7 +9,9 @@ import './images/apple-logo-outline.png';
 import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
-import './images/checklistwhite.png';
+import './images/recipe.png'
+import './images/recipegreen.png'
+import './images/recipeblack.png'
 
 import User from './user';
 import Recipe from './recipe';
@@ -54,11 +56,19 @@ const fetchData = () => {
   users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+<<<<<<< HEAD
 
   ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 
+=======
+	
+  ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+	
+>>>>>>> master
   recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
@@ -74,8 +84,6 @@ const fetchData = () => {
 }
 
 window.addEventListener("load", fetchData);
-
-
 
 // GENERATE A USER ON LOAD
 function generateUser() {
@@ -115,11 +123,14 @@ function addToDom(currentRecipe, shortRecipeName) {
           <div>Click for Instructions</div>
         </div>
 			</div>
-			<div>${tagsToList(currentRecipe.tags)}</div>
+      <div>${tagsToList(currentRecipe.tags)}</div>
+      <div class="button-holder">
+      <img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      </div>
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
-}
+  }
 
 function tagsToList(tagsList) {
   return tagsList.map(tag => `<h4>${tag}</h4>`);
@@ -228,6 +239,9 @@ function hideUnselectedRecipes(foundRecipes) {
 
 // FAVORITE RECIPE FUNCTIONALITY
 function addToMyRecipes() {
+  if (event.target.className === "recipe-icon-card") {
+    addToRecipes()
+  }
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     let card = recipeData.find(recipe => recipe.id === cardId)
@@ -304,7 +318,7 @@ function addRecipeImage(clickedRecipe) {
 
 function generateIngredients(clickedRecipe) {
   return clickedRecipe && clickedRecipe.ingredients.map(i => {
-    let foundIngredient = ingredientsData.find(ingredient =>
+    let foundIngredient = ingredientsData.find(ingredient => 
       ingredient.id === i.id).name;
     return `${capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
@@ -320,11 +334,13 @@ function generateInstructions(clickedRecipe) {
 }
 
 function exitRecipe() {
-  while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
+  while (fullRecipeInfo.firstChild && fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
+
+  }
   fullRecipeInfo.style.display = "none";
   document.getElementById("overlay").remove();
 }
+
 
 // TOGGLE DISPLAYS
 function showMyRecipesBanner() {
@@ -469,6 +485,19 @@ function adjustPantry(ingredID, ingredMod) {
     .catch(error => console.log(error))
 }
 
-// document.getElementById('search-ingredients-btn').addEventListener('click', createPostForm)
 document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
 document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
+
+function addToRecipes() {
+  const cardId = event.target.parentNode.parentNode.id
+  let current = recipeData.find(data => data.id == cardId)
+  if (event.target.src.includes('/images/recipeblack.png')) {
+    event.target.src = '../images/recipegreen.png'
+    let position = user.recipesToCook.indexOf(current)
+    user.recipesToCook.splice(position, 1)
+  } else {
+    event.target.src = '../images/recipeblack.png'
+    user.recipesToCook.push(current)
+  }
+}
+
