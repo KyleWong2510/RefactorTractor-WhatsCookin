@@ -395,28 +395,6 @@ function displayPantryInfo(pantry) {
   });
 }
 
-function findCheckedPantryBoxes() {
-  const pantryCheckboxes = Array.from(document.querySelectorAll(".pantry-checkbox"));
-  const selectedIngredients = pantryCheckboxes.filter(box => box.checked);
-
-	showAllRecipes();
-  if (selectedIngredients.length) filterRecipeByIngred(selectedIngredients);
-}
-
-function filterRecipeByIngred(selected) {
-	const ingredNames = selected.map(item => item.id);
-
-	const filteredRecipes = pantry.checkPantry(ingredNames, recipeData, ingredientsData); //should return array of recipes
-	const recipesToHide = recipeData.filter(recipe => {
-		return !filteredRecipes.includes(recipe);
-	})
-
-	recipesToHide.forEach(recipe => {
-		const domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
-	});
-}
-
 //POST FORM FUNCTIONALITY
 function togglePostForm() {
   document.getElementById('post-to-pantry').classList.toggle('hide')
