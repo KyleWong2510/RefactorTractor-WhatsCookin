@@ -9,7 +9,9 @@ import './images/apple-logo-outline.png';
 import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
-import './images/checklistwhite.png';
+import './images/recipe.png'
+import './images/recipegreen.png'
+import './images/recipeblack.png'
 
 import User from './user';
 import Recipe from './recipe';
@@ -45,32 +47,32 @@ searchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 const onloadHandler = () => {
-	generateUser();
-	findTags();
-	createCards();
+  generateUser();
+  findTags();
+  createCards();
 }
 
 const fetchData = () => {
-	users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 	
-	ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 	
-	recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 
-	return Promise.all([users, ingredientsData, recipeData])
-		.then(response => {
-			users = response[0].wcUsersData;
-			ingredientsData = response[1].ingredientsData;
-			recipeData = response[2].recipeData;
-		})
-	.then(onloadHandler)
-	.catch(error => console.log(error))
+  return Promise.all([users, ingredientsData, recipeData])
+    .then(response => {
+      users = response[0].wcUsersData;
+      ingredientsData = response[1].ingredientsData;
+      recipeData = response[2].recipeData;
+    })
+    .then(onloadHandler)
+    .catch(error => console.log(error))
 }
 
 window.addEventListener("load", fetchData);
@@ -80,28 +82,28 @@ window.addEventListener("load", adjustPantry);
 setTimeout(adjustPantry, 5000)
 
 var adjustPantry = () => {
-	console.log('hi')
-	fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			"userId": 49,
-			"ingredientID": 1124,
-			"ingredientModification": 3
-		})
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(error => console.log(error))
-	}
+  console.log('hi')
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "userId": 49,
+      "ingredientID": 1124,
+      "ingredientModification": 3
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.log(error))
+  }
 }
 
 // GENERATE A USER ON LOAD
 function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-	pantry = new Pantry(user);
-	let firstName = user.name.split(" ")[0];
+  pantry = new Pantry(user);
+  let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
       <h1>Welcome ${firstName}!</h1>
@@ -135,14 +137,17 @@ function addToDom(currentRecipe, shortRecipeName) {
           <div>Click for Instructions</div>
         </div>
 			</div>
-			<div>${tagsToList(currentRecipe.tags)}</div>
+      <div>${tagsToList(currentRecipe.tags)}</div>
+      <div class="button-holder">
+      <img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      </div>
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
-}
+  }
 
 function tagsToList(tagsList) {
-	return tagsList.map(tag => `<h4>${tag}</h4>`);
+  return tagsList.map(tag => `<h4>${tag}</h4>`);
 }
 
 // FILTER BY RECIPE TAGS
@@ -224,9 +229,11 @@ function showFilteredRecipes(arr) {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     });
-    if (arr === user.favoriteRecipes) {showMyRecipesBanner()}
-    // } else {
-      //show toDoList banner
+    if (arr === user.favoriteRecipes) {
+      showMyRecipesBanner()
+    }
+  } else {
+      
   }
 }
 
@@ -246,6 +253,9 @@ function hideUnselectedRecipes(foundRecipes) {
 
 // FAVORITE RECIPE FUNCTIONALITY
 function addToMyRecipes() {
+  if (event.target.className === "recipe-icon-card") {
+    addToRecipes()
+  }
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     let card = recipeData.find(recipe => recipe.id === cardId)
@@ -322,8 +332,8 @@ function addRecipeImage(clickedRecipe) {
 
 function generateIngredients(clickedRecipe) {
   return clickedRecipe && clickedRecipe.ingredients.map(i => {
-		let foundIngredient = ingredientsData.find(ingredient => 
-			ingredient.id === i.id).name;
+    let foundIngredient = ingredientsData.find(ingredient => 
+      ingredient.id === i.id).name;
     return `${capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
 }
@@ -338,11 +348,13 @@ function generateInstructions(clickedRecipe) {
 }
 
 function exitRecipe() {
-  while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
+  while (fullRecipeInfo.firstChild && fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
+
+  }
   fullRecipeInfo.style.display = "none";
   document.getElementById("overlay").remove();
 }
+
 
 // TOGGLE DISPLAYS
 function showMyRecipesBanner() {
@@ -393,7 +405,7 @@ function toggleMenu() {
 }
 
 function showAllRecipes() {
-	allRecipes.forEach(recipe => {
+  allRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "block";
   });
@@ -407,10 +419,48 @@ function findPantryInfo() {
 
 function displayPantryInfo(pantry) {
   pantry.forEach(ingredient => {
-		const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
+    const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
     const ingredientHtml = `<li>${ingredName}, ${ingredient.amount}</li>`;
     document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
       ingredientHtml);
   });
 }
+
+function findCheckedPantryBoxes() {
+  const pantryCheckboxes = Array.from(document.querySelectorAll(".pantry-checkbox"));
+  const selectedIngredients = pantryCheckboxes.filter(box => box.checked);
+
+  showAllRecipes();
+  if (selectedIngredients.length) {
+    filterRecipeByIngred(selectedIngredients);
+  }
+}
+
+function filterRecipeByIngred(selected) {
+  const ingredNames = selected.map(item => item.id);
+
+  const filteredRecipes = pantry.checkPantry(ingredNames, recipeData, ingredientsData); //should return array of recipes
+  const recipesToHide = recipeData.filter(recipe => {
+    return !filteredRecipes.includes(recipe);
+  })
+
+  recipesToHide.forEach(recipe => {
+    const domRecipe = document.getElementById(`${recipe.id}`);
+    domRecipe.style.display = "none";
+  });
+}
+
+function addToRecipes() {
+  const cardId = event.target.parentNode.parentNode.id
+  let current = recipeData.find(data => data.id == cardId)
+  if (event.target.src.includes('/images/recipeblack.png')) {
+    event.target.src = '../images/recipegreen.png'
+    let position = user.recipesToCook.indexOf(current)
+    user.recipesToCook.splice(position, 1)
+  } else {
+    event.target.src = '../images/recipeblack.png'
+    user.recipesToCook.push(current)
+  }
+}
+
