@@ -42,7 +42,6 @@ main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
-showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 const onloadHandler = () => {
@@ -281,14 +280,21 @@ function openRecipeInfo(event) {
 }
 
 function generateRecipeTitle(clickedRecipe, ingredients) {
-  const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
-  let recipeTitle = `
+	const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
+	const ownedIngreds = pantry.checkPantry(clickedRecipe, ingredientsData);
+	const missingIngreds = pantry.findIngredsMissing(clickedRecipe, ingredientsData);
+	
+	let recipeTitle = `
     <button id="exit-recipe-btn">X</button>
     <h3 id="recipe-title">${clickedRecipe.name}</h3>
     <h4>Ingredients</h4>
 		<p>${ingredients}</p>
-		<h4>Ingredients Esimated Cost</h4>
-		<p>$${ingredCost}</p>`
+		<h4>Esimated Cost</h4>
+		<p>$${ingredCost}</p>
+		<h4>Ingredients You Own</h4>
+		<p>${ownedIngreds}</p>
+		<h4>Ingredients You're Missing</h4>
+		<p>${missingIngreds}</p>`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
@@ -374,7 +380,7 @@ function showAllRecipes() {
   showWelcomeBanner();
 }
 
-// CREATE AND USE PANTRY
+// DISPLAY PANTRY
 function findPantryInfo() {
   displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name));
 }
@@ -383,8 +389,7 @@ function displayPantryInfo(pantry) {
   pantry.forEach(ingredient => {
     const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
-    const ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredName}">
-      <label for="${ingredName}">${ingredName}, ${ingredient.amount}</label></li>`;
+    const ingredientHtml = `<li>${ingredName}, ${ingredient.amount}</li>`;
     document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
       ingredientHtml);
   });
