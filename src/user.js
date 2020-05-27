@@ -16,6 +16,7 @@ class User {
   removeRecipe(recipe, array) {
     let i = this[array].indexOf(recipe);
     this[array].splice(i, 1);
+
   }
 	
   filterRecipes(tag, array) {

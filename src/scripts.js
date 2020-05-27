@@ -46,63 +46,58 @@ showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 const onloadHandler = () => {
-	generateUser();
-	findTags();
-	createCards();
+  generateUser();
+  findTags();
+  createCards();
 }
 
 const fetchData = () => {
-	users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
-	
-	ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
-	
-	recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
-		.then(response => response.json())
-		.catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 
-	return Promise.all([users, ingredientsData, recipeData])
-		.then(response => {
-			users = response[0].wcUsersData;
-			ingredientsData = response[1].ingredientsData;
-			recipeData = response[2].recipeData;
-		})
-	.then(onloadHandler)
-	.catch(error => console.log(error))
+  ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+
+  recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+
+  return Promise.all([users, ingredientsData, recipeData])
+    .then(response => {
+      users = response[0].wcUsersData;
+      ingredientsData = response[1].ingredientsData;
+      recipeData = response[2].recipeData;
+    })
+    .then(onloadHandler)
+    .catch(error => console.log(error))
 }
 
 window.addEventListener("load", fetchData);
-window.addEventListener("load", adjustPantry);
 
-// adjustPantry()
-setTimeout(adjustPantry, 5000)
-
-var adjustPantry = () => {
-	console.log('hi')
-	fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'), {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			"userId": 49,
-			"ingredientID": 1124,
-			"ingredientModification": 3
-		})
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(error => console.log(error))
-	}
+function adjustPantry() {
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userID: 49,
+        ingredientID: 1124,
+        ingredientModification: 3
+      })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
 }
 
 // GENERATE A USER ON LOAD
 function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-	pantry = new Pantry(user);
-	let firstName = user.name.split(" ")[0];
+  pantry = new Pantry(user);
+  let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
       <h1>Welcome ${firstName}!</h1>
@@ -143,7 +138,7 @@ function addToDom(currentRecipe, shortRecipeName) {
 }
 
 function tagsToList(tagsList) {
-	return tagsList.map(tag => `<h4>${tag}</h4>`);
+  return tagsList.map(tag => `<h4>${tag}</h4>`);
 }
 
 // FILTER BY RECIPE TAGS
@@ -225,9 +220,11 @@ function showFilteredRecipes(arr) {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     });
-    if (arr === user.favoriteRecipes) {showMyRecipesBanner()}
+    if (arr === user.favoriteRecipes) {
+      showMyRecipesBanner()
+    }
     // } else {
-      //show toDoList banner
+    //show toDoList banner
   }
 }
 
@@ -299,8 +296,8 @@ function openRecipeInfo(event) {
 }
 
 function generateRecipeTitle(clickedRecipe, ingredients) {
-	const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
-	let recipeTitle = `
+  const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
+  let recipeTitle = `
     <button id="exit-recipe-btn">X</button>
     <h3 id="recipe-title">${clickedRecipe.name}</h3>
     <h4>Ingredients</h4>
@@ -316,8 +313,8 @@ function addRecipeImage(clickedRecipe) {
 
 function generateIngredients(clickedRecipe) {
   return clickedRecipe && clickedRecipe.ingredients.map(i => {
-		let foundIngredient = ingredientsData.find(ingredient => 
-			ingredient.id === i.id).name;
+    let foundIngredient = ingredientsData.find(ingredient =>
+      ingredient.id === i.id).name;
     return `${capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
 }
@@ -357,8 +354,6 @@ function pressEnterSearch(event) {
 
 function searchRecipes() {
   showAllRecipes();
-  //if we are on all recipes page, arr === x
-  //if we are on my recipes page, arr === y
   const search = searchInput.value.toLowerCase()
   const results = user.searchForRecipe(search, recipeData)
   filterNonSearched(createRecipeObject(results));
@@ -387,7 +382,7 @@ function toggleMenu() {
 }
 
 function showAllRecipes() {
-	allRecipes.forEach(recipe => {
+  allRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "block";
   });
@@ -401,7 +396,7 @@ function findPantryInfo() {
 
 function displayPantryInfo(pantry) {
   pantry.forEach(ingredient => {
-		const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
+    const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
     const ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredName}">
       <label for="${ingredName}">${ingredName}, ${ingredient.amount}</label></li>`;
@@ -414,7 +409,7 @@ function findCheckedPantryBoxes() {
   const pantryCheckboxes = Array.from(document.querySelectorAll(".pantry-checkbox"));
   const selectedIngredients = pantryCheckboxes.filter(box => box.checked);
 
-	showAllRecipes();
+  showAllRecipes();
   if (selectedIngredients.length) {
     findRecipesWithCheckedIngredients(selectedIngredients);
   }
@@ -424,9 +419,9 @@ function findRecipesWithCheckedIngredients(selected) {
   const recipeChecker = (recipeI, target) => target.every(iName => recipeI.includes(iName));
   const ingredientNames = selected.map(item => item.id)
 
-	recipeData.forEach(recipe => {
-		const allRecipeI = recipe.ingredients.map(ingred => 
-			ingredientsData.find(i => i.id === ingred.id).name);
+  recipeData.forEach(recipe => {
+    const allRecipeI = recipe.ingredients.map(ingred =>
+      ingredientsData.find(i => i.id === ingred.id).name);
 
     if (!recipeChecker(allRecipeI, ingredientNames)) {
       const domRecipe = document.getElementById(`${recipe.id}`);
@@ -434,3 +429,51 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   })
 }
+
+//POST FORM FUNCTIONALITY
+function togglePostForm() {
+  document.getElementById('post-to-pantry').classList.toggle('hide')
+}
+
+const searchIngredientsInput = document.getElementById('search-ingredients-input')
+
+function searchPantry() {
+  const search = searchIngredientsInput.value.toLowerCase();
+  return ingredientsData.filter(ingred => ingred.name).filter(ingred => {
+    console.log(ingred.name)
+    return ingred.name.includes(search)})
+}
+
+function displaySearchedIngredients(ingredients) {
+  let results = document.getElementById('searched-ingredient-results')
+  results.innerHTML = ''
+
+  ingredients.forEach(ingred => {
+    results.insertAdjacentHTML('afterbegin', `
+      <div class="searched-ingredient" id="${ingred.name}">
+        <div id="add-subtract">
+          <button id="minus">-</button>
+          <input id="amount" placeholder="0">
+          <button id="plus">+</button>
+        </div>
+        <p>${ingred.name}</p>
+      </div>
+    `)
+  })
+}
+
+function createPostForm() {
+  let ingredients = searchPantry()
+  displaySearchedIngredients(ingredients)
+  
+}
+
+document.addEventListener('click', function(e) {
+  if(e.target && e.target.id === 'search-ingredients-btn') {
+    createPostForm()
+  }
+})
+
+// document.getElementById('search-ingredients-btn').addEventListener('click', createPostForm)
+document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
+document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
