@@ -1,7 +1,3 @@
-// import users from './data/users-data'; // these will change to API's, get requests
-// import recipeData from  './data/recipe-data';
-// import ingredientsData from './data/ingredient-data';
-
 import './css/base.scss';
 import './css/styles.scss';
 import './images/search.png';
@@ -16,6 +12,7 @@ import './images/recipeblack.png'
 import User from './user';
 import Recipe from './recipe';
 import Pantry from './pantry';
+import domUpdates from './domUpdates';
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -31,22 +28,13 @@ let tagList = document.querySelector(".tag-list");
 let mainTitle = document.querySelector('.main-title')
 
 
-document.addEventListener('click', function (event) {
-  if (event.target.src.includes('/images/recipe.png')) {
-    showToCookItems()
-  }
-})
-
-
-
 let users;
 let recipeData;
 let ingredientsData;
-
-let menuOpen = false;
 let user;
 let pantry;
 let allRecipes = [];
+let menuOpen = false;
 
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", filterRecipesOnPage);
@@ -56,24 +44,29 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
 mainTitle.addEventListener('click', showAllRecipes)
+document.addEventListener('click', function (event) {
+  if (event.target.src.includes('/images/recipe.png')) {
+    showToCookItems()
+  }
+})
 
-const onloadHandler = () => {
-  generateUser();
+function onloadHandler() {
+	user = new User(users[Math.floor(Math.random() * users.length)]);
+	pantry = new Pantry(user);
+	domUpdates.welcomeUser(user, pantry, ingredientsData);
   findTags();
   createCards();
 }
 
-const fetchData = () => {
+function fetchData() {
   users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
-
-
+	
   ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 	
-
   recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
@@ -90,22 +83,7 @@ const fetchData = () => {
 
 window.addEventListener("load", fetchData);
 
-// GENERATE A USER ON LOAD
-function generateUser() {
-  user = new User(users[Math.floor(Math.random() * users.length)]);
-  pantry = new Pantry(user);
-  let firstName = user.name.split(" ")[0];
-  let welcomeMsg = `
-    <div class="welcome-msg">
-      <h1>Welcome ${firstName}!</h1>
-    </div>`;
-  document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-    welcomeMsg);
-  findPantryInfo();
-}
-
 // CREATE RECIPE CARDS
-//put instantiation somewhere else, maybe in promise?
 function createCards() {
   recipeData.forEach(recipe => {
     let currentRecipe = new Recipe(recipe);
@@ -113,32 +91,9 @@ function createCards() {
     allRecipes.push(currentRecipe);
     if (currentRecipe.name.length > 40) {
       shortRecipeName = currentRecipe.name.substring(0, 40) + "...";
-    }
-    addToDom(currentRecipe, shortRecipeName)
+		}
+		domUpdates.displayRecipeCards(currentRecipe, shortRecipeName);
   });
-}
-
-function addToDom(currentRecipe, shortRecipeName) {
-  let cardHtml = `
-    <div class="recipe-card" id=${currentRecipe.id}>
-      <h3 maxlength="40">${shortRecipeName}</h3>
-      <div class="card-photo-container">
-        <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
-        <div class="text">
-          <div>Click for Instructions</div>
-        </div>
-			</div>
-      <div>${tagsToList(currentRecipe.tags)}</div>
-      <div class="button-holder">
-      <img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
-      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-      </div>
-    </div>`
-  main.insertAdjacentHTML("beforeend", cardHtml);
-}
-
-function tagsToList(tagsList) {
-  return tagsList.map(tag => `<h4>${tag}</h4>`);
 }
 
 // FILTER BY RECIPE TAGS
@@ -152,15 +107,7 @@ function findTags() {
     });
   });
   tags.sort();
-  listTags(tags);
-}
-
-function listTags(allTags) {
-  allTags.forEach(tag => {
-    let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-      <label for="${tag}">${capitalize(tag)}</label></li>`;
-    tagList.insertAdjacentHTML("beforeend", tagHtml);
-  });
+  domUpdates.listTags(tags);
 }
 
 function capitalize(words) {
@@ -351,7 +298,6 @@ function exitRecipe() {
   document.getElementById("overlay").remove();
 }
 
-
 // TOGGLE DISPLAYS
 function showMyRecipesBanner() {
   document.querySelector('.to-cook-banner').style.display = 'none';
@@ -378,23 +324,39 @@ function pressEnterSearch(event) {
 }
 
 function searchRecipes() {
-  showAllRecipes();
-  const search = searchInput.value.toLowerCase()
-  const results = user.searchForRecipe(search, recipeData)
-  filterNonSearched(createRecipeObject(results));
+	const search = searchInput.value.toLowerCase();
+	if (document.querySelector('.welcome-msg').style.display !== 'none') {
+		let results = user.searchForRecipe(search, recipeData);
+		console.log(results);
+		filterNonSearched(results);
+  }
+  if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
+		let results = user.searchForRecipe(search, user.favoriteRecipes);
+		filterNonSearched(results)
+  }
+  //if banner is cooknext then
+  // findCheckedBoxes(user.recipesToCook)
+  // filterNonSearched(createRecipeObject(results));
 }
 
 function filterNonSearched(filtered) {
-  let found = allRecipes.filter(recipe => {
+  let found = recipeData.filter(recipe => {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
-  })
-  hideUnselectedRecipes(found);
+	})
+  hideUnsearched(found);
 }
 
-function createRecipeObject(recipes) {
-  return recipes.map(recipe => new Recipe(recipe));
+function hideUnsearched(foundRecipes) {
+	showAllRecipes();
+  foundRecipes.forEach(recipe => {
+    let domRecipe = document.getElementById(`${recipe.id}`);
+    domRecipe.style.display = "none";
+  });
 }
+// function createRecipeObject(recipes) {
+//   return recipes.map(recipe => new Recipe(recipe));
+// }
 
 function toggleMenu() {
   var menuDropdown = document.querySelector(".drop-menu");
@@ -412,21 +374,6 @@ function showAllRecipes() {
     domRecipe.style.display = "block";
   });
   showWelcomeBanner();
-}
-
-// DISPLAY PANTRY
-function findPantryInfo() {
-  displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name));
-}
-
-function displayPantryInfo(pantry) {
-  pantry.forEach(ingredient => {
-    const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
-
-    const ingredientHtml = `<li>${ingredName}, ${ingredient.amount}</li>`;
-    document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
-      ingredientHtml);
-  });
 }
 
 //POST FORM FUNCTIONALITY
@@ -465,7 +412,6 @@ function displaySearchedIngredients(ingredients) {
 function createPostForm() {
   let ingredients = searchPantry()
   displaySearchedIngredients(ingredients)
-  
 }
 
 
