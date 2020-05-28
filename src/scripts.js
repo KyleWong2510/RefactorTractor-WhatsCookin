@@ -24,11 +24,6 @@ let recipesToCkBtn = document.querySelector(".saved-recipes-to-cook");
 let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
-// document.addEventListener('click', function (event) {
-//   if (event.target.src.includes('/images/recipe.png')) {
-//     showToCookItems()
-//   }
-// })
 
 let users;
 let recipeData;
