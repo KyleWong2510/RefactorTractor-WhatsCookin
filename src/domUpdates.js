@@ -123,7 +123,7 @@ let domUpdates = {
 			let domRecipe = document.getElementById(`${recipe.id}`);
 			domRecipe.style.display = "block";
 		});
-		showWelcomeBanner();
+		this.showWelcomeBanner();
 	},
 
 	showWelcomeBanner() {
@@ -203,7 +203,7 @@ let domUpdates = {
 		return clickedRecipe && clickedRecipe.ingredients.map(i => {
 			let foundIngredient = ingredientsData.find(ingredient => 
 				ingredient.id === i.id).name;
-			return `${capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
+			return `${this.capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
 		}).join(", ");
 	},
 
@@ -216,12 +216,14 @@ let domUpdates = {
 		fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
 	},
 
-	addToMyRecipes(recipeData, user, fullRecipeInfo) {
-		if (event.target.className === "recipe-icon-card") { domUpdates.addToCookList(recipeData, user) }
-		else if (event.target.className === "card-apple-icon") { domUpdates.addToFavorites(recipeData, user) }
-		else if (event.target.id === "exit-recipe-btn") { domUpdates.exitRecipe(fullRecipeInfo) }
-		else if (event.target.id === "instructions") { openRecipeInfo(event) }
+	addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
+		if (event.target.className === "recipe-icon-card") { this.addToCookList(recipeData, user) }
+		else if (event.target.className === "card-apple-icon") { this.addToFavorites(recipeData, user) }
+		else if (event.target.id === "exit-recipe-btn") { this.exitRecipe(fullRecipeInfo) }
+		else if (event.target.id === "instructions") { this.openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) }
 	},
+	// openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
+
 
 	addToCookList(recipeData, user) {
 		let cardId = parseInt(event.target.closest(".recipe-card").id)
