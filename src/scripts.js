@@ -110,13 +110,14 @@ function capitalize(words) {
 
 function filterRecipesOnPage() {
   if (document.querySelector('.welcome-msg').style.display !== 'none') {
-    findCheckedBoxes(allRecipes)
+    findCheckedBoxes(allRecipes);
   }
   if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
-    findCheckedBoxes(user.favoriteRecipes)
+    findCheckedBoxes(user.favoriteRecipes);
+	}
+	if (document.querySelector(".to-cook-banner").style.display !== 'none') {
+    findCheckedBoxes(user.recipesToCook);
   }
-  //if banner is cooknext then
-  // findCheckedBoxes(user.recipesToCook)
 }
 
 function findCheckedBoxes(arr) {
@@ -127,9 +128,6 @@ function findCheckedBoxes(arr) {
   })
   findTaggedRecipes(selectedTags, arr);
 }
-
-//Make these dynamic so we can pass in different arrays to filter through
-//Must have a way to indicate what view we are on => banner?
 
 function findTaggedRecipes(selected, arr) {
   let filteredResults = [];
@@ -160,10 +158,10 @@ function showFilteredRecipes(arr) {
       domRecipe.style.display = "none";
     });
     if (arr === user.favoriteRecipes) {
-      showMyRecipesBanner()
-    }
-    // } else {
-    //show toDoList banner
+      showMyRecipesBanner();
+    } else {
+			showToCookBanner();
+		}
   }
 }
 
@@ -318,11 +316,12 @@ function searchRecipes() {
   }
   if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
     let results = user.searchForRecipe(search, user.favoriteRecipes);
+    filterNonSearched(results);
+	}
+	if (document.querySelector(".to-cook-banner").style.display !== 'none') {
+    let results = user.searchForRecipe(search, user.recipesToCook);
     filterNonSearched(results)
   }
-  //if banner is cooknext then
-  // findCheckedBoxes(user.recipesToCook)
-  // filterNonSearched(createRecipeObject(results));
 }
 
 function filterNonSearched(filtered) {
@@ -340,9 +339,6 @@ function hideUnsearched(foundRecipes) {
     domRecipe.style.display = "none";
   });
 }
-// function createRecipeObject(recipes) {
-//   return recipes.map(recipe => new Recipe(recipe));
-// }
 
 function toggleMenu() {
   var menuDropdown = document.querySelector(".drop-menu");
