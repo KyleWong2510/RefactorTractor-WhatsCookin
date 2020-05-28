@@ -1,5 +1,4 @@
 import ingredientsData from '../src/data/ingredient-data';
-
 class User {
   constructor(user) {
     this.id = user.id;
