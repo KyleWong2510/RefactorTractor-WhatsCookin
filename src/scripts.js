@@ -56,19 +56,11 @@ const fetchData = () => {
   users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
-<<<<<<< HEAD
-
-  ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
-    .then(response => response.json())
-    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
-
-=======
 	
   ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
 	
->>>>>>> master
   recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
