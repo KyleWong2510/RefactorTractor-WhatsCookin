@@ -28,12 +28,16 @@ let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
-let recipeIcon = document.querySelector('.recipe-icon')
+let mainTitle = document.querySelector('.main-title')
+
+
 document.addEventListener('click', function (event) {
   if (event.target.src.includes('/images/recipe.png')) {
     showToCookItems()
   }
 })
+
+
 
 let users;
 let recipeData;
@@ -51,6 +55,7 @@ pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
+mainTitle.addEventListener('click', showAllRecipes)
 
 const onloadHandler = () => {
   generateUser();
@@ -254,10 +259,15 @@ function addToMyRecipes() {
     }
   } else if (event.target.id === "exit-recipe-btn") {
     exitRecipe();
-  } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
+    // from Here to
+  } else if (event.target.id === 'recipe-icon-card') {
+    addToRecipes();
+  } else if (event.target.classList.includes(`${currentRecipe.id}`)) {
     openRecipeInfo(event);
   }
+  // Here is a bug
 }
+
 
 function isDescendant(parent, child) {
   let node = child;
@@ -294,11 +304,11 @@ function openRecipeInfo(event) {
 }
 
 function generateRecipeTitle(clickedRecipe, ingredients) {
-	const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
-	const ownedIngreds = pantry.checkPantry(clickedRecipe, ingredientsData);
-	const missingIngreds = pantry.findIngredsMissing(clickedRecipe, ingredientsData);
+  const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
+  const ownedIngreds = pantry.checkPantry(clickedRecipe, ingredientsData);
+  const missingIngreds = pantry.findIngredsMissing(clickedRecipe, ingredientsData);
 	
-	let recipeTitle = `
+  let recipeTitle = `
     <button id="exit-recipe-btn">X</button>
     <h3 id="recipe-title">${clickedRecipe.name}</h3>
     <h4>Ingredients</h4>
@@ -430,7 +440,8 @@ function searchPantry() {
   const search = searchIngredientsInput.value.toLowerCase();
   return ingredientsData.filter(ingred => ingred.name).filter(ingred => {
     console.log(ingred.name)
-    return ingred.name.includes(search)})
+    return ingred.name.includes(search)
+  })
 }
 
 function displaySearchedIngredients(ingredients) {
@@ -471,13 +482,13 @@ function showToCookItems() {
 
 
 document.addEventListener('click', function(e) {
-  if(e.target && e.target.id === 'search-ingredients-btn') {
+  if (e.target && e.target.id === 'search-ingredients-btn') {
     createPostForm()
   }
 })
 
 document.addEventListener('click', function(e) {
-  if(e.target && e.target.id === 'save-changes-btn') {
+  if (e.target && e.target.id === 'save-changes-btn') {
     let amounts = Array.from(document.querySelectorAll('#amount'))
     amounts.forEach(amount => {
       if (amount.value && amount.value !== 0) {
@@ -491,16 +502,16 @@ document.addEventListener('click', function(e) {
 
 function adjustPantry(ingredID, ingredMod) {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userID: user.id,
-        ingredientID: +ingredID,
-        ingredientModification: +ingredMod
-      })
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userID: user.id,
+      ingredientID: +ingredID,
+      ingredientModification: +ingredMod
     })
+  })
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.log(error))
@@ -522,4 +533,6 @@ function addToRecipes() {
     user.recipesToCook.push(current)
   }
 }
+
+
 

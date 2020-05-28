@@ -172,11 +172,13 @@ recipe-icon {
   width: 50px;
   bottom: 10px;
   position: absolute;
+  z-index: 1;
 }
 
 .recipe-icon-card:hover {
   transition: .4s ease;
   bottom: 20px;
+  z-index: 1;
 }
 
 .button-holder {
