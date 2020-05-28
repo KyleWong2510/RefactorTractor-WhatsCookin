@@ -377,6 +377,7 @@ main {
 /* BUTTONS */
 .show-pantry-recipes-btn,
 .show-all-btn,
+#modify-pantry-btn,
 .filter-btn {
   background-color: #359567;
   border: 0;
@@ -389,9 +390,12 @@ main {
   padding: 5px 10px 5px 10px;
 }
 
-.show-pantry-recipes-btn {
+.show-pantry-recipes-btn,
+#modify-pantry-btn {
   margin-top: 10px;
 }
+
+
 
 .show-all-btn {
   height: 40px;
@@ -503,4 +507,24 @@ main {
   top:0;
   width:100%;
   z-index:100;
+}
+
+#post-to-pantry {
+  background: white;
+  border: 3px solid #C4EB67;
+  border-radius: 10px;
+  box-shadow: 1px 1px 115px black;
+  height: 70%;
+  margin: 0;
+  overflow-x: scroll;
+  padding: 1% 1% 1% 1%;
+  position: fixed;
+  right: 15%;
+  top: 15%;
+  width: 70%;
+  z-index: 1000;
+}
+
+.hide {
+  display: none
 }
