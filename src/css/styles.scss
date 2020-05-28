@@ -211,13 +211,13 @@ recipe-icon {
 
 .my-recipes-banner h1,
 .to-cook-banner h1,
-.welcome-msg h1 {
+.welcome-msg {
   color: white;
   width: 100%;
 }
 
 .my-recipes-banner,
-.to-cook-banner  {
+.to-cook-banner {
   display: none;
   margin-top: 25px;
   
@@ -264,7 +264,7 @@ li {
 
 
 /* RECIPE CARD SECTION */
-main {
+main, .recipe-container {
   grid-area: main;
   display: flex;
   justify-content: center;

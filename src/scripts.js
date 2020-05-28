@@ -18,6 +18,7 @@ let allRecipesBtn = document.querySelectorAll(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
+let recipeCards = document.querySelector(".recipe-container");
 let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let recipesToCkBtn = document.querySelector(".saved-recipes-to-cook");
@@ -35,14 +36,19 @@ let menuOpen = false;
 
 window.addEventListener("load", fetchData);
 
-allRecipesBtn.forEach(bt => bt.addEventListener("click", () => {domUpdates.showAllRecipes(allRecipes)}));
-recipesToCkBtn.addEventListener("click", showToCookItems);
+allRecipesBtn.forEach(bt => bt.addEventListener("click", () => {handleRecipeCardCreation(recipeData)}));
+// allRecipesBtn.forEach(bt => bt.addEventListener("click", () => {domUpdates.showAllRecipes(allRecipes)}));
 filterBtn.addEventListener("click", () => {domUpdates.filterRecipesOnPage(allRecipes, user)});
-main.addEventListener("click", () => {domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo)});
+main.addEventListener("click", () => {domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry)});
 pantryBtn.addEventListener("click", () => {domUpdates.toggleMenu(menuOpen)});
-savedRecipesBtn.addEventListener("click", () => {domUpdates.showSavedRecipes(allRecipes, recipeData, user)});
+savedRecipesBtn.addEventListener("click", () => {handleRecipeCardCreation(user.favoriteRecipes)});
+recipesToCkBtn.addEventListener("click", () => {handleRecipeCardCreation(user.recipesToCook)});
+// recipesToCkBtn.addEventListener("click", () => domUpdates.showToCookItems(recipeData, user));
+// savedRecipesBtn.addEventListener("click", () => {domUpdates.showSavedRecipes(allRecipes, recipeData, user)});
 searchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
+document.getElementById('save-changes-btn').addEventListener('click', domUpdates.togglePostForm);
+document.getElementById('modify-pantry-btn').addEventListener('click', domUpdates.togglePostForm);
 
 function onloadHandler() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
@@ -75,6 +81,20 @@ function fetchData() {
     .catch(error => console.log(error))
 }
 
+function handleRecipeCardCreation(recipeArr) {
+	recipeCards.innerHTML = '';
+	recipeArr.forEach(recipe => {
+    let currentRecipe = new Recipe(recipe);
+    let shortRecipeName = currentRecipe.name;
+    if (currentRecipe.name.length > 40) {
+      shortRecipeName = currentRecipe.name.substring(0, 40) + "...";
+    }
+    domUpdates.displayRecipeCards(currentRecipe, shortRecipeName);
+	});
+	if (recipeArr === user.favoriteRecipes) { domUpdates.showMyRecipesBanner() }
+	if (recipeArr === user.recipesToCook) { domUpdates.showToCookBanner() }
+	// if (recipeArr === recipeData) { domUpdates.welcomeUser(u) }
+}
 
 // CREATE RECIPE CARDS
 function createCards() {
@@ -362,17 +382,13 @@ function filterNonSearched(filtered) {
 // }
 
 //POST FORM FUNCTIONALITY
-function togglePostForm() {
-  document.getElementById('post-to-pantry').classList.toggle('hide')
-}
+// function togglePostForm() {
+//   document.getElementById('post-to-pantry').classList.toggle('hide')
+// }
 
-const searchIngredientsInput = document.getElementById('search-ingredients-input')
-
-function searchPantry() {
-  const search = searchIngredientsInput.value.toLowerCase();
-  return ingredientsData.filter(ingred => ingred.name).filter(ingred => {
-    console.log(ingred.name)
-    return ingred.name.includes(search)})
+function createPostForm() {
+	let ingredients = searchPantry()
+	displaySearchedIngredients(ingredients)
 }
 
 function displaySearchedIngredients(ingredients) {
@@ -393,31 +409,34 @@ function displaySearchedIngredients(ingredients) {
   })
 }
 
-function createPostForm() {
-  let ingredients = searchPantry()
-  displaySearchedIngredients(ingredients)
+function searchPantry() {
+	const searchIngredientsInput = document.getElementById('search-ingredients-input')
+  const search = searchIngredientsInput.value.toLowerCase();
+  return ingredientsData.filter(ingred => ingred.name).filter(ingred => {
+    console.log(ingred.name)
+    return ingred.name.includes(search)})
 }
 
-function showToCookItems() {
-  showAllRecipes();
-  let unsavedRecipes = recipeData.filter(recipe => {
-    return !user.recipesToCook.includes(recipe);
-  });
-  unsavedRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
-  });
-  showToCookBanner()
-}
+// function showToCookItems() {
+//   showAllRecipes();
+//   let unsavedRecipes = recipeData.filter(recipe => {
+//     return !user.recipesToCook.includes(recipe);
+//   });
+//   unsavedRecipes.forEach(recipe => {
+//     let domRecipe = document.getElementById(`${recipe.id}`);
+//     domRecipe.style.display = "none";
+//   });
+//   showToCookBanner()
+// }
 
 document.addEventListener('click', function(e) {
-  if(e.target && e.target.id === 'search-ingredients-btn') {
+  if (e.target && e.target.id === 'search-ingredients-btn') {
     createPostForm()
   }
 })
 
 document.addEventListener('click', function(e) {
-  if(e.target && e.target.id === 'save-changes-btn') {
+  if (e.target && e.target.id === 'save-changes-btn') {
     let amounts = Array.from(document.querySelectorAll('#amount'))
     amounts.forEach(amount => {
       if (amount.value && amount.value !== 0) {
@@ -445,21 +464,3 @@ function adjustPantry(ingredID, ingredMod) {
     .then(data => console.log(data))
     .catch(error => console.log(error))
 }
-
-document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
-document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
-
-
-function addToRecipes() {
-  const cardId = event.target.parentNode.parentNode.id
-  let current = recipeData.find(data => data.id == cardId)
-  if (event.target.src.includes('/images/recipeblack.png')) {
-    event.target.src = '../images/recipegreen.png'
-    let position = user.recipesToCook.indexOf(current)
-    user.recipesToCook.splice(position, 1)
-  } else {
-    event.target.src = '../images/recipeblack.png'
-    user.recipesToCook.push(current)
-  }
-}
-
