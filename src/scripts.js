@@ -14,20 +14,16 @@ import Recipe from './recipe';
 import Pantry from './pantry';
 import domUpdates from './domUpdates';
 
-let allRecipesBtn = document.querySelector(".show-all-btn");
+let allRecipesBtn = document.querySelectorAll(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
 let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
+let recipesToCkBtn = document.querySelector(".saved-recipes-to-cook");
 let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
-document.addEventListener('click', function (event) {
-  if (event.target.src.includes('/images/recipe.png')) {
-    showToCookItems()
-  }
-})
 
 let users;
 let recipeData;
@@ -37,7 +33,8 @@ let pantry;
 let allRecipes = [];
 let menuOpen = false;
 
-allRecipesBtn.addEventListener("click", showAllRecipes);
+allRecipesBtn.forEach(bt => bt.addEventListener("click", showAllRecipes));
+recipesToCkBtn.addEventListener("click", showToCookItems);
 filterBtn.addEventListener("click", filterRecipesOnPage);
 main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
@@ -46,9 +43,9 @@ searchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 function onloadHandler() {
-	user = new User(users[Math.floor(Math.random() * users.length)]);
-	pantry = new Pantry(user);
-	domUpdates.welcomeUser(user, pantry, ingredientsData);
+  user = new User(users[Math.floor(Math.random() * users.length)]);
+  pantry = new Pantry(user);
+  domUpdates.welcomeUser(user, pantry, ingredientsData);
   findTags();
   createCards();
 }
@@ -86,8 +83,8 @@ function createCards() {
     allRecipes.push(currentRecipe);
     if (currentRecipe.name.length > 40) {
       shortRecipeName = currentRecipe.name.substring(0, 40) + "...";
-		}
-		domUpdates.displayRecipeCards(currentRecipe, shortRecipeName);
+    }
+    domUpdates.displayRecipeCards(currentRecipe, shortRecipeName);
   });
 }
 
@@ -113,13 +110,14 @@ function capitalize(words) {
 
 function filterRecipesOnPage() {
   if (document.querySelector('.welcome-msg').style.display !== 'none') {
-    findCheckedBoxes(allRecipes)
+    findCheckedBoxes(allRecipes);
   }
   if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
-    findCheckedBoxes(user.favoriteRecipes)
+    findCheckedBoxes(user.favoriteRecipes);
+	}
+	if (document.querySelector(".to-cook-banner").style.display !== 'none') {
+    findCheckedBoxes(user.recipesToCook);
   }
-  //if banner is cooknext then
-  // findCheckedBoxes(user.recipesToCook)
 }
 
 function findCheckedBoxes(arr) {
@@ -130,9 +128,6 @@ function findCheckedBoxes(arr) {
   })
   findTaggedRecipes(selectedTags, arr);
 }
-
-//Make these dynamic so we can pass in different arrays to filter through
-//Must have a way to indicate what view we are on => banner?
 
 function findTaggedRecipes(selected, arr) {
   let filteredResults = [];
@@ -163,10 +158,10 @@ function showFilteredRecipes(arr) {
       domRecipe.style.display = "none";
     });
     if (arr === user.favoriteRecipes) {
-      showMyRecipesBanner()
-    }
-    // } else {
-    //show toDoList banner
+      showMyRecipesBanner();
+    } else {
+			showToCookBanner();
+		}
   }
 }
 
@@ -186,35 +181,34 @@ function hideUnselectedRecipes(foundRecipes) {
 
 // FAVORITE RECIPE FUNCTIONALITY
 function addToMyRecipes() {
-  if (event.target.className === "recipe-icon-card") {
-    addToRecipes()
-  }
-  if (event.target.className === "card-apple-icon") {
-    let cardId = parseInt(event.target.closest(".recipe-card").id)
-    let card = recipeData.find(recipe => recipe.id === cardId)
-    if (!user.favoriteRecipes.includes(card)) {
-      event.target.src = "../images/apple-logo.png";
-      user.saveRecipe(card, 'favoriteRecipes');
-    } else {
-      event.target.src = "../images/apple-logo-outline.png";
-      user.removeRecipe(card, 'favoriteRecipes');
-    }
-  } else if (event.target.id === "exit-recipe-btn") {
-    exitRecipe();
-  } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
-    openRecipeInfo(event);
+  if (event.target.className === "recipe-icon-card") { addToCookList() }
+  else if (event.target.className === "card-apple-icon") { addToFavorites() }
+  else if (event.target.id === "exit-recipe-btn") { exitRecipe() }
+  else if (event.target.id === "instructions") { openRecipeInfo(event) }
+}
+
+function addToCookList() {
+  let cardId = parseInt(event.target.closest(".recipe-card").id)
+  let card = recipeData.find(recipe => recipe.id === cardId);
+  if (!user.recipesToCook.includes(card)) {
+    event.target.src = "../images/recipeblack.png";
+    user.saveRecipe(card, 'recipesToCook');
+  } else {
+    event.target.src = "../images/recipegreen.png";
+    user.removeRecipe(card, 'recipesToCook');
   }
 }
 
-function isDescendant(parent, child) {
-  let node = child;
-  while (node !== null) {
-    if (node === parent) {
-      return true;
-    }
-    node = node.parentNode;
+function addToFavorites() {
+  let cardId = parseInt(event.target.closest(".recipe-card").id)
+  let card = recipeData.find(recipe => recipe.id === cardId)
+  if (!user.favoriteRecipes.includes(card)) {
+    event.target.src = "../images/apple-logo.png";
+    user.saveRecipe(card, 'favoriteRecipes');
+  } else {
+    event.target.src = "../images/apple-logo-outline.png";
+    user.removeRecipe(card, 'favoriteRecipes');
   }
-  return false;
 }
 
 function showSavedRecipes() {
@@ -232,7 +226,7 @@ function showSavedRecipes() {
 // CREATE RECIPE INSTRUCTIONS
 function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
-  let recipeId = event.path.find(e => e.id).id;
+  let recipeId = parseInt(event.target.closest(".recipe-card").id);
   let clickedRecipe = allRecipes.find(clickedRecipe => clickedRecipe.id === Number(recipeId));
   generateRecipeTitle(clickedRecipe, generateIngredients(clickedRecipe));
   addRecipeImage(clickedRecipe);
@@ -314,39 +308,37 @@ function pressEnterSearch(event) {
 }
 
 function searchRecipes() {
-	const search = searchInput.value.toLowerCase();
-	if (document.querySelector('.welcome-msg').style.display !== 'none') {
-		let results = user.searchForRecipe(search, recipeData);
-		console.log(results);
-		filterNonSearched(results);
+  const search = searchInput.value.toLowerCase();
+  if (document.querySelector('.welcome-msg').style.display !== 'none') {
+    let results = user.searchForRecipe(search, recipeData);
+    console.log(results);
+    filterNonSearched(results);
   }
   if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
-		let results = user.searchForRecipe(search, user.favoriteRecipes);
-		filterNonSearched(results)
+    let results = user.searchForRecipe(search, user.favoriteRecipes);
+    filterNonSearched(results);
+	}
+	if (document.querySelector(".to-cook-banner").style.display !== 'none') {
+    let results = user.searchForRecipe(search, user.recipesToCook);
+    filterNonSearched(results)
   }
-  //if banner is cooknext then
-  // findCheckedBoxes(user.recipesToCook)
-  // filterNonSearched(createRecipeObject(results));
 }
 
 function filterNonSearched(filtered) {
   let found = recipeData.filter(recipe => {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
-	})
+  })
   hideUnsearched(found);
 }
 
 function hideUnsearched(foundRecipes) {
-	showAllRecipes();
+  showAllRecipes();
   foundRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "none";
   });
 }
-// function createRecipeObject(recipes) {
-//   return recipes.map(recipe => new Recipe(recipe));
-// }
 
 function toggleMenu() {
   var menuDropdown = document.querySelector(".drop-menu");
@@ -403,8 +395,8 @@ function createPostForm() {
   displaySearchedIngredients(ingredients)
 }
 
-
 function showToCookItems() {
+  showAllRecipes();
   let unsavedRecipes = recipeData.filter(recipe => {
     return !user.recipesToCook.includes(recipe);
   });
@@ -414,7 +406,6 @@ function showToCookItems() {
   });
   showToCookBanner()
 }
-
 
 document.addEventListener('click', function(e) {
   if(e.target && e.target.id === 'search-ingredients-btn') {
