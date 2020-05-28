@@ -14,20 +14,21 @@ import Recipe from './recipe';
 import Pantry from './pantry';
 import domUpdates from './domUpdates';
 
-let allRecipesBtn = document.querySelector(".show-all-btn");
+let allRecipesBtn = document.querySelectorAll(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
 let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
+let recipesToCkBtn = document.querySelector(".saved-recipes-to-cook");
 let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
-document.addEventListener('click', function (event) {
-  if (event.target.src.includes('/images/recipe.png')) {
-    showToCookItems()
-  }
-})
+// document.addEventListener('click', function (event) {
+//   if (event.target.src.includes('/images/recipe.png')) {
+//     showToCookItems()
+//   }
+// })
 
 let users;
 let recipeData;
@@ -37,7 +38,8 @@ let pantry;
 let allRecipes = [];
 let menuOpen = false;
 
-allRecipesBtn.addEventListener("click", showAllRecipes);
+allRecipesBtn.forEach(bt => bt.addEventListener("click", showAllRecipes));
+recipesToCkBtn.addEventListener("click", showToCookItems);
 filterBtn.addEventListener("click", filterRecipesOnPage);
 main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
@@ -405,6 +407,7 @@ function createPostForm() {
 
 
 function showToCookItems() {
+	showAllRecipes();
   let unsavedRecipes = recipeData.filter(recipe => {
     return !user.recipesToCook.includes(recipe);
   });
