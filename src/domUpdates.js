@@ -31,13 +31,13 @@ let domUpdates = {
       <div class="card-photo-container">
         <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
         <div class="text">
-          <div>Click for Instructions</div>
+          <div id="instructions">Click for Instructions</div>
         </div>
 			</div>
       <div>${tagsToList}</div>
       <div class="button-holder">
-      <img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
-      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      	<img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
+      	<img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </div>
     </div>`
   	main.insertAdjacentHTML("beforeend", cardHtml);

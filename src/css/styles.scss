@@ -170,13 +170,8 @@ recipe-icon {
 .recipe-icon-card {
   height: 50px;
   width: 50px;
-  bottom: 10px;
+  bottom: 7px;
   position: absolute;
-}
-
-.recipe-icon-card:hover {
-  transition: .4s ease;
-  bottom: 20px;
 }
 
 .button-holder {
