@@ -29,6 +29,11 @@ let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let recipeIcon = document.querySelector('.recipe-icon')
+document.addEventListener('click', function (event) {
+  if (event.target.src.includes('/images/recipe.png')) {
+    showToCookItems()
+  }
+})
 
 let users;
 let recipeData;
@@ -47,7 +52,6 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
-recipeIcon.addEventListener('submit', showToCookBanner)
 
 const onloadHandler = () => {
   generateUser();
@@ -359,31 +363,11 @@ function showMyRecipesBanner() {
   document.querySelector(".my-recipes-banner").style.display = "block";
 }
 
-document.addEventListener('click', function(event) {
-  if (event.target.src.includes('/images/recipe.png')) {
-    showToCookItems()
-
-  }
-})
-
 function showToCookBanner() {
-  console.log('is this working')
   document.querySelector(".my-recipes-banner").style.display = "none";
   document.querySelector('.welcome-msg').style.display = 'none';
   document.querySelector('.to-cook-banner').style.display = 'block'
 }
-
-function showToCookItems() {
-  let unsavedRecipes = recipeData.filter(recipe => {
-    return !user.recipesToCook.includes(recipe);
-  });
-  unsavedRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
-  });
-  showToCookBanner()
-  }
-
 
 function showWelcomeBanner() {
   document.querySelector('.to-cook-banner').style.display = 'none';
@@ -474,6 +458,17 @@ function filterRecipeByIngred(selected) {
     const domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "none";
   });
+}
+
+function showToCookItems() {
+  let unsavedRecipes = recipeData.filter(recipe => {
+    return !user.recipesToCook.includes(recipe);
+  });
+  unsavedRecipes.forEach(recipe => {
+    let domRecipe = document.getElementById(`${recipe.id}`);
+    domRecipe.style.display = "none";
+  });
+  showToCookBanner()
 }
 
 function addToRecipes() {
