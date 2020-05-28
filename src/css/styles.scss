@@ -208,20 +208,31 @@ recipe-icon {
 }
 
 .my-recipes-banner,
-.welcome-msg {
+.welcome-msg,
+.to-cook-banner {
   text-align: center;
   width: 95%;
 }
 
 .my-recipes-banner h1,
+.to-cook-banner h1,
 .welcome-msg h1 {
   color: white;
   width: 100%;
 }
 
-.my-recipes-banner {
+.my-recipes-banner,
+.to-cook-banner  {
   display: none;
   margin-top: 25px;
+  
+}
+
+.home-button {
+  display: inline-block;
+  align-self: center;
+  right: 522px;
+  bottom: 436px;
 }
 
 .welcome-msg {
@@ -361,8 +372,6 @@ main {
 #modify-pantry-btn {
   margin-top: 10px;
 }
-
-
 
 .show-all-btn {
   height: 40px;

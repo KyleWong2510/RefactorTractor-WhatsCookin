@@ -23,6 +23,11 @@ let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
+document.addEventListener('click', function (event) {
+  if (event.target.src.includes('/images/recipe.png')) {
+    showToCookItems()
+  }
+})
 
 let users;
 let recipeData;
@@ -285,13 +290,21 @@ function exitRecipe() {
 
 // TOGGLE DISPLAYS
 function showMyRecipesBanner() {
+  document.querySelector('.to-cook-banner').style.display = 'none';
   document.querySelector(".welcome-msg").style.display = "none";
   document.querySelector(".my-recipes-banner").style.display = "block";
 }
 
-function showWelcomeBanner() {
-  document.querySelector(".welcome-msg").style.display = "flex";
+function showToCookBanner() {
   document.querySelector(".my-recipes-banner").style.display = "none";
+  document.querySelector('.welcome-msg').style.display = 'none';
+  document.querySelector('.to-cook-banner').style.display = 'block'
+}
+
+function showWelcomeBanner() {
+  document.querySelector('.to-cook-banner').style.display = 'none';
+  document.querySelector(".my-recipes-banner").style.display = "none";
+  document.querySelector(".welcome-msg").style.display = "flex";
 }
 
 // SEARCH RECIPES
@@ -390,6 +403,19 @@ function createPostForm() {
   displaySearchedIngredients(ingredients)
 }
 
+
+function showToCookItems() {
+  let unsavedRecipes = recipeData.filter(recipe => {
+    return !user.recipesToCook.includes(recipe);
+  });
+  unsavedRecipes.forEach(recipe => {
+    let domRecipe = document.getElementById(`${recipe.id}`);
+    domRecipe.style.display = "none";
+  });
+  showToCookBanner()
+}
+
+
 document.addEventListener('click', function(e) {
   if(e.target && e.target.id === 'search-ingredients-btn') {
     createPostForm()
@@ -428,6 +454,7 @@ function adjustPantry(ingredID, ingredMod) {
 
 document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
 document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
+
 
 function addToRecipes() {
   const cardId = event.target.parentNode.parentNode.id
