@@ -143,12 +143,17 @@ function filterNonSearched(filtered) {
 }
 
 //POST FORM FUNCTIONALITY
-function togglePostForm() {
-  document.getElementById('post-to-pantry').classList.toggle('hide')
+function hidePostForm() {
+  document.getElementById('post-to-pantry').style.display = 'none'
+  document.getElementById('')
 }
 
-document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
-document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
+function showPostForm() {
+  document.getElementById('post-to-pantry').style.display = 'flex'
+}
+
+document.getElementById('save-changes-btn').addEventListener('click', hidePostForm)
+document.getElementById('modify-pantry-btn').addEventListener('click', showPostForm)
 
 document.addEventListener('click', function(e) {
   if (e.target && e.target.classList.contains('search-ingredients-btn')) {
@@ -158,7 +163,7 @@ document.addEventListener('click', function(e) {
 
 document.addEventListener('click', function(e) {
   if (e.target && e.target.id === 'save-changes-btn') {
-    let amounts = Array.from(document.querySelectorAll('#amount'))
+    let amounts = Array.from(document.querySelectorAll('.amount'))
     amounts.forEach(amount => {
       if (amount.value && amount.value !== 0) {
         let ingredID = amount.parentNode.parentNode.id
