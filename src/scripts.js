@@ -35,6 +35,7 @@ let menuOpen = false;
 
 window.addEventListener("load", fetchData);
 
+
 allRecipesBtn.forEach(bt => bt.addEventListener("click", () => {domUpdates.showAllRecipes(allRecipes)}));
 recipesToCkBtn.addEventListener("click", showToCookItems);
 filterBtn.addEventListener("click", () => {domUpdates.filterRecipesOnPage(allRecipes, user)});
