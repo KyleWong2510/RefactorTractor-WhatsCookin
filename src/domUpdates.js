@@ -1,7 +1,7 @@
 let domUpdates = {
 	welcomeUser(user, pantry, ingredientsData) {
 		let firstName = user.name.split(" ")[0];
-<<<<<<< HEAD
+
     let welcomeMsg = `
 		<div class="welcome-msg">
 		<h1>Welcome ${firstName}!</h1>
@@ -9,7 +9,6 @@ let domUpdates = {
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
 		welcomeMsg);
 		
-=======
 		let welcomeMsg = `
 		<div class="welcome-msg">
 		<h1>Welcome ${firstName}!</h1>
@@ -17,7 +16,7 @@ let domUpdates = {
 		document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
 			welcomeMsg);
 
->>>>>>> 9393326249c51421b03532c7521ccd5bfb24a7e3
+
 		this.displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name), ingredientsData);
 	},
 
@@ -43,6 +42,7 @@ let domUpdates = {
         <div class="text">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <div>Click for Instructions</div>
 =======
           <div id="instructions">Click for Instructions</div>
@@ -50,14 +50,22 @@ let domUpdates = {
 =======
           <div id="instructions">Click for Instructions</div>
 >>>>>>> 9393326249c51421b03532c7521ccd5bfb24a7e3
+=======
+          <div id="instructions">Click for Instructions</div>
+>>>>>>> master
         </div>
 			</div>
       <div>${tagsToList}</div>
       <div class="button-holder">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+=======
+      	<img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
+      	<img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+>>>>>>> master
 =======
       	<img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
       	<img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
@@ -67,6 +75,7 @@ let domUpdates = {
   	main.insertAdjacentHTML("beforeend", cardHtml);
 	},
 	listTags(allTags) {
+<<<<<<< HEAD
 =======
       	<img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
       	<img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
@@ -78,6 +87,8 @@ let domUpdates = {
 	listTags(allTags) {
 		console
 >>>>>>> 9393326249c51421b03532c7521ccd5bfb24a7e3
+=======
+>>>>>>> master
 		let tagList = document.querySelector(".tag-list");
 		allTags.forEach(tag => {
 			let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
@@ -85,18 +96,21 @@ let domUpdates = {
 			tagList.insertAdjacentHTML("beforeend", tagHtml);
 		})
 	},
-<<<<<<< HEAD
-=======
 
->>>>>>> 9393326249c51421b03532c7521ccd5bfb24a7e3
+
+
+
+
+
 	capitalize(words) {
 		return words.split(" ").map(word => {
 			return word.charAt(0).toUpperCase() + word.slice(1);
 		}).join(" ");
-<<<<<<< HEAD
+
+
 	}
 
-=======
+
 	},
 
 	//Changes as of 5/28
@@ -315,12 +329,7 @@ let domUpdates = {
 		}
 	}
 
-
-
-
-
-
->>>>>>> 9393326249c51421b03532c7521ccd5bfb24a7e3
+	}
 }
 
 export default domUpdates;
