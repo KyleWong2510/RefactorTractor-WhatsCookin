@@ -145,7 +145,8 @@ function filterNonSearched(filtered) {
 //POST FORM FUNCTIONALITY
 function hidePostForm() {
   document.getElementById('post-to-pantry').style.display = 'none'
-  document.getElementById('')
+  document.getElementById('searched-ingredient-results').innerHTML = ''
+  // document.getElementById('search-ingredients-input').value = ''
 }
 
 function showPostForm() {
@@ -458,4 +459,3 @@ function toggleMenu() {
 //       </div>
 //     `)
 //   })
-// }

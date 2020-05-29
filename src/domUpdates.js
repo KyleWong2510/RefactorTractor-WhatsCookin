@@ -12,6 +12,7 @@ let domUpdates = {
   },
 
   displayPantryInfo(pantry, ingredientsData) {
+		console.log('pantry')
     pantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
@@ -311,9 +312,7 @@ let domUpdates = {
 	},
 
 	addIngredientCount(e) {
-		let amount = e.target.previousSibling.previousSibling
-		console.log('amt', amount);
-		
+		let amount = e.target.previousSibling.previousSibling		
 		amount.value++
 	}
 }
