@@ -1,5 +1,14 @@
+$green: #84C8A4;
+$greyblue: #5B7894;
+$forest-green: #359567;
+$light-green: #C4EB67;
+$grey: #475d74;
+$searchbg: #b6dcca;
+$shadow: #5c7894;
+
+
 body {
-  background-color: #5B7894;
+  background-color: $greyblue;
   display: grid;
   font-family: "Quicksand", sans-serif;
   grid-template-columns: 1fr 5fr;
@@ -24,12 +33,12 @@ h1 {
 }
 
 h2 {
-  color: #84C8A4;
+  color: $green;
   margin: 10px 0px 10px 0px;
 }
 
 h3 {
-  color: #359567;
+  color: $forest-green;
   cursor: pointer;
   height: 17%;
   margin: 5px 5px 10px 0px;
@@ -37,8 +46,8 @@ h3 {
 }
 
 h4 {
-  color: #359567;
-  background-color: #C4EB67;
+  color: $forest-green;
+  background-color: $light-green;
   border-radius: 3px;
   margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
@@ -57,7 +66,7 @@ header {
 }
 
 span {
-  color: #C4EB67;
+  color: $light-green;
   font-weight: 400;
 }
 
@@ -69,8 +78,8 @@ span {
 
 #search {
   border-radius: 15px 15px 15px 15px;
-  border: 3px outset #C4EB67;
-  box-shadow: 0px 0px 7px 0px #475d74;
+  border: 3px outset $light-green;
+  box-shadow: 0px 0px 7px 0px $grey;
   display: flex;
   flex-direction: row;
   font-family: "Quicksand", sans-serif;
@@ -80,12 +89,12 @@ span {
 }
 
 #search-input {
-  background-color: #b6dcca;
+  background-color: $searchbg;
   background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(255, 255, 255)), color-stop(1, rgb(225,225,225)));
   border-radius: 10px 0px 0px 10px;
   border: none;
-  box-shadow: inset -3px -1px 20px 1px #5c7894;
-  color: #5B7894;
+  box-shadow: inset -3px -1px 20px 1px $shadow;
+  color: $greyblue;
   font-family: "Quicksand", sans-serif;
   font-size: 42px;
   height: 100%;
@@ -94,27 +103,23 @@ span {
   text-align: right;
   transition: .8s ease;
   width: 100%;
-}
-
-#search-input:hover {
-  box-shadow: inset 0px 0px 0px 0px white;
-  transition: .8s ease;
-}
-
-#search-input:focus {
-  box-shadow: inset 0px 0px 0px 0px white;
-}
-
-#search-input::placeholder {
-  color: #5B7894;
-  font-size: 20px;
-  text-align: right;
-  text-shadow: none;
-}
-
-#search-input:focus::placeholder {
-  font-size: 0px;
-  transition: .8s ease;
+  &:hover {
+    box-shadow: inset 0px 0px 0px 0px white;
+    transition: .8s ease;
+  }
+  &:focus {
+    box-shadow: inset 0px 0px 0px 0px white;
+  }
+  &::placeholder {
+    color: $greyblue;
+    font-size: 20px;
+    text-align: right;
+    text-shadow: none;
+  }
+  &:focus::placeholder {
+    font-size: 0px;
+    transition: .8s ease;
+  }
 }
 
 .search-label {
@@ -122,7 +127,7 @@ span {
 }
 
 .search-btn {
-  border-left: 3px outset #C4EB67;
+  border-left: 3px outset $light-green;
   border-radius: 0px 15px 15px 0px;
   padding: 1%;
 }
@@ -143,15 +148,13 @@ span {
   text-align: center;
   transition: .4s ease;
   width: 15%;
+  &:hover {
+    color: $light-green;
+    font-size: 14px;
+    text-shadow: 0px 2px 4px black;
+    transition: .4s ease;
+  }
 }
-
-.nav-btn:hover {
-  color: #C4EB67;
-  font-size: 14px;
-  text-shadow: 0px 2px 4px black;
-  transition: .4s ease;
-}
-
 .nav-btn img {
    max-height: 50px;
    max-width: 50px;
@@ -159,10 +162,10 @@ span {
 }
 
 .saved-ingredients-btn {
-  border-left: 3px solid #C4EB67;
+  border-left: 3px solid $light-green;
 }
 
-recipe-icon {
+.recipe-icon {
   height: 50px;
   width: auto;
 }
@@ -172,6 +175,12 @@ recipe-icon {
   width: 50px;
   bottom: 7px;
   position: absolute;
+  z-index: 1;
+  &:hover {
+    transition: .4s ease;
+    bottom: 20px;
+    z-index: 1;
+  }
 }
 
 .button-holder {
@@ -188,10 +197,9 @@ recipe-icon {
 }
 
 .saved-recipes-to-cook {
-  border-left: 3px solid #C4EB67;
+  border-left: 3px solid $light-green;
   padding: 1px 6px 5px 0px;
 }
-
 
 /* BANNER IMAGE*/
 .banner-image {
@@ -220,7 +228,6 @@ recipe-icon {
 .to-cook-banner  {
   display: none;
   margin-top: 25px;
-  
 }
 
 .home-button {
@@ -233,7 +240,6 @@ recipe-icon {
 .welcome-msg {
   margin-top: 50px;
 }
-
 
 /* FILTER SIDEBAR */
 aside {
@@ -275,7 +281,7 @@ main {
 
 .recipe-card {
   background-color: white;
-  border: 2px solid #C4EB67;
+  border: 2px solid $light-green;
   border-radius: 7px;
   cursor: pointer;
 	height: 329px;
@@ -283,23 +289,20 @@ main {
   padding: 15px;
 	width: 250px;
 	position: relative;
-}
-
-.recipe-card:hover .card-photo-preview {
-  opacity: 50%;
-  transition: .8s ease;
-}
-
-.recipe-card:hover .text {
-  font-size: 20px;
-  opacity: 100%;
-  transition: .5s ease;
-  width: 100%;
-}
-
-.recipe-card:hover h3 {
-  text-shadow: 0px 0px 4px #C4EB67;
-  transition: .8s ease;
+  &:hover .card-photo-preview {
+    opacity: 50%;
+    transition: .8s ease;
+  }
+  &:hover .text {
+    font-size: 20px;
+    opacity: 100%;
+    transition: .5s ease;
+    width: 100%;
+  }
+  &:hover h3 {
+    text-shadow: 0px 0px 4px $light-green;
+    transition: .8s ease;
+  }
 }
 
 .card-apple-icon {
@@ -334,7 +337,7 @@ main {
 }
 
 .text {
-  background: #359567;
+  background: $forest-green;
   color: white;
   font-weight: 700;
   font-size: 0px;
@@ -346,13 +349,12 @@ main {
   transition: .5s ease;
 }
 
-
 /* BUTTONS */
 .show-pantry-recipes-btn,
 .show-all-btn,
 #modify-pantry-btn,
 .filter-btn {
-  background-color: #359567;
+  background-color: $forest-green;
   border: 0;
   border-radius: 3px;
   color: white;
@@ -375,9 +377,8 @@ main {
 }
 
 .filter-btn:hover {
-  background-color: #84C8A4;
+  background-color: $green;
 }
-
 
 /* PANTRY LIST */
 .drop-menu {
@@ -393,24 +394,21 @@ main {
   text-align: center;
   width: 250px;
   z-index: 3;
+  & h2 {
+    color: $forest-green;
+    margin: 0px;
+  }
 }
-
-.drop-menu h2 {
-  color: #359567;
-  margin: 0px;
-}
-
 .pantry-list {
   color: #000000;
   padding-left: 15px;
   text-align: left;
 }
 
-
 /* RECIPE INSTRUCTIONS */
 .recipe-instructions {
   background: white;
-  border: 3px solid #C4EB67;
+  border: 3px solid $light-green;
   border-radius: 10px;
   box-shadow: 1px 1px 115px black;
   display: none;
@@ -427,20 +425,19 @@ main {
 
 #exit-recipe-btn {
   background: white;
-  border: 2px double #359567;
+  border: 2px double $forest-green;
   border-radius: 5px;
-  color: #359567;
+  color: $forest-green;
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;
   margin: -4% -3% 2% -1%;
   position: fixed;
   transition: .3s ease;
-}
-
-#exit-recipe-btn:hover {
-  background: #C4EB67;
-  transition: .3s ease;
+  &:hover {
+    background: $light-green;
+    transition: .3s ease;
+  }
 }
 
 #recipe-title {
@@ -457,7 +454,7 @@ main {
 
 .recipe-instructions h4 {
   background: white;
-  color: #359567;
+  color: $forest-green;
 }
 
 .recipe-instructions p {
@@ -470,7 +467,7 @@ main {
 
 #overlay {
   filter:alpha(opacity=50);
-  background-color: #5B7894;
+  background-color: $greyblue;
   height:100%;
   left:0;
   opacity:0.5;
@@ -482,7 +479,7 @@ main {
 
 #post-to-pantry {
   background: white;
-  border: 3px solid #C4EB67;
+  border: 3px solid $light-green;
   border-radius: 10px;
   box-shadow: 1px 1px 115px black;
   height: 70%;

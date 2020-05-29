@@ -5,9 +5,9 @@ import './images/apple-logo-outline.png';
 import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
-import './images/recipe.png'
-import './images/recipegreen.png'
-import './images/recipeblack.png'
+import './images/recipe.png';
+import './images/recipegreen.png';
+import './images/recipeblack.png';
 
 import User from './user';
 import Recipe from './recipe';
@@ -36,7 +36,7 @@ let menuOpen = false;
 window.addEventListener("load", fetchData);
 allRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)));
 savedRecipesBtn.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user));
-recipesToCkBtn.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user) );
+recipesToCkBtn.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user));
 filterBtn.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user));
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
 pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
@@ -55,11 +55,11 @@ function fetchData() {
   users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
-	
+
   ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
-	
+
   recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
@@ -117,8 +117,8 @@ function searchRecipes() {
   if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
     let results = user.searchForRecipe(search, user.favoriteRecipes);
     filterNonSearched(results);
-	}
-	if (document.querySelector(".to-cook-banner").style.display !== 'none') {
+  }
+  if (document.querySelector(".to-cook-banner").style.display !== 'none') {
     let results = user.searchForRecipe(search, user.recipesToCook);
     filterNonSearched(results)
   }
@@ -140,13 +140,13 @@ function togglePostForm() {
 document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
 document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
   if (e.target && e.target.id === 'search-ingredients-btn') {
     createPostForm()
   }
 })
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
   if (e.target && e.target.id === 'save-changes-btn') {
     let amounts = Array.from(document.querySelectorAll('#amount'))
     amounts.forEach(amount => {
@@ -165,7 +165,7 @@ function createPostForm() {
 }
 
 function searchPantry() {
-	const searchIngredientsInput = document.getElementById('search-ingredients-input')
+  const searchIngredientsInput = document.getElementById('search-ingredients-input')
   const search = searchIngredientsInput.value.toLowerCase();
   return ingredientsData.filter(ingred => ingred.name).filter(ingred => ingred.name.includes(search))
 }
@@ -337,7 +337,7 @@ function adjustPantry(ingredID, ingredMod) {
 //   const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
 //   const ownedIngreds = pantry.checkPantry(clickedRecipe, ingredientsData);
 //   const missingIngreds = pantry.findIngredsMissing(clickedRecipe, ingredientsData);
-	
+
 //   let recipeTitle = `
 //     <button id="exit-recipe-btn">X</button>
 //     <h3 id="recipe-title">${clickedRecipe.name}</h3>
