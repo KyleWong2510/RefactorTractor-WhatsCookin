@@ -141,13 +141,13 @@ document.getElementById('save-changes-btn').addEventListener('click', togglePost
 document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
 
 document.addEventListener('click', function(e) {
-  if(e.target && e.target.id === 'search-ingredients-btn') {
+  if (e.target && e.target.id === 'search-ingredients-btn') {
     createPostForm()
   }
 })
 
 document.addEventListener('click', function(e) {
-  if(e.target && e.target.id === 'save-changes-btn') {
+  if (e.target && e.target.id === 'save-changes-btn') {
     let amounts = Array.from(document.querySelectorAll('#amount'))
     amounts.forEach(amount => {
       if (amount.value && amount.value !== 0) {
