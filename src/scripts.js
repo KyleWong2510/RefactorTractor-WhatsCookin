@@ -39,7 +39,10 @@ allRecipesBtn.forEach(bt => bt.addEventListener("click", () => {domUpdates.showA
 recipesToCkBtn.addEventListener("click", showToCookItems);
 filterBtn.addEventListener("click", () => {domUpdates.filterRecipesOnPage(allRecipes, user)});
 main.addEventListener("click", () => {domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry)});
-pantryBtn.addEventListener("click", () => {domUpdates.toggleMenu(menuOpen)});
+// pantryBtn.addEventListener("click", () => {domUpdates.toggleMenu(menuOpen)});
+
+pantryBtn.addEventListener("click", toggleMenu);
+
 savedRecipesBtn.addEventListener("click", () => {domUpdates.showSavedRecipes(allRecipes, recipeData, user)});
 searchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
@@ -343,15 +346,15 @@ function filterNonSearched(filtered) {
 //   });
 // }
 
-// function toggleMenu() {
-//   var menuDropdown = document.querySelector(".drop-menu");
-//   menuOpen = !menuOpen;
-//   if (menuOpen) {
-//     menuDropdown.style.display = "block";
-//   } else {
-//     menuDropdown.style.display = "none";
-//   }
-// }
+function toggleMenu() {
+  var menuDropdown = document.querySelector(".drop-menu");
+  menuOpen = !menuOpen;
+  if (menuOpen) {
+    menuDropdown.style.display = "block";
+  } else {
+    menuDropdown.style.display = "none";
+  }
+}
 
 // function showAllRecipes() {
 //   allRecipes.forEach(recipe => {
