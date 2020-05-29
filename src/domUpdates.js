@@ -74,14 +74,14 @@ let domUpdates = {
 	},
 
 	listTags(allTags) {
-		console
->>>>>>> 9393326249c51421b03532c7521ccd5bfb24a7e3
-=======
->>>>>>> master
+
+
+
+
 		let tagList = document.querySelector(".tag-list");
 		allTags.forEach(tag => {
 			let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-=======
+
     main.insertAdjacentHTML("beforeend", cardHtml);
   },
 
