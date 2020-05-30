@@ -39,9 +39,20 @@ savedRecipesBtn.addEventListener("click", () => domUpdates.showSavedRecipes(allR
 recipesToCkBtn.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user));
 filterBtn.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user));
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
-pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
+// pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
+pantryBtn.addEventListener("click", toggleMenu);
+
 searchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
+
+document.addEventListener('click', function(e) {
+  if (e.target && e.target.id === 'minus') {
+    domUpdates.subtractIngredientCount(e)
+  }
+  if (e.target && e.target.id === 'plus') {
+    domUpdates.addIngredientCount(e)
+  }
+})
 
 function onloadHandler() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
@@ -111,7 +122,6 @@ function searchRecipes() {
   const search = searchInput.value.toLowerCase();
   if (document.querySelector('.welcome-msg').style.display !== 'none') {
     let results = user.searchForRecipe(search, recipeData);
-    console.log(results);
     filterNonSearched(results);
   }
   if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
@@ -133,22 +143,28 @@ function filterNonSearched(filtered) {
 }
 
 //POST FORM FUNCTIONALITY
-function togglePostForm() {
-  document.getElementById('post-to-pantry').classList.toggle('hide')
+function hidePostForm() {
+  document.getElementById('post-to-pantry').style.display = 'none'
+  document.getElementById('searched-ingredient-results').innerHTML = ''
+  document.getElementById('search-ingredients-input').value = ''
 }
 
-document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
-document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
+function showPostForm() {
+  document.getElementById('post-to-pantry').style.display = 'flex'
+}
 
-document.addEventListener('click', function (e) {
-  if (e.target && e.target.id === 'search-ingredients-btn') {
+document.getElementById('save-changes-btn').addEventListener('click', hidePostForm)
+document.getElementById('modify-pantry-btn').addEventListener('click', showPostForm)
+
+document.addEventListener('click', function(e) {
+  if (e.target && e.target.classList.contains('search-ingredients-btn')) {
     createPostForm()
   }
 })
 
 document.addEventListener('click', function (e) {
   if (e.target && e.target.id === 'save-changes-btn') {
-    let amounts = Array.from(document.querySelectorAll('#amount'))
+    let amounts = Array.from(document.querySelectorAll('.amount'))
     amounts.forEach(amount => {
       if (amount.value && amount.value !== 0) {
         let ingredID = amount.parentNode.parentNode.id
@@ -408,15 +424,15 @@ function adjustPantry(ingredID, ingredMod) {
 //   });
 // }
 
-// function toggleMenu() {
-//   var menuDropdown = document.querySelector(".drop-menu");
-//   menuOpen = !menuOpen;
-//   if (menuOpen) {
-//     menuDropdown.style.display = "block";
-//   } else {
-//     menuDropdown.style.display = "none";
-//   }
-// }
+function toggleMenu() {
+  var menuDropdown = document.querySelector(".drop-menu");
+  menuOpen = !menuOpen;
+  if (menuOpen) {
+    menuDropdown.style.display = "block";
+  } else {
+    menuDropdown.style.display = "none";
+  }
+}
 
 // function showAllRecipes() {
 //   allRecipes.forEach(recipe => {
@@ -442,4 +458,3 @@ function adjustPantry(ingredID, ingredMod) {
 //       </div>
 //     `)
 //   })
-// }

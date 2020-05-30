@@ -12,6 +12,7 @@ let domUpdates = {
   },
 
   displayPantryInfo(pantry, ingredientsData) {
+		console.log('pantry')
     pantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
@@ -302,18 +303,24 @@ let domUpdates = {
 				<div class="searched-ingredient" id="${ingred.id}">
 					<div id="add-subtract">
 						<button id="minus">-</button>
-						<input id="amount" placeholder="0">
+						<input class="amount" placeholder="value..." value=0>
 						<button id="plus">+</button>
 					</div>
-					<p>${ingred.name}</p>
+					<p id="ingred-name">${ingred.name}</p>
 				</div>
 			`)
-    })
-  }
+		})
+	},
+	
+	subtractIngredientCount(e) {
+		let amount = e.target.nextSibling.nextSibling
+		amount.value--
+	},
 
-
-
-
+	addIngredientCount(e) {
+		let amount = e.target.previousSibling.previousSibling		
+		amount.value++
+	}
 }
 
 export default domUpdates;
