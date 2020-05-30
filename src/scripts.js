@@ -39,12 +39,13 @@ savedRecipesBtn.addEventListener("click", () => domUpdates.showSavedRecipes(allR
 recipesToCkBtn.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user) );
 filterBtn.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user));
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
-pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
+// pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
+pantryBtn.addEventListener("click", toggleMenu);
+
 searchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 document.addEventListener('click', function(e) {
-  console.log(event.target)
   if (e.target && e.target.id === 'minus') {
     domUpdates.subtractIngredientCount(e)
   }
@@ -121,7 +122,6 @@ function searchRecipes() {
   const search = searchInput.value.toLowerCase();
   if (document.querySelector('.welcome-msg').style.display !== 'none') {
     let results = user.searchForRecipe(search, recipeData);
-    console.log(results);
     filterNonSearched(results);
   }
   if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
@@ -146,7 +146,7 @@ function filterNonSearched(filtered) {
 function hidePostForm() {
   document.getElementById('post-to-pantry').style.display = 'none'
   document.getElementById('searched-ingredient-results').innerHTML = ''
-  // document.getElementById('search-ingredients-input').value = ''
+  document.getElementById('search-ingredients-input').value = ''
 }
 
 function showPostForm() {
@@ -176,7 +176,6 @@ document.addEventListener('click', function(e) {
 })
 
 function createPostForm() {
-  console.log('hi')
   let ingredients = searchPantry()
   domUpdates.displaySearchedIngreds(ingredients)
 }
