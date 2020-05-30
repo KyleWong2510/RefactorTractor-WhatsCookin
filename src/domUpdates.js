@@ -25,6 +25,7 @@ let domUpdates = {
     let main = document.querySelector("main");
     let tagsToList = currentRecipe.tags.map(tag => `<h4>${tag}</h4>`);
 
+    // Div id 'instructions' could be changed to improve aria score.
     let cardHtml = `
     <div class="recipe-card" id=${currentRecipe.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>

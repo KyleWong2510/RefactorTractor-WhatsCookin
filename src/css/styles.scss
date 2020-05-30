@@ -5,6 +5,7 @@ $light-green: #C4EB67;
 $grey: #475d74;
 $searchbg: #b6dcca;
 $shadow: #5c7894;
+$lighthouse-blue: #8c84c8;
 
 
 body {
@@ -46,15 +47,18 @@ h3 {
 }
 
 h4 {
-  color: $forest-green;
+  color: #353795;
   background-color: $light-green;
   border-radius: 3px;
   margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
 	width: max-content;
-	display: inline-block
+	display: inline-block;
 }
 
+li {
+  color: black;
+}
 
 /* HEADER */
 header {
@@ -124,6 +128,10 @@ span {
 
 .search-label {
   display: none;
+}
+
+.recipe-type {
+  color: $lighthouse-blue;
 }
 
 .search-btn {
@@ -328,12 +336,16 @@ main {
   width: 100%;
 }
 
+
 .card-photo-container {
   align-items: center;
   display: flex;
   height: 130px;
   justify-content: center;
   position: relative;
+}
+img {
+  
 }
 
 .text {
@@ -357,7 +369,7 @@ main {
   background-color: $forest-green;
   border: 0;
   border-radius: 3px;
-  color: white;
+  color: black;
   cursor: pointer;
   font-family: "Quicksand", sans-serif;
   font-size: 12pt;
