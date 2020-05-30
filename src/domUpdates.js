@@ -26,13 +26,14 @@ let domUpdates = {
     let main = document.querySelector("main");
     let tagsToList = currentRecipe.tags.map(tag => `<h4>${tag}</h4>`);
 
+    // Div id 'instructions' could be changed to improve aria score.
     let cardHtml = `
     <div class="recipe-card" id=${currentRecipe.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
       <div class="card-photo-container">
         <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
         <div class="text">
-          <div id="instructions">Click for Instructions</div>
+          <div class="instructions">Click for Instructions</div>
         </div>
 			</div>
       <div>${tagsToList}</div>
@@ -64,13 +65,13 @@ let domUpdates = {
   filterRecipesOnPage(allRecipes, user, recipeData) {
     if (document.querySelector('.welcome-msg').style.display !== 'none') {
       this.findCheckedBoxes(allRecipes, allRecipes, recipeData, user)
-    };
+    }
     if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
       this.findCheckedBoxes(user.favoriteRecipes, allRecipes, recipeData, user)
-    };
+    }
     if (document.querySelector(".to-cook-banner").style.display !== 'none') {
       this.findCheckedBoxes(user.recipesToCook, allRecipes, recipeData, user);
-    };
+    }
   },
 
   //not really dom updates...how can this live in scripts?
@@ -169,19 +170,19 @@ let domUpdates = {
       domRecipe.style.display = "none";
     });
     this.showMyRecipesBanner();
-	},
-	
-	showToCookItems(allRecipes, recipeData, user) {
-		domUpdates.showAllRecipes(allRecipes);
-		let unsavedRecipes = recipeData.filter(recipe => {
-			return !user.recipesToCook.includes(recipe);
-		});
-		unsavedRecipes.forEach(recipe => {
-			let domRecipe = document.getElementById(`${recipe.id}`);
-			domRecipe.style.display = "none";
-		});
-		domUpdates.showToCookBanner()
-	},
+  },
+
+  showToCookItems(allRecipes, recipeData, user) {
+    domUpdates.showAllRecipes(allRecipes);
+    let unsavedRecipes = recipeData.filter(recipe => {
+      return !user.recipesToCook.includes(recipe);
+    });
+    unsavedRecipes.forEach(recipe => {
+      let domRecipe = document.getElementById(`${recipe.id}`);
+      domRecipe.style.display = "none";
+    });
+    domUpdates.showToCookBanner()
+  },
 
   openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
     fullRecipeInfo.style.display = "inline";
@@ -197,7 +198,7 @@ let domUpdates = {
     const ingredCost = clickedRecipe.calculateIngredCost(ingredientsData);
     const ownedIngreds = pantry.checkPantry(clickedRecipe, ingredientsData);
     const missingIngreds = pantry.findIngredsMissing(clickedRecipe, ingredientsData);
-		
+
     let recipeTitle = `
 			<button id="exit-recipe-btn">X</button>
 			<h3 id="recipe-title">${clickedRecipe.name}</h3>
@@ -214,7 +215,7 @@ let domUpdates = {
 
   generateIngredients(clickedRecipe, ingredientsData) {
     return clickedRecipe && clickedRecipe.ingredients.map(i => {
-      let foundIngredient = ingredientsData.find(ingredient => 
+      let foundIngredient = ingredientsData.find(ingredient =>
         ingredient.id === i.id).name;
       return `${this.capitalize(foundIngredient)} (${i.quantity.amount} ${i.quantity.unit})`
     }).join(", ");
@@ -230,10 +231,15 @@ let domUpdates = {
   },
 
   addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
-    if (event.target.className === "recipe-icon-card") { this.addToCookList(recipeData, user) }
-    else if (event.target.className === "card-apple-icon") { this.addToFavorites(recipeData, user) }
-    else if (event.target.id === "exit-recipe-btn") { this.exitRecipe(fullRecipeInfo) }
-    else if (event.target.id === "instructions") { this.openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) }
+    if (event.target.className === "recipe-icon-card") {
+      this.addToCookList(recipeData, user)
+    } else if (event.target.className === "card-apple-icon") {
+      this.addToFavorites(recipeData, user)
+    } else if (event.target.id === "exit-recipe-btn") {
+      this.exitRecipe(fullRecipeInfo)
+    } else if (event.target.className === "instructions") {
+      this.openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry)
+    }
   },
   // openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
 
@@ -249,7 +255,7 @@ let domUpdates = {
       user.removeRecipe(card, 'recipesToCook');
     }
   },
-	
+
   addToFavorites(recipeData, user) {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     let card = recipeData.find(recipe => recipe.id === cardId)
@@ -264,18 +270,18 @@ let domUpdates = {
   //SHOULD THERE BE SOMETHING IN THE WHILE?
   exitRecipe(fullRecipeInfo) {
     while (fullRecipeInfo.firstChild && fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
-	
-    }
+
+	}
     fullRecipeInfo.style.display = "none";
     document.getElementById("overlay").remove();
   },
 
   hideUnsearched(foundRecipes, allRecipes) {
     this.showAllRecipes(allRecipes);
-	  foundRecipes.forEach(recipe => {
+    foundRecipes.forEach(recipe => {
       let domRecipe = document.getElementById(`${recipe.id}`);
-		  domRecipe.style.display = "none";
-	  });
+      domRecipe.style.display = "none";
+    });
   },
 
   toggleMenu(menuOpen) {
@@ -288,12 +294,12 @@ let domUpdates = {
     }
   },
 
-	displaySearchedIngreds(ingreds) {
-		let results = document.getElementById('searched-ingredient-results')
-		results.innerHTML = ''
-	
-		ingreds.forEach(ingred => {
-			results.insertAdjacentHTML('afterbegin', `
+  displaySearchedIngreds(ingreds) {
+    let results = document.getElementById('searched-ingredient-results')
+    results.innerHTML = ''
+
+    ingreds.forEach(ingred => {
+      results.insertAdjacentHTML('afterbegin', `
 				<div class="searched-ingredient" id="${ingred.id}">
 					<div id="add-subtract">
 						<button id="minus">-</button>
@@ -303,6 +309,7 @@ let domUpdates = {
 					<p id="ingred-name">${ingred.name}</p>
 				</div>
 			`)
+<<<<<<< HEAD
 		})
 	},
 	
@@ -310,6 +317,13 @@ let domUpdates = {
 		let amount = e.target.nextSibling.nextSibling
 		amount.value--
 	},
+=======
+    })
+  }
+
+
+
+>>>>>>> master
 
 	addIngredientCount(e) {
 		let amount = e.target.previousSibling.previousSibling		
