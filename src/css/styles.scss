@@ -176,11 +176,6 @@ span {
   bottom: 7px;
   position: absolute;
   z-index: 1;
-  &:hover {
-    transition: .4s ease;
-    bottom: 20px;
-    z-index: 1;
-  }
 }
 
 .button-holder {
@@ -270,7 +265,7 @@ li {
 
 
 /* RECIPE CARD SECTION */
-main {
+main, .recipe-card-container {
   grid-area: main;
   display: flex;
   justify-content: center;
@@ -495,4 +490,23 @@ main {
 
 .hide {
   display: none
+}
+
+@media only screen and (max-width: 700px) {
+
+	.mobile-aside,
+	#blockColorblindContent,
+	#search,
+	header,
+	.mobile-button {
+		display: none!important;
+	}
+
+	.main-title {
+		align-self: center!important;
+	}
+
+	.mobile-menu {
+		display: block!important;
+	}
 }

@@ -22,7 +22,7 @@ let domUpdates = {
   },
 
   displayRecipeCards(currentRecipe, shortRecipeName) {
-    let main = document.querySelector("main");
+		let cardContainer = document.querySelector('.recipe-card-container');
     let tagsToList = currentRecipe.tags.map(tag => `<h4>${tag}</h4>`);
 
     let cardHtml = `
@@ -31,7 +31,7 @@ let domUpdates = {
       <div class="card-photo-container">
         <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
         <div class="text">
-          <div id="instructions">Click for Instructions</div>
+          <div id="recipe-instructions">Click for Instructions</div>
         </div>
 			</div>
       <div>${tagsToList}</div>
@@ -40,7 +40,7 @@ let domUpdates = {
       	<img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </div>
     </div>`
-    main.insertAdjacentHTML("beforeend", cardHtml);
+    cardContainer.insertAdjacentHTML("beforeend", cardHtml);
   },
 
   listTags(allTags) {
@@ -235,7 +235,7 @@ let domUpdates = {
       this.addToFavorites(recipeData, user)
     } else if (event.target.id === "exit-recipe-btn") {
       this.exitRecipe(fullRecipeInfo)
-    } else if (event.target.id === "instructions") {
+    } else if (event.target.className === "recipe-instructions") {
       this.openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry)
     }
   },
