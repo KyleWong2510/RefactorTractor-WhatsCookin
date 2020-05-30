@@ -156,13 +156,8 @@ function showPostForm() {
 document.getElementById('save-changes-btn').addEventListener('click', hidePostForm)
 document.getElementById('modify-pantry-btn').addEventListener('click', showPostForm)
 
-<<<<<<< HEAD
 document.addEventListener('click', function(e) {
   if (e.target && e.target.classList.contains('search-ingredients-btn')) {
-=======
-document.addEventListener('click', function (e) {
-  if (e.target && e.target.id === 'search-ingredients-btn') {
->>>>>>> master
     createPostForm()
   }
 })

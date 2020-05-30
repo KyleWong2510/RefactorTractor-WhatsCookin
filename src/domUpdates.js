@@ -309,7 +309,6 @@ let domUpdates = {
 					<p id="ingred-name">${ingred.name}</p>
 				</div>
 			`)
-<<<<<<< HEAD
 		})
 	},
 	
@@ -317,13 +316,6 @@ let domUpdates = {
 		let amount = e.target.nextSibling.nextSibling
 		amount.value--
 	},
-=======
-    })
-  }
-
-
-
->>>>>>> master
 
 	addIngredientCount(e) {
 		let amount = e.target.previousSibling.previousSibling		
