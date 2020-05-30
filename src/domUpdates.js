@@ -25,13 +25,14 @@ let domUpdates = {
     let main = document.querySelector("main");
     let tagsToList = currentRecipe.tags.map(tag => `<h4>${tag}</h4>`);
 
+    // Div id 'instructions' could be changed to improve aria score.
     let cardHtml = `
     <div class="recipe-card" id=${currentRecipe.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
       <div class="card-photo-container">
         <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
         <div class="text">
-          <div id="instructions">Click for Instructions</div>
+          <div class="instructions">Click for Instructions</div>
         </div>
 			</div>
       <div>${tagsToList}</div>
@@ -235,7 +236,7 @@ let domUpdates = {
       this.addToFavorites(recipeData, user)
     } else if (event.target.id === "exit-recipe-btn") {
       this.exitRecipe(fullRecipeInfo)
-    } else if (event.target.id === "instructions") {
+    } else if (event.target.className === "instructions") {
       this.openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry)
     }
   },

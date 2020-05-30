@@ -12,14 +12,15 @@
     <header>
       <h1 class="main-title"><span>fresh</span>Picks<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
       <form id="search" role="search">
-        <input id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
-        <label for="search-input" class="search-label"></label>
+        <input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
+          <label for="#search-input">
+        </label>
         <button class="nav-btn search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
       </form>
       <button class="nav-btn  saved-recipes-btn" type="button" name="button"><img src="../images/cookbook.png" alt="search button">My Recipes</button>
       <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" alt="search button">My Pantry</button>
-      <button class="nav-btn saved-recipes-to-cook h1 ing-pan-btn" type="button" name="button"
-        role="show saved recipes to cook"><img class="recipe-icon" src="../images/recipe.png"
+      <button class="nav-btn saved-recipes-to-cook h1 ing-pan-btn" type="button" name="button" aria-label="View your personal recipes to cook list"
+        role="complementary"><img class="recipe-icon" src="../images/recipe.png"
           alt="fork and knife image">Recipes to
         Cook</button>
     </header>
@@ -42,7 +43,7 @@
     </div>
     <aside>
       <div class="wrap">
-        <h2>Recipe Type</h2>
+        <h2 class="recipe-type">Recipe Type</h2>
         <ul class="tag-list">
         </ul>
         <button class="filter-btn">Filter Recipes</button>
@@ -55,7 +56,7 @@
         <form id="search-ingredients" role="search">
           <input id="search-ingredients-input" type="text" autocomplete="off" placeholder="Search Ingredients..."></input>
           <label for="search-ingredients-input" class="search-label"></label>
-          <button id="search-ingredients-btn" type="button" name="button"><img src="images/search.png" alt="search button" id="search-ingredients-btn"></button>
+          <button id="search-ingredients-btn" type="button" name="button"><img src="images/search.png" alt="search button" id="search-ingredients-btn-img"></button>
         </form>
         <div id="searched-ingredient-results">
 
