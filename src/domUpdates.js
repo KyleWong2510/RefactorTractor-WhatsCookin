@@ -12,6 +12,7 @@ let domUpdates = {
   },
 
   displayPantryInfo(pantry, ingredientsData) {
+		console.log('pantry')
     pantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
@@ -25,13 +26,14 @@ let domUpdates = {
 		let cardContainer = document.querySelector('.recipe-card-container');
     let tagsToList = currentRecipe.tags.map(tag => `<h4>${tag}</h4>`);
 
+    // Div id 'instructions' could be changed to improve aria score.
     let cardHtml = `
     <div class="recipe-card" id=${currentRecipe.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
       <div class="card-photo-container">
         <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
         <div class="text">
-          <div id="recipe-instructions">Click for Instructions</div>
+          <div class="instructions">Click for Instructions</div>
         </div>
 			</div>
       <div>${tagsToList}</div>
@@ -235,7 +237,7 @@ let domUpdates = {
       this.addToFavorites(recipeData, user)
     } else if (event.target.id === "exit-recipe-btn") {
       this.exitRecipe(fullRecipeInfo)
-    } else if (event.target.className === "recipe-instructions") {
+    } else if (event.target.className === "instructions") {
       this.openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry)
     }
   },
@@ -301,18 +303,24 @@ let domUpdates = {
 				<div class="searched-ingredient" id="${ingred.id}">
 					<div id="add-subtract">
 						<button id="minus">-</button>
-						<input id="amount" placeholder="0">
+						<input class="amount" placeholder="value..." value=0>
 						<button id="plus">+</button>
 					</div>
-					<p>${ingred.name}</p>
+					<p id="ingred-name">${ingred.name}</p>
 				</div>
 			`)
-    })
-  }
+		})
+	},
+	
+	subtractIngredientCount(e) {
+		let amount = e.target.nextSibling.nextSibling
+		amount.value--
+	},
 
-
-
-
+	addIngredientCount(e) {
+		let amount = e.target.previousSibling.previousSibling		
+		amount.value++
+	}
 }
 
 export default domUpdates;

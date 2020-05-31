@@ -18,12 +18,19 @@ let allRecipesBtn = document.querySelectorAll(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
-let pantryBtn = document.querySelector(".my-pantry-btn");
-let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
-let recipesToCkBtn = document.querySelector(".saved-recipes-to-cook");
+let pantryBtn = document.querySelectorAll(".my-pantry-btn");
+let savedRecipesBtn = document.querySelectorAll(".saved-recipes-btn");
+let recipesToCkBtn = document.querySelectorAll(".saved-recipes-to-cook");
 let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
+const mobileSearchBtn = document.querySelector(".mobile-search-btn");
+const mobileSearchForm = document.querySelector("#mobile-search");
+const mobileSearchInput = document.querySelector("#mobile-search-input");
+const menuButton = document.querySelector('.menu-button');
+const menuCloseButton = document.querySelector('.menu-close');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileMenuBody = document.querySelector('.menu-body-text');
 
 let users;
 let recipeData;
@@ -33,17 +40,50 @@ let pantry;
 let allRecipes = [];
 let menuOpen = false;
 
+menuButton.addEventListener('click', openMobileMenu);
+menuCloseButton.addEventListener('click', closeMobileMenu);
+
+function openMobileMenu() {
+	mobileMenuBody.classList.remove('hide');
+	mobileMenuBody.classList.add('menu-body-style');
+	mobileMenu.classList.add('open-style');
+  menuButton.classList.add('hide');
+  menuCloseButton.classList.remove('hide');
+}
+
+function closeMobileMenu() {
+	mobileMenuBody.classList.add('hide');
+	mobileMenuBody.classList.remove('menu-body-style');
+	mobileMenu.classList.remove('open-style');
+	menuButton.classList.remove('hide');
+  menuCloseButton.classList.add('hide');
+}
+
 window.addEventListener("load", fetchData);
 allRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)));
-savedRecipesBtn.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user));
-recipesToCkBtn.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user));
+savedRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user)));
+recipesToCkBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user)));
 filterBtn.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user));
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
-pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
+// pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
+pantryBtn.forEach(bt => bt.addEventListener("click", toggleMenu));
+
 searchBtn.addEventListener("click", searchRecipes);
+mobileSearchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
+mobileSearchForm.addEventListener("submit", pressEnterSearch);
+
+document.addEventListener('click', function(e) {
+  if (e.target && e.target.id === 'minus') {
+    domUpdates.subtractIngredientCount(e)
+  }
+  if (e.target && e.target.id === 'plus') {
+    domUpdates.addIngredientCount(e)
+  }
+})
 
 function onloadHandler() {
+	document.querySelector("#huntr-react-container-2").remove();
   user = new User(users[Math.floor(Math.random() * users.length)]);
   pantry = new Pantry(user);
   domUpdates.welcomeUser(user, pantry, ingredientsData);
@@ -54,15 +94,15 @@ function onloadHandler() {
 function fetchData() {
   users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
     .then(response => response.json())
-    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message))
 
   ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
     .then(response => response.json())
-    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message))
 
   recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
-    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message))
 
   return Promise.all([users, ingredientsData, recipeData])
     .then(response => {
@@ -103,15 +143,19 @@ function findTags() {
 
 // SEARCH RECIPES
 function pressEnterSearch(event) {
-  event.preventDefault();
-  searchRecipes();
+	event.preventDefault();
+	let searchinput;
+	if (mobileSearchInput.value) {
+		searchinput = mobileSearchInput.value
+	} else {
+		searchinput = searchInput.value;
+	}
+  searchRecipes(searchinput.toLowerCase());
 }
 
-function searchRecipes() {
-  const search = searchInput.value.toLowerCase();
+function searchRecipes(search) {
   if (document.querySelector('.welcome-msg').style.display !== 'none') {
     let results = user.searchForRecipe(search, recipeData);
-    console.log(results);
     filterNonSearched(results);
   }
   if (document.querySelector(".my-recipes-banner").style.display !== 'none') {
@@ -133,22 +177,28 @@ function filterNonSearched(filtered) {
 }
 
 //POST FORM FUNCTIONALITY
-function togglePostForm() {
-  document.getElementById('post-to-pantry').classList.toggle('hide')
+function hidePostForm() {
+  document.getElementById('post-to-pantry').style.display = 'none'
+  document.getElementById('searched-ingredient-results').innerHTML = ''
+  document.getElementById('search-ingredients-input').value = ''
 }
 
-document.getElementById('save-changes-btn').addEventListener('click', togglePostForm)
-document.getElementById('modify-pantry-btn').addEventListener('click', togglePostForm)
+function showPostForm() {
+  document.getElementById('post-to-pantry').style.display = 'flex'
+}
 
-document.addEventListener('click', function (e) {
-  if (e.target && e.target.id === 'search-ingredients-btn') {
+document.getElementById('save-changes-btn').addEventListener('click', hidePostForm)
+document.getElementById('modify-pantry-btn').addEventListener('click', showPostForm)
+
+document.addEventListener('click', function(e) {
+  if (e.target && e.target.classList.contains('search-ingredients-btn')) {
     createPostForm()
   }
 })
 
 document.addEventListener('click', function (e) {
   if (e.target && e.target.id === 'save-changes-btn') {
-    let amounts = Array.from(document.querySelectorAll('#amount'))
+    let amounts = Array.from(document.querySelectorAll('.amount'))
     amounts.forEach(amount => {
       if (amount.value && amount.value !== 0) {
         let ingredID = amount.parentNode.parentNode.id
@@ -408,15 +458,15 @@ function adjustPantry(ingredID, ingredMod) {
 //   });
 // }
 
-// function toggleMenu() {
-//   var menuDropdown = document.querySelector(".drop-menu");
-//   menuOpen = !menuOpen;
-//   if (menuOpen) {
-//     menuDropdown.style.display = "block";
-//   } else {
-//     menuDropdown.style.display = "none";
-//   }
-// }
+function toggleMenu() {
+  var menuDropdown = document.querySelector(".drop-menu");
+  menuOpen = !menuOpen;
+  if (menuOpen) {
+    menuDropdown.style.display = "block";
+  } else {
+    menuDropdown.style.display = "none";
+  }
+}
 
 // function showAllRecipes() {
 //   allRecipes.forEach(recipe => {
@@ -442,4 +492,3 @@ function adjustPantry(ingredID, ingredMod) {
 //       </div>
 //     `)
 //   })
-// }

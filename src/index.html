@@ -10,20 +10,36 @@
   </head>
   <body>
 		<section class="menu mobile-menu hide">
-			<span class="header-text">
+			<section class="background">
+			<div class="header-text">
 				<h1 class="main-title"><span>fresh</span>Picks<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
-				<input type="image" src="images/menu.svg" name="menu" class="menu-icon hamburger-menu" id="menu" />
-				<input type="image" src="images/menu-close.svg" name="menu-close" class="menu-icon menu-close hide" id="menu-close" />
-			</span>
-			<span class="menu-body-text">
-
-			</span>
+				<div class="menu-button"><img src="https://spng.pinpng.com/pngs/s/163-1639439_menu-icon-white-menu-bar-icon-hd-png.png" class="menu-button" alt="mobile menu button"/></div>
+				<div class="menu-close hide"><img src="https://www.vhv.rs/dpng/d/145-1453957_mermaiden-crystal-dress-up-game-transparent-background-white.png" class="menu-close" alt="exit mobile menu button"/></div>
+				</div>
+			<div class="menu-body-text hide">
+				<form id="mobile-search" role="search">
+					<input name="search for" id="mobile-search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
+						<label for="#search-input">
+					</label>
+					<button class="mobile-nav-btn mobile-search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
+				</form>
+				<section class="mobile-buttons">
+					<button class="mobile-nav-btn  saved-recipes-btn" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
+					<button class="mobile-nav-btn saved-recipes-to-cook h1 ing-pan-btn " type="button" name="button"
+						role="show saved recipes to cook"><img class="recipe-icon" src="../images/recipe.png"
+							alt="fork and knife image">Recipes to Cook</button>
+					<button class="mobile-nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
+				</section>
+				<button class="mobile-filter-btn">Filter Recipes by Type</button>
+			</div>
+			</section>
 		</section>
     <header>
       <h1 class="main-title"><span>fresh</span>Picks<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
       <form id="search" role="search">
-        <input id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
-        <label for="search-input" class="search-label"></label>
+        <input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
+          <label for="#search-input">
+        </label>
         <button class="nav-btn search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
       </form>
       <button class="nav-btn  saved-recipes-btn mobile-button" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
@@ -51,7 +67,7 @@
     </div>
     <aside class="mobile-aside">
       <div class="wrap">
-        <h2>Recipe Type</h2>
+        <h2 class="recipe-type">Recipe Type</h2>
         <ul class="tag-list">
         </ul>
         <button class="filter-btn">Filter Recipes</button>
@@ -59,12 +75,12 @@
     </aside>
     <main>
       <div class="recipe-instructions"></div>
-      <div id="post-to-pantry" class="hide">
-        <h3>Modify Your Pantry</h3>
+      <div id="post-to-pantry">
+        <h3 id="modify-pantry-title">Modify Your Pantry</h3>
         <form id="search-ingredients" role="search">
           <input id="search-ingredients-input" type="text" autocomplete="off" placeholder="Search Ingredients..."></input>
           <label for="search-ingredients-input" class="search-label"></label>
-          <button id="search-ingredients-btn" type="button" name="button"><img src="images/search.png" alt="search button" id="search-ingredients-btn"></button>
+          <button class="search-ingredients-btn" type="button" name="button"><img src="images/search.png" alt="search button" id="search-ingredients-icon" class="search-ingredients-btn"></button>
         </form>
         <div id="searched-ingredient-results">
 
