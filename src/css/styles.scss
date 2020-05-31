@@ -278,7 +278,7 @@ span {
 }
 
 /* FILTER SIDEBAR */
-aside {
+.aside {
   background-color: white;
   display: flex;
   justify-content: center;
@@ -632,21 +632,28 @@ main, .recipe-card-container {
 	display: none;
 }
 
-@media only screen and (max-width: 700px) {
 
-	.mobile-aside,
+@media only screen and (max-width: 700px) {
+	
+	.aside, 
 	#blockColorblindContent,
 	#search,
 	header {
 		display: none!important;
 	}
 
+	.main-title{
+		display: flex;
+	}
+	
 	.menu-button, 
-	.menu-close {
+	.menu-close,
+	.feather {
 		position: absolute;
 		right: 0px;
 		top: 0px;
-		height: 3vh;
+		height: 5vh;
+		stroke: #fff;
 	}
 
 	.mobile-buttons {
@@ -656,9 +663,12 @@ main, .recipe-card-container {
 	.mobile-menu {
 		display: flex!important;
 		height: 100px;
+		z-index: 2;
+		position: relative;
 	}
 
 	#mobile-search {
+		display: flex;
 		min-width: 300px;
     max-width: 450px;
     margin: 0 auto;
@@ -699,9 +709,28 @@ main, .recipe-card-container {
     position: absolute;
     width: 100%;
     z-index: 1;
-  }
+	}
+	
+	.mobile-wrap {
+		position: relative;
+		z-index: 2;
+		width: 200px;
+		height: 520px;
+		background: white;
+	}
+
+	.mobile-aside {
+		display: flex;
+    justify-content: center;
+    height: auto;
+    text-align: center;
+	}
 
 	body {
 		display: block;
+	}
+
+	.mobile-cards {
+		z-index: 1;
 	}
 }

@@ -33,7 +33,7 @@ class User {
     const word = keyword.toLowerCase()
     const searchedResults = []
     array.forEach(recipe => {
-      if(recipe.name.toLowerCase().includes(word)) {
+      if (recipe.name.toLowerCase().includes(word)) {
         searchedResults.push(recipe)
       }
     })
@@ -50,7 +50,7 @@ class User {
     
       array.forEach(recipe => {
       recipe.ingredients.forEach(ingred => {
-        if(ingredientIDs.includes(ingred.id)) {
+        if (ingredientIDs.includes(ingred.id)) {
           searchedResults.push(recipe)
         }
       })  

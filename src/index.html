@@ -12,10 +12,17 @@
 		<section class="menu mobile-menu hide">
 			<section class="background">
 			<div class="header-text">
-				<h1 class="main-title"><span>fresh</span>Picks<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
-				<div class="menu-button"><img src="https://spng.pinpng.com/pngs/s/163-1639439_menu-icon-white-menu-bar-icon-hd-png.png" class="menu-button" alt="mobile menu button"/></div>
-				<div class="menu-close hide"><img src="https://www.vhv.rs/dpng/d/145-1453957_mermaiden-crystal-dress-up-game-transparent-background-white.png" class="menu-close" alt="exit mobile menu button"/></div>
+				<h1 class="main-title">
+					<span>fresh</span>Picks
+					<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon" />
+				</h1>
+				<div class="menu-button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
 				</div>
+				<div class="menu-close hide">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</div>
+			</div>
 			<div class="menu-body-text hide">
 				<form id="mobile-search" role="search">
 					<input name="search for" id="mobile-search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
@@ -32,6 +39,14 @@
 				</section>
 				<button class="mobile-filter-btn">Filter Recipes by Type</button>
 			</div>
+			<aside class="mobile-aside">
+				<div class="mobile-wrap hide">
+					<h2 class="recipe-type">Recipe Type</h2>
+					<ul class="tag-list">
+					</ul>
+					<button class="filter-btn">Filter Recipes</button>
+				</div>
+			</aside>
 			</section>
 		</section>
     <header>
@@ -65,7 +80,7 @@
       <button id="modify-pantry-btn">+ / - Ingredients</button>
       <ul class="pantry-list"></ul>
     </div>
-    <aside class="mobile-aside">
+    <aside class="aside">
       <div class="wrap">
         <h2 class="recipe-type">Recipe Type</h2>
         <ul class="tag-list">

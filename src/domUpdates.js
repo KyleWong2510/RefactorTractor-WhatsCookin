@@ -48,12 +48,11 @@ let domUpdates = {
   },
 
   listTags(allTags) {
-    console
-    let tagList = document.querySelector(".tag-list");
+    let tagList = document.querySelectorAll(".tag-list");
     allTags.forEach(tag => {
       let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
 				<label for="${tag}">${this.capitalize(tag)}</label></li>`;
-      tagList.insertAdjacentHTML("beforeend", tagHtml);
+      tagList.forEach(t => t.insertAdjacentHTML("beforeend", tagHtml));
     })
   },
 

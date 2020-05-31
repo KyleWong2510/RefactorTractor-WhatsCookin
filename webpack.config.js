@@ -12,6 +12,10 @@ module.exports = {
   // CSS and file (image) loaders
   module: {
     rules: [
+			{
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
+    },
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],

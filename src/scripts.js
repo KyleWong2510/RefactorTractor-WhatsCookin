@@ -14,16 +14,16 @@ import Recipe from './recipe';
 import Pantry from './pantry';
 import domUpdates from './domUpdates';
 
-let allRecipesBtn = document.querySelectorAll(".show-all-btn");
-let filterBtn = document.querySelector(".filter-btn");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
-let main = document.querySelector("main");
-let pantryBtn = document.querySelectorAll(".my-pantry-btn");
-let savedRecipesBtn = document.querySelectorAll(".saved-recipes-btn");
-let recipesToCkBtn = document.querySelectorAll(".saved-recipes-to-cook");
-let searchBtn = document.querySelector(".search-btn");
-let searchForm = document.querySelector("#search");
-let searchInput = document.querySelector("#search-input");
+const allRecipesBtn = document.querySelectorAll(".show-all-btn");
+const filterBtn = document.querySelectorAll(".filter-btn");
+const fullRecipeInfo = document.querySelector(".recipe-instructions");
+const main = document.querySelector("main");
+const pantryBtn = document.querySelectorAll(".my-pantry-btn");
+const savedRecipesBtn = document.querySelectorAll(".saved-recipes-btn");
+const recipesToCkBtn = document.querySelectorAll(".saved-recipes-to-cook");
+const searchBtn = document.querySelector(".search-btn");
+const searchForm = document.querySelector("#search");
+const searchInput = document.querySelector("#search-input");
 const mobileSearchBtn = document.querySelector(".mobile-search-btn");
 const mobileSearchForm = document.querySelector("#mobile-search");
 const mobileSearchInput = document.querySelector("#mobile-search-input");
@@ -31,6 +31,7 @@ const menuButton = document.querySelector('.menu-button');
 const menuCloseButton = document.querySelector('.menu-close');
 const mobileMenu = document.querySelector('.mobile-menu');
 const mobileMenuBody = document.querySelector('.menu-body-text');
+const mobileBackground = document.querySelector('.background');
 
 let users;
 let recipeData;
@@ -48,7 +49,16 @@ function openMobileMenu() {
 	mobileMenuBody.classList.add('menu-body-style');
 	mobileMenu.classList.add('open-style');
   menuButton.classList.add('hide');
-  menuCloseButton.classList.remove('hide');
+	menuCloseButton.classList.remove('hide');
+	mobileBackground.classList.add('gray-1');
+	document.querySelector('.mobile-filter-btn').addEventListener('click', openFilterBar);
+}
+
+function openFilterBar() {
+	document.querySelector('.mobile-wrap').classList.remove('hide');
+	document.querySelector('.filter-btn').addEventListener('click', function() {
+		document.querySelector('.mobile-wrap').classList.add('hide');
+	})
 }
 
 function closeMobileMenu() {
@@ -56,14 +66,15 @@ function closeMobileMenu() {
 	mobileMenuBody.classList.remove('menu-body-style');
 	mobileMenu.classList.remove('open-style');
 	menuButton.classList.remove('hide');
-  menuCloseButton.classList.add('hide');
+	menuCloseButton.classList.add('hide');
+	mobileBackground.classList.remove('gray-1');
 }
 
 window.addEventListener("load", fetchData);
 allRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)));
 savedRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user)));
 recipesToCkBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user)));
-filterBtn.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user));
+filterBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user)));
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
 // pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
 pantryBtn.forEach(bt => bt.addEventListener("click", toggleMenu));
