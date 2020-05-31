@@ -20,6 +20,10 @@ body {
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: auto;
+  &:focus {
+    border: 1px solid blue;
+  }
+    
 }
 
 h1 {
