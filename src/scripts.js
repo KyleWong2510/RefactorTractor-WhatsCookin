@@ -179,11 +179,27 @@ function filterNonSearched(filtered) {
 //POST FORM FUNCTIONALITY
 function hidePostForm() {
   document.getElementById('post-to-pantry').style.display = 'none'
-  document.getElementById('searched-ingredient-results').innerHTML = ''
-  document.getElementById('search-ingredients-input').value = ''
+
+  users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+    .then(response => response.json())
+    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+  
+  return Promise.resolve(users)
+    .then(response => {
+      users = response.wcUsersData
+      let id = user.id
+      user = new User(users[id - 1])
+      // console.log('user', user)
+      pantry = new Pantry(user);
+      console.log('pantryFetch', pantry)
+    })
+    .then(() => domUpdates.displayPantryInfo(pantry.data, ingredientsData))
+    .catch(error => console.log(error))   
 }
 
 function showPostForm() {
+  document.getElementById('searched-ingredient-results').innerHTML = ''
+  document.getElementById('search-ingredients-input').value = ''
   document.getElementById('post-to-pantry').style.display = 'flex'
 }
 
@@ -234,6 +250,10 @@ function adjustPantry(ingredID, ingredMod) {
   })
     .then(response => response.json())
     .then(data => console.log(data))
+    .catch(error => console.log(error))
+    .then(hidePostForm())
+    // .then(console.log('pantry of user', user.pantry))
+    // .then(console.log('pantry to display', pantry.data))
     .catch(error => console.log(error))
 }
 
