@@ -695,6 +695,19 @@ main, .recipe-card-container {
     margin-top: 17px;
 	}
 
+	.drop-menu {
+		align-items: center;
+    background-color: #DAE4EE;
+    display: none;
+    height: 600px;
+    overflow: scroll;
+    padding: 15px;
+    position: absolute;
+    text-align: center;
+    width: 229px;
+    z-index: 3;
+	}
+
 	.open-style {
 		display: flex;
 		flex-direction: column;
@@ -702,14 +715,14 @@ main, .recipe-card-container {
 		justify-content: space-between;
 	}
 
-	.gray-1 {
-    background: darkgray;
-    height: 100%;
-    opacity: 80%;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-	}
+	// .gray-1 {
+  //   background: darkgray;
+  //   height: 100%;
+  //   opacity: 80%;
+  //   position: absolute;
+  //   width: 100%;
+  //   z-index: 2;
+	// }
 	
 	.mobile-wrap {
 		position: relative;
@@ -717,6 +730,7 @@ main, .recipe-card-container {
 		width: 200px;
 		height: 520px;
 		background: white;
+		margin-top: 227px;
 	}
 
 	.mobile-aside {
@@ -732,5 +746,11 @@ main, .recipe-card-container {
 
 	.mobile-cards {
 		z-index: 1;
+    position: relative;
+	}
+
+	.banner-image {
+		z-index: 1;
+    position: relative;
 	}
 }

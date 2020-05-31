@@ -41,35 +41,6 @@ let pantry;
 let allRecipes = [];
 let menuOpen = false;
 
-menuButton.addEventListener('click', openMobileMenu);
-menuCloseButton.addEventListener('click', closeMobileMenu);
-
-function openMobileMenu() {
-	mobileMenuBody.classList.remove('hide');
-	mobileMenuBody.classList.add('menu-body-style');
-	mobileMenu.classList.add('open-style');
-  menuButton.classList.add('hide');
-	menuCloseButton.classList.remove('hide');
-	mobileBackground.classList.add('gray-1');
-	document.querySelector('.mobile-filter-btn').addEventListener('click', openFilterBar);
-}
-
-function openFilterBar() {
-	document.querySelector('.mobile-wrap').classList.remove('hide');
-	document.querySelector('.filter-btn').addEventListener('click', function() {
-		document.querySelector('.mobile-wrap').classList.add('hide');
-	})
-}
-
-function closeMobileMenu() {
-	mobileMenuBody.classList.add('hide');
-	mobileMenuBody.classList.remove('menu-body-style');
-	mobileMenu.classList.remove('open-style');
-	menuButton.classList.remove('hide');
-	menuCloseButton.classList.add('hide');
-	mobileBackground.classList.remove('gray-1');
-}
-
 window.addEventListener("load", fetchData);
 allRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)));
 savedRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user)));
@@ -78,11 +49,12 @@ filterBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.filterReci
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
 // pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
 pantryBtn.forEach(bt => bt.addEventListener("click", toggleMenu));
-
 searchBtn.addEventListener("click", searchRecipes);
 mobileSearchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
 mobileSearchForm.addEventListener("submit", pressEnterSearch);
+menuButton.addEventListener('click', openMobileMenu);
+menuCloseButton.addEventListener('click', closeMobileMenu);
 
 document.addEventListener('click', function(e) {
   if (e.target && e.target.id === 'minus') {
@@ -94,7 +66,7 @@ document.addEventListener('click', function(e) {
 })
 
 function onloadHandler() {
-	document.querySelector("#huntr-react-container-2").remove();
+  document.querySelector("#huntr-react-container-2").remove();
   user = new User(users[Math.floor(Math.random() * users.length)]);
   pantry = new Pantry(user);
   domUpdates.welcomeUser(user, pantry, ingredientsData);
@@ -123,6 +95,33 @@ function fetchData() {
     })
     .then(onloadHandler)
     .catch(error => console.log(error))
+}
+
+//MOBILE MEDIA QUERY
+function openMobileMenu() {
+  mobileMenuBody.classList.remove('hide');
+  mobileMenuBody.classList.add('menu-body-style');
+  mobileMenu.classList.add('open-style');
+  menuButton.classList.add('hide');
+  menuCloseButton.classList.remove('hide');
+  mobileBackground.classList.add('gray-1');
+  document.querySelector('.mobile-filter-btn').addEventListener('click', openFilterBar);
+}
+
+function openFilterBar() {
+  document.querySelector('.mobile-wrap').classList.remove('hide');
+  document.querySelector('.filter-btn').addEventListener('click', function() {
+    document.querySelector('.mobile-wrap').classList.add('hide');
+  })
+}
+
+function closeMobileMenu() {
+  mobileMenuBody.classList.add('hide');
+  mobileMenuBody.classList.remove('menu-body-style');
+  mobileMenu.classList.remove('open-style');
+  menuButton.classList.remove('hide');
+  menuCloseButton.classList.add('hide');
+  mobileBackground.classList.remove('gray-1');
 }
 
 // CREATE RECIPE CARDS
@@ -154,13 +153,13 @@ function findTags() {
 
 // SEARCH RECIPES
 function pressEnterSearch(event) {
-	event.preventDefault();
-	let searchinput;
-	if (mobileSearchInput.value) {
-		searchinput = mobileSearchInput.value
-	} else {
-		searchinput = searchInput.value;
-	}
+  event.preventDefault();
+  let searchinput;
+  if (mobileSearchInput.value) {
+    searchinput = mobileSearchInput.value
+  } else {
+    searchinput = searchInput.value;
+  }
   searchRecipes(searchinput.toLowerCase());
 }
 

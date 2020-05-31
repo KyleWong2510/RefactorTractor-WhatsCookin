@@ -7,10 +7,11 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Sulphur+Point:400,700&display=swap" rel="stylesheet">
     <link rel="icon" href="../images/apple-logo.png" />
-  </head>
+	</head>
+	
   <body>
+		<section class="background">
 		<section class="menu mobile-menu hide">
-			<section class="background">
 			<div class="header-text">
 				<h1 class="main-title">
 					<span>fresh</span>Picks
@@ -47,10 +48,13 @@
 					<button class="filter-btn">Filter Recipes</button>
 				</div>
 			</aside>
-			</section>
 		</section>
+
     <header>
-      <h1 class="main-title"><span>fresh</span>Picks<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
+      <h1 class="main-title">
+				<span>fresh</span>Picks
+				<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon">
+			</h1>
       <form id="search" role="search">
         <input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
           <label for="#search-input">
@@ -62,7 +66,8 @@
         role="show saved recipes to cook"><img class="recipe-icon mobile-button" src="../images/recipe.png"
           alt="fork and knife image">Recipes to Cook</button>
       <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn mobile-button" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
-    </header>
+		</header>
+		
     <section class="banner-image">
       <div class="to-cook-banner hidden">
         <div class="home-button">
@@ -74,12 +79,14 @@
         <h1>My Recipes</h1>
         <button class="show-all-btn">Show All Recipes</button>
       </div>
-    </section>
+		</section>
+		
     <div class="drop-menu">
       <h2>My Pantry</h2>
       <button id="modify-pantry-btn">+ / - Ingredients</button>
       <ul class="pantry-list"></ul>
-    </div>
+		</div>
+		
     <aside class="aside">
       <div class="wrap">
         <h2 class="recipe-type">Recipe Type</h2>
@@ -87,7 +94,8 @@
         </ul>
         <button class="filter-btn">Filter Recipes</button>
       </div>
-    </aside>
+		</aside>
+		
     <main>
       <div class="recipe-instructions"></div>
       <div id="post-to-pantry">
@@ -107,6 +115,7 @@
         <button class="show-all-btn">Show All Recipes</button>
 			</div>
 			<div class="recipe-card-container mobile-cards"></div>
-    </main>
+		</main>
+	</section>
   </body>
 </html>
