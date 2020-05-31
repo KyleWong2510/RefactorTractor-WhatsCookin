@@ -7,23 +7,67 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Sulphur+Point:400,700&display=swap" rel="stylesheet">
     <link rel="icon" href="../images/apple-logo.png" />
-  </head>
+	</head>
+	
   <body>
+		<section class="background">
+		<section class="menu mobile-menu hide">
+			<div class="header-text">
+				<h1 class="main-title">
+					<span>fresh</span>Picks
+					<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon" />
+				</h1>
+				<div class="menu-button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+				</div>
+				<div class="menu-close hide">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</div>
+			</div>
+			<div class="menu-body-text hide">
+				<form id="mobile-search" role="search">
+					<input name="search for" id="mobile-search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
+						<label for="#search-input">
+					</label>
+					<button class="mobile-nav-btn mobile-search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
+				</form>
+				<section class="mobile-buttons">
+					<button class="mobile-nav-btn  saved-recipes-btn" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
+					<button class="mobile-nav-btn saved-recipes-to-cook h1 ing-pan-btn " type="button" name="button"
+						role="show saved recipes to cook"><img class="recipe-icon" src="../images/recipe.png"
+							alt="fork and knife image">Recipes to Cook</button>
+					<button class="mobile-nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
+				</section>
+				<button class="mobile-filter-btn">Filter Recipes by Type</button>
+			</div>
+			<aside class="mobile-aside">
+				<div class="mobile-wrap hide">
+					<h2 class="recipe-type">Recipe Type</h2>
+					<ul class="tag-list">
+					</ul>
+					<button class="filter-btn">Filter Recipes</button>
+				</div>
+			</aside>
+		</section>
+
     <header>
-      <h1 class="main-title"><span>fresh</span>Picks<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
+      <h1 class="main-title">
+				<span>fresh</span>Picks
+				<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon">
+			</h1>
       <form id="search" role="search">
         <input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
           <label for="#search-input">
         </label>
         <button class="nav-btn search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
       </form>
-      <button class="nav-btn  saved-recipes-btn" type="button" name="button"><img src="../images/cookbook.png" alt="search button">My Recipes</button>
-      <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" alt="search button">My Pantry</button>
-      <button class="nav-btn saved-recipes-to-cook h1 ing-pan-btn" type="button" name="button" aria-label="View your personal recipes to cook list"
-        role="complementary"><img class="recipe-icon" src="../images/recipe.png"
-          alt="fork and knife image">Recipes to
-        Cook</button>
-    </header>
+      <button class="nav-btn  saved-recipes-btn mobile-button" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
+      <button class="nav-btn saved-recipes-to-cook h1 ing-pan-btn mobile-button" type="button" name="button"
+        role="show saved recipes to cook"><img class="recipe-icon mobile-button" src="../images/recipe.png"
+          alt="fork and knife image">Recipes to Cook</button>
+      <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn mobile-button" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
+		</header>
+		
     <section class="banner-image">
       <div class="to-cook-banner hidden">
         <div class="home-button">
@@ -35,20 +79,23 @@
         <h1>My Recipes</h1>
         <button class="show-all-btn">Show All Recipes</button>
       </div>
-    </section>
+		</section>
+		
     <div class="drop-menu">
       <h2>My Pantry</h2>
       <button id="modify-pantry-btn">+ / - Ingredients</button>
       <ul class="pantry-list"></ul>
-    </div>
-    <aside>
+		</div>
+		
+    <aside class="aside">
       <div class="wrap">
         <h2 class="recipe-type">Recipe Type</h2>
         <ul class="tag-list">
         </ul>
         <button class="filter-btn">Filter Recipes</button>
       </div>
-    </aside>
+		</aside>
+		
     <main>
       <div class="recipe-instructions"></div>
       <div id="post-to-pantry">
@@ -66,7 +113,9 @@
       <div class="my-recipes-banner">
         <h1>My Recipes</h1>
         <button class="show-all-btn">Show All Recipes</button>
-      </div>
-    </main>
+			</div>
+			<div class="recipe-card-container mobile-cards"></div>
+		</main>
+	</section>
   </body>
 </html>

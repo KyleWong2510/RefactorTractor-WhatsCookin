@@ -7,14 +7,14 @@ let domUpdates = {
 		</div>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
       welcomeMsg);
-		//What is the sort doing?  No name property on pantry items
+    //What is the sort doing?  No name property on pantry items
     this.displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name), ingredientsData);
   },
 
   displayPantryInfo(pantry, ingredientsData) {
-		console.log('pantryFn', pantry)
-		let pantryList = document.querySelector(".pantry-list")
-		pantryList.innerHTML = ''
+    console.log('pantryFn', pantry)
+    let pantryList = document.querySelector(".pantry-list")
+    pantryList.innerHTML = ''
     pantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
@@ -25,7 +25,7 @@ let domUpdates = {
   },
 
   displayRecipeCards(currentRecipe, shortRecipeName) {
-    let main = document.querySelector("main");
+    let cardContainer = document.querySelector('.recipe-card-container');
     let tagsToList = currentRecipe.tags.map(tag => `<h4>${tag}</h4>`);
 
     // Div id 'instructions' could be changed to improve aria score.
@@ -44,16 +44,15 @@ let domUpdates = {
       	<img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </div>
     </div>`
-    main.insertAdjacentHTML("beforeend", cardHtml);
+    cardContainer.insertAdjacentHTML("beforeend", cardHtml);
   },
 
   listTags(allTags) {
-    console
-    let tagList = document.querySelector(".tag-list");
+    let tagList = document.querySelectorAll(".tag-list");
     allTags.forEach(tag => {
       let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
 				<label for="${tag}">${this.capitalize(tag)}</label></li>`;
-      tagList.insertAdjacentHTML("beforeend", tagHtml);
+      tagList.forEach(t => t.insertAdjacentHTML("beforeend", tagHtml));
     })
   },
 
@@ -273,7 +272,7 @@ let domUpdates = {
   exitRecipe(fullRecipeInfo) {
     while (fullRecipeInfo.firstChild && fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
 
-	}
+    }
     fullRecipeInfo.style.display = "none";
     document.getElementById("overlay").remove();
   },
@@ -311,18 +310,44 @@ let domUpdates = {
 					<p id="ingred-name">${ingred.name}</p>
 				</div>
 			`)
-		})
-	},
+    })
+  },
 	
-	subtractIngredientCount(e) {
-		let amount = e.target.nextSibling.nextSibling
-		amount.value--
-	},
+  subtractIngredientCount(e) {
+    let amount = e.target.nextSibling.nextSibling
+    amount.value--
+  },
 
-	addIngredientCount(e) {
-		let amount = e.target.previousSibling.previousSibling		
-		amount.value++
-	}
+  addIngredientCount(e) {
+    let amount = e.target.previousSibling.previousSibling		
+    amount.value++
+  },
+
+  // openMobileMenu() {
+  //   document.querySelector('.menu-body-text').classList.remove('hide');
+  //   document.querySelector('.menu-body-text').classList.add('menu-body-style');
+  //   document.querySelector('.mobile-menu').classList.add('open-style');
+  //   document.querySelector('.menu-button').classList.add('hide');
+  //   document.querySelector('.menu-close').classList.remove('hide');
+  //   document.querySelector('.background').classList.add('gray-1');
+  //   document.querySelector('.mobile-filter-btn').addEventListener('click', this.openFilterBar);
+	// },
+
+	// openFilterBar() {
+	// 	document.querySelector('.mobile-wrap').classList.remove('hide');
+	// 	document.querySelector('.filter-btn').addEventListener('click', function() {
+	// 		document.querySelector('.mobile-wrap').classList.add('hide');
+	// 	})
+	// },
+	
+	// closeMobileMenu() {
+	// 	document.querySelector('.menu-body-text').classList.add('hide');
+	// 	document.querySelector('.menu-body-text').classList.remove('menu-body-style');
+	// 	document.querySelector('.mobile-menu').classList.remove('open-style');
+	// 	document.querySelector('.menu-button').classList.remove('hide');
+	// 	document.querySelector('.menu-close').classList.add('hide');
+	// 	document.querySelector('.background').classList.remove('gray-1');
+	// }
 }
 
 export default domUpdates;

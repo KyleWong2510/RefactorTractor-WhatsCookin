@@ -14,16 +14,24 @@ import Recipe from './recipe';
 import Pantry from './pantry';
 import domUpdates from './domUpdates';
 
-let allRecipesBtn = document.querySelectorAll(".show-all-btn");
-let filterBtn = document.querySelector(".filter-btn");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
-let main = document.querySelector("main");
-let pantryBtn = document.querySelector(".my-pantry-btn");
-let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
-let recipesToCkBtn = document.querySelector(".saved-recipes-to-cook");
-let searchBtn = document.querySelector(".search-btn");
-let searchForm = document.querySelector("#search");
-let searchInput = document.querySelector("#search-input");
+const allRecipesBtn = document.querySelectorAll(".show-all-btn");
+const filterBtn = document.querySelectorAll(".filter-btn");
+const fullRecipeInfo = document.querySelector(".recipe-instructions");
+const main = document.querySelector("main");
+const pantryBtn = document.querySelectorAll(".my-pantry-btn");
+const savedRecipesBtn = document.querySelectorAll(".saved-recipes-btn");
+const recipesToCkBtn = document.querySelectorAll(".saved-recipes-to-cook");
+const searchBtn = document.querySelector(".search-btn");
+const searchForm = document.querySelector("#search");
+const searchInput = document.querySelector("#search-input");
+const mobileSearchBtn = document.querySelector(".mobile-search-btn");
+const mobileSearchForm = document.querySelector("#mobile-search");
+const mobileSearchInput = document.querySelector("#mobile-search-input");
+const menuButton = document.querySelector('.menu-button');
+const menuCloseButton = document.querySelector('.menu-close');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileMenuBody = document.querySelector('.menu-body-text');
+const mobileBackground = document.querySelector('.background');
 
 let users;
 let recipeData;
@@ -35,15 +43,18 @@ let menuOpen = false;
 
 window.addEventListener("load", fetchData);
 allRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)));
-savedRecipesBtn.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user));
-recipesToCkBtn.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user));
-filterBtn.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user));
+savedRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user)));
+recipesToCkBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user)));
+filterBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user)));
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
 // pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
-pantryBtn.addEventListener("click", toggleMenu);
-
+pantryBtn.forEach(bt => bt.addEventListener("click", toggleMenu));
 searchBtn.addEventListener("click", searchRecipes);
+mobileSearchBtn.addEventListener("click", searchRecipes);
 searchForm.addEventListener("submit", pressEnterSearch);
+mobileSearchForm.addEventListener("submit", pressEnterSearch);
+menuButton.addEventListener('click', openMobileMenu);
+menuCloseButton.addEventListener('click', closeMobileMenu);
 
 document.addEventListener('click', function(e) {
   if (e.target && e.target.id === 'minus') {
@@ -55,6 +66,7 @@ document.addEventListener('click', function(e) {
 })
 
 function onloadHandler() {
+  document.querySelector("#huntr-react-container-2").remove();
   user = new User(users[Math.floor(Math.random() * users.length)]);
   pantry = new Pantry(user);
   domUpdates.welcomeUser(user, pantry, ingredientsData);
@@ -65,15 +77,15 @@ function onloadHandler() {
 function fetchData() {
   users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
     .then(response => response.json())
-    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message))
 
   ingredientsData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
     .then(response => response.json())
-    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message))
 
   recipeData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
-    .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
+    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message))
 
   return Promise.all([users, ingredientsData, recipeData])
     .then(response => {
@@ -83,6 +95,33 @@ function fetchData() {
     })
     .then(onloadHandler)
     .catch(error => console.log(error))
+}
+
+//MOBILE MEDIA QUERY
+function openMobileMenu() {
+  mobileMenuBody.classList.remove('hide');
+  mobileMenuBody.classList.add('menu-body-style');
+  mobileMenu.classList.add('open-style');
+  menuButton.classList.add('hide');
+  menuCloseButton.classList.remove('hide');
+  mobileBackground.classList.add('gray-1');
+  document.querySelector('.mobile-filter-btn').addEventListener('click', openFilterBar);
+}
+
+function openFilterBar() {
+  document.querySelector('.mobile-wrap').classList.remove('hide');
+  document.querySelector('.filter-btn').addEventListener('click', function() {
+    document.querySelector('.mobile-wrap').classList.add('hide');
+  })
+}
+
+function closeMobileMenu() {
+  mobileMenuBody.classList.add('hide');
+  mobileMenuBody.classList.remove('menu-body-style');
+  mobileMenu.classList.remove('open-style');
+  menuButton.classList.remove('hide');
+  menuCloseButton.classList.add('hide');
+  mobileBackground.classList.remove('gray-1');
 }
 
 // CREATE RECIPE CARDS
@@ -115,11 +154,16 @@ function findTags() {
 // SEARCH RECIPES
 function pressEnterSearch(event) {
   event.preventDefault();
-  searchRecipes();
+  let searchinput;
+  if (mobileSearchInput.value) {
+    searchinput = mobileSearchInput.value
+  } else {
+    searchinput = searchInput.value;
+  }
+  searchRecipes(searchinput.toLowerCase());
 }
 
-function searchRecipes() {
-  const search = searchInput.value.toLowerCase();
+function searchRecipes(search) {
   if (document.querySelector('.welcome-msg').style.display !== 'none') {
     let results = user.searchForRecipe(search, recipeData);
     filterNonSearched(results);
