@@ -7,17 +7,19 @@ let domUpdates = {
 		</div>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
       welcomeMsg);
-
+		//What is the sort doing?  No name property on pantry items
     this.displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name), ingredientsData);
   },
 
   displayPantryInfo(pantry, ingredientsData) {
-		console.log('pantry')
+		console.log('pantryFn', pantry)
+		let pantryList = document.querySelector(".pantry-list")
+		pantryList.innerHTML = ''
     pantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
 
       const ingredientHtml = `<li>${ingredName}, ${ingredient.amount}</li>`;
-      document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
+      pantryList.insertAdjacentHTML("beforeend",
         ingredientHtml);
     });
   },
