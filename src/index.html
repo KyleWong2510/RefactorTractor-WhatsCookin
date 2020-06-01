@@ -17,19 +17,19 @@
 					<span>fresh</span>Picks
 					<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon" role="logo"/>
 				</h1>
-				<div class="menu-button">
-					<img src="images/menu.svg" alt="menu icon" class="feather feather-menu" fill="#fff" stroke="currentColor" />
-					<!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg> -->
-				</div>
-				<div class="menu-close hide">
-					<img src="images/x.svg" alt="close menu icon" class="feather feather-close" fill="#fff" stroke="currentColor" />
-					<!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> -->
-				</div>
-			</div>
-			<div class="menu-body-text hide">
+				<section class="menu-button">
+					<!-- <img src="images/menu.svg" alt="menu icon" class="feather feather-menu" fill="#fff" stroke="currentColor" /> -->
+					<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+				</section>
+				<section class="menu-close hide">
+					<!-- <img src="images/x.svg" alt="close menu icon" class="feather feather-close" fill="#fff" stroke="currentColor" /> -->
+					<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</section>
+			</section>
+			<section class="menu-body-text hide">
 				<form id="mobile-search" role="search">
 					<input name="search for" id="mobile-search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
-						<label for="#search-input">
+						<label for="mobile-search-input">
 					</label>
 					<button class="mobile-nav-btn mobile-search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
 				</form>
@@ -43,23 +43,23 @@
 				<button role="button" class="mobile-filter-btn">Filter Recipes by Type</button>
 			</section>
 			<aside class="mobile-aside">
-				<div class="mobile-wrap hide">
+				<section class="mobile-wrap hide">
 					<h2 class="recipe-type">Recipe Type</h2>
 					<ul class="tag-list">
 					</ul>
 					<button class="filter-btn">Filter Recipes</button>
-				</div>
+				</section>
 			</aside>
 		</section>
 
-    <header role="heading">
+    <header role="navigation">
       <h1 role="banner" class="main-title">
 				<span>fresh</span>Picks
 				<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon">
 			</h1>
       <form id="search" role="search">
         <input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
-          <label for="search-input">
+          <label for="search input">
         </label>
         <button role="button" class="nav-btn search-btn" type="button" name="search button"><img src="images/search.png" alt="search button"></button>
       </form>
@@ -89,13 +89,13 @@
       <ul class="pantry-list"></ul>
 		</section>
 		
-    <aside role="listbox" class="aside">
-      <div class="wrap">
+    <aside role="complementary" class="aside">
+      <section class="wrap">
         <h2 class="recipe-type">Recipe Type</h2>
         <ul  class="tag-list">
         </ul>
         <button role="button" class="filter-btn">Filter Recipes</button>
-      </div>
+      </section>
 		</aside>
 		
     <main role="complementary">

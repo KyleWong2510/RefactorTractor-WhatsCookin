@@ -12,7 +12,6 @@ let domUpdates = {
   },
 
   displayPantryInfo(pantry, ingredientsData) {
-    console.log('pantryFn', pantry)
     let pantryList = document.querySelector(".pantry-list")
     pantryList.innerHTML = ''
     pantry.forEach(ingredient => {
