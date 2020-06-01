@@ -68,7 +68,6 @@ document.addEventListener('click', function(e) {
 })
 
 function onloadHandler() {
-  // document.querySelector("#huntr-react-container-2").remove();
   user = new User(users[Math.floor(Math.random() * users.length)]);
   pantry = new Pantry(user);
   domUpdates.welcomeUser(user, pantry, ingredientsData);

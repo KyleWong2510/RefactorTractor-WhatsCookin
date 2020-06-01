@@ -7,7 +7,6 @@ let domUpdates = {
 		</div>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
       welcomeMsg);
-    //What is the sort doing?  No name property on pantry items
     this.displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name), ingredientsData);
   },
 
@@ -181,7 +180,7 @@ let domUpdates = {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     });
-    domUpdates.showToCookBanner()
+    this.showToCookBanner()
   },
 
   openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
