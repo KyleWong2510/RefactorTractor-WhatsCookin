@@ -9,13 +9,13 @@
     <link rel="icon" href="../images/apple-logo.png" />
 	</head>
 	
-  <body>
+  <body role="main">
 		<!-- <section class="background"> -->
 		<section class="menu mobile-menu hide">
-			<div class="header-text">
+			<section class="header-text">
 				<h1 class="main-title">
 					<span>fresh</span>Picks
-					<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon" />
+					<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon" role="logo"/>
 				</h1>
 				<div class="menu-button">
 					<img src="images/menu.svg" alt="menu icon" class="feather feather-menu" fill="#fff" stroke="currentColor" />
@@ -34,14 +34,14 @@
 					<button class="mobile-nav-btn mobile-search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
 				</form>
 				<section class="mobile-buttons">
-					<button class="mobile-nav-btn  saved-recipes-btn" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
-					<button class="mobile-nav-btn saved-recipes-to-cook h1 ing-pan-btn " type="button" name="button"
+					<button role="button" class="mobile-nav-btn  saved-recipes-btn" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
+					<button  role="button" class="mobile-nav-btn saved-recipes-to-cook h1 ing-pan-btn " type="button" name="button"
 						role="show saved recipes to cook"><img class="recipe-icon" src="../images/recipe.png"
 							alt="fork and knife image">Recipes to Cook</button>
-					<button class="mobile-nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
+					<button role="button" class="mobile-nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
 				</section>
-				<button class="mobile-filter-btn">Filter Recipes by Type</button>
-			</div>
+				<button role="button" class="mobile-filter-btn">Filter Recipes by Type</button>
+			</section>
 			<aside class="mobile-aside">
 				<div class="mobile-wrap hide">
 					<h2 class="recipe-type">Recipe Type</h2>
@@ -52,71 +52,70 @@
 			</aside>
 		</section>
 
-    <header>
-      <h1 class="main-title">
+    <header role="heading">
+      <h1 role="banner" class="main-title">
 				<span>fresh</span>Picks
 				<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon">
 			</h1>
       <form id="search" role="search">
         <input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
-          <label for="#search-input">
+          <label for="search-input">
         </label>
-        <button class="nav-btn search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
+        <button role="button" class="nav-btn search-btn" type="button" name="search button"><img src="images/search.png" alt="search button"></button>
       </form>
-      <button class="nav-btn  saved-recipes-btn mobile-button" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
+      <button role="button" class="nav-btn  saved-recipes-btn mobile-button" type="button" name="button"><img role="img" src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
       <button class="nav-btn saved-recipes-to-cook h1 ing-pan-btn mobile-button" type="button" name="button"
-        role="show saved recipes to cook"><img class="recipe-icon mobile-button" src="../images/recipe.png"
+        role="button"><img role="img" class="recipe-icon mobile-button" src="../images/recipe.png"
           alt="fork and knife image">Recipes to Cook</button>
-      <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn mobile-button" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
+      <button role="button" class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn mobile-button" type="button" name="button"><img role="img" src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
 		</header>
 		
-    <section class="banner-image">
-      <div class="to-cook-banner hidden">
-        <div class="home-button">
+    <section role="banner" class="banner-image">
+      <section role="banner" class="to-cook-banner hidden">
+        <section class="home-button">
         <h1>Recipes to Cook</h1>
-          <button class="show-all-btn">Show All Recipes</button>
-        </div>
-      </div>
-      <div class="my-recipes-banner">
+          <button role="button" class="show-all-btn">Show All Recipes</button>
+        </section>
+      </section>
+      <section role="banner" class="my-recipes-banner">
         <h1>My Recipes</h1>
-        <button class="show-all-btn">Show All Recipes</button>
-      </div>
+        <button role="banner" class="show-all-btn">Show All Recipes</button>
+      </section>
 		</section>
 		
-    <div class="drop-menu">
+    <section role="menubar" class="drop-menu">
       <h2>My Pantry</h2>
-      <button id="modify-pantry-btn">+ / - Ingredients</button>
+      <button role="button" class="button" id="modify-pantry-btn">+ / - Ingredients</button>
       <ul class="pantry-list"></ul>
-		</div>
+		</section>
 		
-    <aside class="aside">
+    <aside role="listbox" class="aside">
       <div class="wrap">
         <h2 class="recipe-type">Recipe Type</h2>
-        <ul class="tag-list">
+        <ul  class="tag-list">
         </ul>
-        <button class="filter-btn">Filter Recipes</button>
+        <button role="button" class="filter-btn">Filter Recipes</button>
       </div>
 		</aside>
 		
-    <main>
-      <div class="recipe-instructions"></div>
-      <div id="post-to-pantry">
+    <main role="complementary">
+      <section class="recipe-instructions"></section>
+      <section id="post-to-pantry">
         <h3 id="modify-pantry-title">Modify Your Pantry</h3>
-        <form id="search-ingredients" role="search">
-          <input id="search-ingredients-input" type="text" autocomplete="off" placeholder="Search Ingredients..."></input>
+        <form role="form" id="search-ingredients" role="search">
+          <input role="input" id="search-ingredients-input" type="text" autocomplete="off" placeholder="Search Ingredients..."></input>
           <label for="search-ingredients-input" class="search-label"></label>
-          <button class="search-ingredients-btn" type="button" name="button"><img src="images/search.png" alt="search button" id="search-ingredients-icon" class="search-ingredients-btn"></button>
+          <button role="button" class="search-ingredients-btn" type="button" name="button"><img src="images/search.png" alt="search button" id="search-ingredients-icon" class="search-ingredients-btn"></button>
         </form>
-        <div id="searched-ingredient-results">
-
-        </div>
-        <button id="save-changes-btn">Save Changes and Exit</button>
-      </div>
-      <div class="my-recipes-banner">
+        <section role="complementary" id="searched-ingredient-results">
+        </section>
+        <button role="button" id="save-changes-btn">Save Changes and Exit</button>
+      </section>
+      <section role="banner" class="my-recipes-banner">
         <h1>My Recipes</h1>
-        <button class="show-all-btn">Show All Recipes</button>
-			</div>
-			<div class="recipe-card-container mobile-cards"></div>
+        <button role="button" class="show-all-btn">Show All Recipes</button>
+			</section>
+			<section class="recipe-card-container mobile-cards"></section>
 		</main>
 	<!-- </section> -->
   </body>

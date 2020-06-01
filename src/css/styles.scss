@@ -20,6 +20,10 @@ body {
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: auto;
+  &:focus {
+    border: 1px solid blue;
+  }
+    
 }
 
 h1 {
@@ -392,10 +396,10 @@ main, .recipe-card-container {
 #modify-pantry-btn,
 .filter-btn,
 .mobile-filter-btn {
-  background-color: $forest-green;
+  background-color: #3e668c;
   border: 0;
   border-radius: 3px;
-  color: black;
+  color: #ffffff;
   cursor: pointer;
   font-family: "Quicksand", sans-serif;
   font-size: 12pt;
