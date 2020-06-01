@@ -657,11 +657,12 @@ main, .recipe-card-container {
 		right: 0px;
 		top: 0px;
 		height: 5vh;
-		stroke: #fff;
+		color: #fff;
 	}
 
 	.mobile-buttons {
 		display: flex;
+		justify-content: space-evenly;
 	}
 
 	.mobile-menu {
@@ -709,7 +710,10 @@ main, .recipe-card-container {
     position: absolute;
     text-align: center;
     width: 229px;
-    z-index: 3;
+		z-index: 3;
+    top: 38%;
+    position: absolute;
+    right: 62%;
 	}
 
 	.open-style {
@@ -734,14 +738,20 @@ main, .recipe-card-container {
 		width: 200px;
 		height: 520px;
 		background: white;
-		margin-top: 227px;
+		top: 43%;
+	}
+
+	.saved-ingredients-btn,
+	.saved-recipes-to-cook {
+		padding: 5px;
+		border-left: none;
 	}
 
 	.mobile-aside {
 		display: flex;
     justify-content: center;
-    height: auto;
-    text-align: center;
+		height: 0px;
+		text-align: center;
 	}
 
 	body {

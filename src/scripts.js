@@ -33,7 +33,7 @@ const menuButton = document.querySelector('.menu-button');
 const menuCloseButton = document.querySelector('.menu-close');
 const mobileMenu = document.querySelector('.mobile-menu');
 const mobileMenuBody = document.querySelector('.menu-body-text');
-const mobileBackground = document.querySelector('.background');
+// const mobileBackground = document.querySelector('.background');
 
 let users;
 let recipeData;
@@ -68,7 +68,6 @@ document.addEventListener('click', function(e) {
 })
 
 function onloadHandler() {
-  // document.querySelector("#huntr-react-container-2").remove();
   user = new User(users[Math.floor(Math.random() * users.length)]);
   pantry = new Pantry(user);
   domUpdates.welcomeUser(user, pantry, ingredientsData);
