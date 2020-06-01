@@ -44,6 +44,8 @@ describe('User', function() {
 
   it('should be able to save a recipe to favoriteRecipes', function() {
     user.saveRecipe(recipe1, 'favoriteRecipes');
+    // console.log(recipe1)
+    // console.log(user.favoriteRecipes)
     expect(user.favoriteRecipes[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
   });
 
@@ -52,7 +54,20 @@ describe('User', function() {
     expect(user.recipesToCook[0].name).to.equal('Maple Dijon Apple Cider Grilled Pork Chops');
   });
 
-  it('should be able to remove a recipe from favorites', function() {
+  it('should notify user if the array entered is not on the user object', function() {
+    expect(user.saveRecipe(recipe1, 'myFavorites')).to.equal('You must pass a valid array');
+  });
+
+  it('should notify user if the recipe object is not in the right format', function() {
+    let recipe4 = {
+      id: 3,
+      name: 'foods',
+      ingredients: []
+    }
+    expect(user.saveRecipe(recipe4, 'favoriteRecipes')).to.equal('You must pass a valid recipe');
+  });
+
+  it('should be able to remove a recipe from a given array', function() {
     user.saveRecipe(recipe1, 'favoriteRecipes')
     user.saveRecipe(recipe2, 'favoriteRecipes')
     user.saveRecipe(recipe3, 'favoriteRecipes')
@@ -67,10 +82,15 @@ describe('User', function() {
     expect(user.filterRecipes('snack', 'favoriteRecipes')).to.deep.equal([recipe1]);
   });
 
+  it('should only accept a string as a tag to search for', function() {
+    user.saveRecipe(recipe1, 'favoriteRecipes');
+    expect(user.filterRecipes(3, 'favoriteRecipes')).to.equal('You must pass a valid tag that is a string');
+  })
+
   it('should be able to search recipes by name', function() {
     user.saveRecipe(recipe1, 'favoriteRecipes');
     user.saveRecipe(recipe2, 'favoriteRecipes')
-    expect(user.searchForRecipe('Loaded', user.favoriteRecipes)).to.deep.equal([recipe1]);
+    expect(user.searchForRecipe('Loaded', 'favoriteRecipes')).to.deep.equal([recipe1]);
   });
 
   it('should be able to search recipes by ingredient', function() {
@@ -78,6 +98,22 @@ describe('User', function() {
     user.saveRecipe(recipe2, 'favoriteRecipes');
     user.saveRecipe(recipe3, 'favoriteRecipes');
 
-    expect(user.searchForRecipe('pepper', user.favoriteRecipes)).to.deep.equal([recipe3]);
+    expect(user.searchForRecipe('pepper', 'favoriteRecipes')).to.deep.equal([recipe2, recipe3]);
+  });
+
+  it('should only accept a string as a keyword', function() {
+    user.saveRecipe(recipe1, 'favoriteRecipes');
+    user.saveRecipe(recipe2, 'favoriteRecipes');
+    user.saveRecipe(recipe3, 'favoriteRecipes');
+
+    expect(user.searchForRecipe([], 'favoriteRecipes')).to.equal('You must pass a valid keyword that is a string');
+  });
+
+  it('should only accept a valid array', function() {
+    user.saveRecipe(recipe1, 'favoriteRecipes');
+    user.saveRecipe(recipe2, 'favoriteRecipes');
+    user.saveRecipe(recipe3, 'favoriteRecipes');
+
+    expect(user.searchForRecipe('pepper', 'myFavorites')).to.equal('You must pass a valid array');
   });
 });
