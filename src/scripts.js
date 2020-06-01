@@ -8,6 +8,8 @@ import './images/seasoning.png';
 import './images/recipe.png';
 import './images/recipegreen.png';
 import './images/recipeblack.png';
+import './images/menu.svg';
+import './images/x.svg';
 
 import User from './user';
 import Recipe from './recipe';
