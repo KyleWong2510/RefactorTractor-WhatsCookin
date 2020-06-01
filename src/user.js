@@ -75,7 +75,7 @@ class User {
     
     this[array].forEach(recipe => {
       recipe.ingredients.forEach(ingred => {
-        if(ingredientIDs.includes(ingred.id)) {
+        if (ingredientIDs.includes(ingred.id)) {
           searchedResults.push(recipe)
         }
       })  

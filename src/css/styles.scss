@@ -7,7 +7,6 @@ $searchbg: #b6dcca;
 $shadow: #5c7894;
 $lighthouse-blue: #8c84c8;
 
-
 body {
   background-color: $greyblue;
   display: grid;
@@ -93,7 +92,8 @@ span {
 }
 
 #search-input,
-#search-ingredients-input {
+#search-ingredients-input,
+#mobile-search-input {
   background-color: $searchbg;
   background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(255, 255, 255)), color-stop(1, rgb(225,225,225)));
   border-radius: 10px 0px 0px 10px;
@@ -128,18 +128,21 @@ span {
 }
 
 #search-input:hover,
-#search-ingredients-input:hover {
+#search-ingredients-input:hover,
+#mobile-search-input:hover {
   box-shadow: inset 0px 0px 0px 0px white;
   transition: .8s ease;
 }
 
 #search-input:focus,
-#search-ingredients-input:focus {
+#search-ingredients-input:focus,
+#mobile-search-input:focus {
   box-shadow: inset 0px 0px 0px 0px white;
 }
 
 #search-input::placeholder,
-#search-ingredients-input::placeholder {
+#search-ingredients-input::placeholder,
+#mobile-search-input::placeholder {
   color: #5B7894;
   font-size: 20px;
   text-align: right;
@@ -147,7 +150,8 @@ span {
 }
 
 #search-input:focus::placeholder,
-#search-ingredients-input:focus::placeholder {
+#search-ingredients-input:focus::placeholder,
+#mobile-search-input:focus::placeholder {
   font-size: 0px;
   transition: .8s ease;
 }
@@ -160,13 +164,15 @@ span {
   color: $lighthouse-blue;
 }
 
-.search-btn {
+.search-btn,
+.mobile-search-btn {
   border-left: 3px outset $light-green;
   border-radius: 0px 15px 15px 0px;
   padding: 1%;
 }
 
-.nav-btn {
+.nav-btn,
+.mobile-nav-btn {
   align-items: center;
   background: #5B7894 no-repeat;
   border: none;
@@ -189,7 +195,8 @@ span {
     transition: .4s ease;
   }
 }
-.nav-btn img {
+.nav-btn img,
+.mobile-nav-btn img {
    max-height: 50px;
    max-width: 50px;
   padding: 2px 0px;
@@ -210,11 +217,6 @@ span {
   bottom: 7px;
   position: absolute;
   z-index: 1;
-  &:hover {
-    transition: .4s ease;
-    bottom: 20px;
-    z-index: 1;
-  }
 }
 
 .button-holder {
@@ -276,7 +278,7 @@ span {
 }
 
 /* FILTER SIDEBAR */
-aside {
+.aside {
   background-color: white;
   display: flex;
   justify-content: center;
@@ -304,7 +306,7 @@ li {
 
 
 /* RECIPE CARD SECTION */
-main {
+main, .recipe-card-container {
   grid-area: main;
   display: flex;
   justify-content: center;
@@ -388,7 +390,8 @@ main {
 .show-pantry-recipes-btn,
 .show-all-btn,
 #modify-pantry-btn,
-.filter-btn {
+.filter-btn,
+.mobile-filter-btn {
   background-color: $forest-green;
   border: 0;
   border-radius: 3px;
@@ -626,5 +629,128 @@ main {
 }
 
 .hide {
-  display: none
+	display: none;
+}
+
+
+@media only screen and (max-width: 700px) {
+	
+	.aside, 
+	#blockColorblindContent,
+	#search,
+	header {
+		display: none!important;
+	}
+
+	.main-title{
+		display: flex;
+	}
+	
+	.menu-button, 
+	.menu-close,
+	.feather {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		height: 5vh;
+		stroke: #fff;
+	}
+
+	.mobile-buttons {
+		display: flex;
+	}
+
+	.mobile-menu {
+		display: flex!important;
+		height: 100px;
+		z-index: 2;
+		position: relative;
+	}
+
+	#mobile-search {
+		display: flex;
+		min-width: 300px;
+    max-width: 450px;
+    margin: 0 auto;
+	}
+
+	#mobile-search-input {
+		max-height: 70px;
+	}
+
+	.menu-body-style {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 400px;
+	}
+
+	.mobile-nav-btn {
+		margin: 0 auto;
+	}
+
+	.mobile-filter-btn {
+		display: block;
+    margin: 0 auto;
+    margin-top: 17px;
+	}
+
+	.drop-menu {
+		align-items: center;
+    background-color: #DAE4EE;
+    display: none;
+    height: 600px;
+    overflow: scroll;
+    padding: 15px;
+    position: absolute;
+    text-align: center;
+    width: 229px;
+    z-index: 3;
+	}
+
+	.open-style {
+		display: flex;
+		flex-direction: column;
+		height: 450px;
+		justify-content: space-between;
+	}
+
+	// .gray-1 {
+  //   background: darkgray;
+  //   height: 100%;
+  //   opacity: 80%;
+  //   position: absolute;
+  //   width: 100%;
+  //   z-index: 2;
+	// }
+	
+	.mobile-wrap {
+		position: relative;
+		z-index: 2;
+		width: 200px;
+		height: 520px;
+		background: white;
+		margin-top: 227px;
+	}
+
+	.mobile-aside {
+		display: flex;
+    justify-content: center;
+    height: auto;
+    text-align: center;
+	}
+
+	body {
+		display: block;
+	}
+
+	.mobile-cards {
+		z-index: 1;
+    position: relative;
+	}
+
+	.banner-image {
+		z-index: 1;
+    position: relative;
+	}
 }
