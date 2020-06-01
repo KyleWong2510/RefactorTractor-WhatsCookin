@@ -31,7 +31,7 @@ const menuButton = document.querySelector('.menu-button');
 const menuCloseButton = document.querySelector('.menu-close');
 const mobileMenu = document.querySelector('.mobile-menu');
 const mobileMenuBody = document.querySelector('.menu-body-text');
-const mobileBackground = document.querySelector('.background');
+// const mobileBackground = document.querySelector('.background');
 
 let users;
 let recipeData;
