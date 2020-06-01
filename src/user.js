@@ -9,46 +9,71 @@ class User {
   }
 
   saveRecipe(recipe, array) {
-    this[array].push(recipe);
+    if(!Object.keys(recipe).includes('id') || !Object.keys(recipe).includes('name') || !Object.keys(recipe).includes('ingredients') || !Object.keys(recipe).includes('instructions') || !Object.keys(recipe).includes('tags') || !Object.keys(recipe).includes('image')) {
+      return 'You must pass a valid recipe'
+    }
+    if(array === 'favoriteRecipes' || array === 'recipesToCook') {
+      this[array].push(recipe)
+    } else return 'You must pass a valid array'
   }
 
   removeRecipe(recipe, array) {
-    let i = this[array].indexOf(recipe);
-    this[array].splice(i, 1);
-
+    if(!Object.keys(recipe).includes('id') || !Object.keys(recipe).includes('name') || !Object.keys(recipe).includes('ingredients') || !Object.keys(recipe).includes('instructions') || !Object.keys(recipe).includes('tags') || !Object.keys(recipe).includes('image')) {
+      return 'You must pass a valid recipe'
+    }
+    if(array === 'favoriteRecipes' || array === 'recipesToCook') {
+      let i = this[array].indexOf(recipe);
+      this[array].splice(i, 1);
+    } else return 'You must pass a valid array'
   }
 	
   filterRecipes(tag, array) {
-    return this[array].filter(recipe => recipe.tags.includes(tag));
+    if(typeof tag !== 'string') return 'You must pass a valid tag that is a string'
+    if(array === 'favoriteRecipes' || array === 'recipesToCook') {
+      return this[array].filter(recipe => recipe.tags.includes(tag));
+    } else return 'You must pass a valid array'
 	}
 	
   searchForRecipe(keyword, array) {
-    let byName = this.searchByName(keyword, array)
-    let byIngredient = this.searchByIngred(keyword, array)
-    let searchedResults = byName.concat(byIngredient)
-    return [... new Set(searchedResults)]
+    if(typeof keyword !== 'string') return 'You must pass a valid keyword that is a string'
+    if(array === 'favoriteRecipes' || array === 'recipesToCook') {
+      let byName = this.searchByName(keyword, array)
+      let byIngredient = this.searchByIngred(keyword, array)
+      let searchedResults = byName.concat(byIngredient)
+      return [... new Set(searchedResults)]
+    } else return 'You must pass a valid array'
   }
 
   searchByName(keyword, array) {
-    const word = keyword.toLowerCase()
     const searchedResults = []
-    array.forEach(recipe => {
-      if(recipe.name.toLowerCase().includes(word)) {
+    this[array].forEach(recipe => {
+      if(recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
         searchedResults.push(recipe)
       }
     })
     return searchedResults
   }
-//s&p issue
+
   searchByIngred(keyword, array) {
-    const word = keyword.toLowerCase()
-    const searchedResults = []
-    const ingredientIDs = ingredientsData
-      .filter(ingred => ingred.name)
-      .filter(ingred => ingred.name.toLowerCase().includes(word))
-      .map(ingred => ingred.id)
+    const searchedResults = [];
+    let ingredientIDs = [];
+
+    if(keyword === 'salt' || keyword === 'pepper') {
+      ingredientIDs = ingredientsData
+        .filter(ingred => ingred.name)
+        .filter(ingred => {
+          return ingred.name.toLowerCase().includes(keyword.toLowerCase()) || 
+          ingred.name.toLowerCase().includes('s&p')
+        })
+        .map(ingred => ingred.id)
+    } else {
+      ingredientIDs = ingredientsData
+        .filter(ingred => ingred.name)
+        .filter(ingred => ingred.name.toLowerCase().includes(keyword.toLowerCase()))
+        .map(ingred => ingred.id)
+    }
     
-      array.forEach(recipe => {
+    this[array].forEach(recipe => {
       recipe.ingredients.forEach(ingred => {
         if(ingredientIDs.includes(ingred.id)) {
           searchedResults.push(recipe)
