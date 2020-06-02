@@ -115,7 +115,7 @@ let domUpdates = {
   showWelcomeBanner() {
     document.querySelector('.to-cook-banner').style.display = 'none';
     document.querySelector(".my-recipes-banner").style.display = "none";
-    document.querySelector(".welcome-msg").style.display = "flex";
+    document.querySelector(".welcome-msg").style.display = "block";
   },
 
   showMyRecipesBanner() {

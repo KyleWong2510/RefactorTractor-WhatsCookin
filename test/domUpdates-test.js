@@ -39,13 +39,35 @@ describe('domUpdates', function() {
   });
 
   it('welcomeUser should display a welcome message', () => {
-    chai.spy.on(domUpdates, ['welcomeUser', 'displayPantryInfo'], () => {})
+    chai.spy.on(domUpdates, ['welcomeUser'], () => {});
 
     domUpdates.welcomeUser(user, pantry, ingredientsData);
 
     expect(domUpdates.welcomeUser).to.have.been.called(1);
     expect(domUpdates.welcomeUser).to.have.been.called.with(user, pantry, ingredientsData);
-    //expect dom updates to not have been called
-    expect(domUpdates.displayPantryInfo).to.have.been.called(1);
+  });
+
+  it('displayRecipeCards should a recipe card', () => {
+    const currentRecipe = {
+      "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+      "id": 595736,
+      "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+      "ingredients": [
+        {
+          "name": "all purpose flour",
+          "id": 20081,
+          "quantity": {
+            "amount": 1.5,
+            "unit": "c"
+          }
+        }]
+    };
+    const shortRecipeName = currentRecipe.name;
+    chai.spy.on(domUpdates, ['displayRecipeCards'], () => {});
+
+    domUpdates.displayRecipeCards(currentRecipe, shortRecipeName);
+
+    expect(domUpdates.displayRecipeCards).to.have.been.called(1);
+    expect(domUpdates.displayRecipeCards).to.have.been.called.with(currentRecipe, shortRecipeName);
 	});
 })
