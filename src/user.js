@@ -46,7 +46,6 @@ class User {
   }
 
   searchByName(keyword, array) {
-    console.log('keyword', keyword)
     const searchedResults = []
     array.forEach(recipe => {
       if (recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
