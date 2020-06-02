@@ -75,22 +75,10 @@ describe('User', function() {
     expect(user.favoriteRecipes).to.deep.equal([recipe1, recipe3]);
   });
 
-  it('should be able to filter recipes by type', function() {
-    user.saveRecipe(recipe1, 'favoriteRecipes');
-    user.saveRecipe(recipe2, 'favoriteRecipes');
-    user.saveRecipe(recipe3, 'favoriteRecipes');
-    expect(user.filterRecipes('snack', 'favoriteRecipes')).to.deep.equal([recipe1]);
-  });
-
-  it('should only accept a string as a tag to search for', function() {
-    user.saveRecipe(recipe1, 'favoriteRecipes');
-    expect(user.filterRecipes(3, 'favoriteRecipes')).to.equal('You must pass a valid tag that is a string');
-  })
-
   it('should be able to search recipes by name', function() {
     user.saveRecipe(recipe1, 'favoriteRecipes');
     user.saveRecipe(recipe2, 'favoriteRecipes')
-    expect(user.searchForRecipe('Loaded', 'favoriteRecipes')).to.deep.equal([recipe1]);
+    expect(user.searchForRecipe('Loaded', user.favoriteRecipes)).to.deep.equal([recipe1]);
   });
 
   it('should be able to search recipes by ingredient', function() {
@@ -98,7 +86,7 @@ describe('User', function() {
     user.saveRecipe(recipe2, 'favoriteRecipes');
     user.saveRecipe(recipe3, 'favoriteRecipes');
 
-    expect(user.searchForRecipe('pepper', 'favoriteRecipes')).to.deep.equal([recipe2, recipe3]);
+    expect(user.searchForRecipe('pepper', user.favoriteRecipes)).to.deep.equal([recipe2, recipe3]);
   });
 
   it('should only accept a string as a keyword', function() {
@@ -106,7 +94,7 @@ describe('User', function() {
     user.saveRecipe(recipe2, 'favoriteRecipes');
     user.saveRecipe(recipe3, 'favoriteRecipes');
 
-    expect(user.searchForRecipe([], 'favoriteRecipes')).to.equal('You must pass a valid keyword that is a string');
+    expect(user.searchForRecipe([], user.favoriteRecipes)).to.equal('You must pass a valid keyword that is a string');
   });
 
   it('should only accept a valid array', function() {
