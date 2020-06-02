@@ -49,7 +49,7 @@ class User {
     console.log('keyword', keyword)
     const searchedResults = []
     array.forEach(recipe => {
-      if(recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
+      if (recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
         searchedResults.push(recipe)
       }
     })

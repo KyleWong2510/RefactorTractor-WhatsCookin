@@ -202,7 +202,6 @@ function hidePostForm() {
       user = new User(users[id - 1])
       // console.log('user', user)
       pantry = new Pantry(user);
-      console.log('pantryFetch', pantry)
     })
     .then(() => domUpdates.displayPantryInfo(pantry.data, ingredientsData))
     .catch(error => console.log(error))   
