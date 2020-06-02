@@ -1,13 +1,13 @@
 // @import 'media-query';
 
-$green: #84C8A4;
-$greyblue: #5B7894;
 $forest-green: #359567;
-$light-green: #C4EB67;
+$green: #84C8A4;
 $grey: #475d74;
+$greyblue: #5B7894;
+$light-green: #C4EB67;
+$lighthouse-blue: #8c84c8;
 $searchbg: #b6dcca;
 $shadow: #5c7894;
-$lighthouse-blue: #8c84c8;
 
 @mixin search-inputs () {
   background-color: $searchbg;
@@ -41,6 +41,18 @@ $lighthouse-blue: #8c84c8;
     font-size: 0px;
     transition: .8s ease;
   }
+}
+
+@mixin button-styles() {
+  background-color: #3e668c;
+  border: 0;
+  border-radius: 3px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
 }
 
 body {
@@ -82,13 +94,13 @@ h3 {
 }
 
 h4 {
-  color: #353795;
   background-color: $light-green;
   border-radius: 3px;
+  color: #353795;
+	display: inline-block;
   margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
 	width: max-content;
-	display: inline-block;
 }
 
 li {
@@ -100,18 +112,18 @@ span {
 }
 
 .button-holder {
-  height: 59px;
-  width: 110px;
-  position: absolute;
   bottom: 0;
+  height: 59px;
   left: 160px;
+  position: absolute;
+  width: 110px;
 }
 
 .recipe-icon-card {
-  height: 50px;
-  width: 50px;
   bottom: 7px;
+  height: 50px;
   position: absolute;
+  width: 50px;
   z-index: 1;
 }
 
@@ -139,8 +151,8 @@ header {
 }
 
 #search {
-  border-radius: 15px 15px 15px 15px;
   border: 3px outset $light-green;
+  border-radius: 15px 15px 15px 15px;
   box-shadow: 0px 0px 7px 0px $grey;
   display: flex;
   font-family: "Quicksand", sans-serif;
@@ -243,10 +255,10 @@ header {
 }
 
 .home-button {
-  display: inline-block;
   align-self: center;
-  right: 522px;
   bottom: 436px;
+  display: inline-block;
+  right: 522px;
 }
 
 .welcome-msg {
@@ -257,8 +269,8 @@ header {
 .aside {
   background-color: white;
   display: flex;
-  justify-content: center;
   height: auto;
+  justify-content: center;
   text-align: center;
 }
 
@@ -272,8 +284,8 @@ header {
 
 ul {
   list-style-type: none;
-  text-align: left;
   padding-left: 35px;
+  text-align: left;
 }
 
 li {
@@ -282,11 +294,11 @@ li {
 
 /* RECIPE CARD SECTION */
 main, .recipe-card-container {
-  grid-area: main;
-  display: flex;
-  justify-content: center;
   align-content: flex-start;
+  display: flex;
   flex-wrap: wrap;
+  grid-area: main;
+  justify-content: center;
 }
 
 .recipe-card {
@@ -297,8 +309,8 @@ main, .recipe-card-container {
 	height: 329px;
   margin: 20px;
   padding: 15px;
-	width: 250px;
 	position: relative;
+	width: 250px;
   &:hover .card-photo-preview {
     opacity: 50%;
     transition: .8s ease;
@@ -317,21 +329,21 @@ main, .recipe-card-container {
 
 .card-apple-icon {
   cursor: pointer;
+	bottom: 0;
   float: right;
   height: 50px;
 	padding-bottom: 10px;
 	padding-right: 11px;
-	width: 45px;
 	position: absolute;
-	bottom: 0;
 	right: 0;	
+	width: 45px;
 }
 
 .card-photo-preview {
   background-position: 50% 50%;
+  border-radius: 7px;
   background-repeat: no-repeat;
   background-size: cover;
-  border-radius: 7px;
   cursor: pointer;
   height: 130px;
   transition: .8s ease;
@@ -355,40 +367,45 @@ main, .recipe-card-container {
   padding: 0%;
   position: absolute;
   text-align: center;
-  width: 0%;
   transition: .5s ease;
+  width: 0%;
 }
 
 /* BUTTONS */
-.show-pantry-recipes-btn,
-.show-all-btn,
-#modify-pantry-btn,
-.filter-btn,
-.mobile-filter-btn {
-  background-color: #3e668c;
-  border: 0;
-  border-radius: 3px;
-  color: #ffffff;
-  cursor: pointer;
-  font-family: "Quicksand", sans-serif;
-  font-size: 12pt;
-  font-weight: bold;
-  padding: 5px 10px 5px 10px;
-}
+// .show-pantry-recipes-btn,
+// .show-all-btn,
+// #modify-pantry-btn,
+// .filter-btn,
+// .mobile-filter-btn {
+//   background-color: #3e668c;
+//   border: 0;
+//   border-radius: 3px;
+//   color: #ffffff;
+//   cursor: pointer;
+//   font-family: "Quicksand", sans-serif;
+//   font-size: 12pt;
+//   font-weight: bold;
+//   padding: 5px 10px 5px 10px;
+// }
 
 .show-pantry-recipes-btn,
 #modify-pantry-btn {
+  @include button-styles();
   margin-top: 10px;
 }
 
 .show-all-btn {
+  @include button-styles();
   height: 40px;
   margin-top: 20px;
   width: 200px;
 }
 
-.filter-btn:hover {
-  background-color: $green;
+.filter-btn {
+  @include button-styles();
+  &:hover {
+    background-color: $green;
+  }
 }
 
 /* PANTRY LIST */
@@ -525,15 +542,15 @@ main, .recipe-card-container {
 }
 
 #search-ingredients {
-  border-radius: 10px;
   border: 3px outset #C4EB67;
+  border-radius: 10px;
   box-shadow: 0px 0px 7px 0px #475d74;
   display: flex;
   font-family: "Quicksand", sans-serif;
+  height: 10%
   justify-content: center;
   margin: 1.2% 0.5% 1.2% 0%;
   width: 100%;
-  height: 10%
 }
 
 #modify-pantry-title {
@@ -549,12 +566,12 @@ main, .recipe-card-container {
 }
 
 #save-changes-btn {
-  height: 7%;
   background-color: #475d74;
+  border: none;
+  border-radius: 5px;
   color: white;
   font-family: "Quicksand", sans-serif;
-  border-radius: 5px;
-  border: none;
+  height: 7%;
   margin-top: 5%;
   width: 25%;
 }
@@ -565,21 +582,21 @@ main, .recipe-card-container {
 }
 
 #add-subtract {
-  display: flex;
   border: solid 2px #475d74;
   border-radius: 7px;
-  margin: 0;
+  display: flex;
   height: 10%;
+  margin: 0;
   width: 20%
 }
 
 #minus, 
 #plus {
+  background-color: #475d74;
   border: 0;
   color: white;
-  background-color: #475d74;
+  border-radius: 3px 0px 0px 3px;
   width: 30%;
-  border-radius: 3px 0px 0px 3px
 }
 
 #ingred-name {
@@ -587,12 +604,12 @@ main, .recipe-card-container {
 }
 
 .amount {
+  border: 0;
   border-color: #475d74;
   border-radius: 0;
   margin: 0;
   text-align: center;
   width: 40%;
-  border: 0;
 }
 
 .hide {
@@ -621,11 +638,11 @@ main, .recipe-card-container {
 		.menu-button, 
 		.menu-close,
 		.feather {
+			color: #fff;
+			height: 5vh;
 			position: absolute;
 			right: 0px;
 			top: 0px;
-			height: 5vh;
-			color: #fff;
 		}
 
 		.mobile-buttons {
@@ -636,8 +653,8 @@ main, .recipe-card-container {
 		.mobile-menu {
 			display: flex!important;
 			height: 100px;
-			z-index: 2;
 			position: relative;
+			z-index: 2;
 		}
 
 		.open-style {
@@ -649,9 +666,9 @@ main, .recipe-card-container {
 
 		#mobile-search {
 			display: flex;
-			min-width: 300px;
-			max-width: 450px;
 			margin: 0 auto;
+			max-width: 450px;
+			min-width: 300px;
 			.mobile-nav-btn {
 				margin: 0 auto;
 			}
@@ -665,8 +682,8 @@ main, .recipe-card-container {
 		.menu-body-style {
 			display: flex;
 			flex-direction: column;
-			justify-content: space-around;
 			height: 350px;
+			justify-content: space-around;
 			.saved-ingredients-btn,
 			.saved-recipes-to-cook {
 				padding: 5px;
@@ -681,18 +698,18 @@ main, .recipe-card-container {
 		}
 
 		.drop-menu {
-			display: none;
-			position: absolute;
 			align-items: center;
 			background-color: #DAE4EE;
+			display: none;
 			height: 600px;
-			width: 229px;
 			overflow: scroll;
 			padding: 15px;
-			text-align: center;
-			z-index: 3;
-			top: 30%;
+			position: absolute;
 			right: 26%;
+			text-align: center;
+			top: 30%;
+			width: 229px;
+			z-index: 3;
 		}
 
 		#post-to-pantry {
@@ -700,18 +717,18 @@ main, .recipe-card-container {
 		}
 
 		.mobile-aside {
-			display: flex;
-			justify-content: center;
-			height: 0px;
-			text-align: center;
 			background: white;
+			display: flex;
+			height: 0px;
+			justify-content: center;
+			text-align: center;
 			.mobile-wrap {
-				position: relative;
-				z-index: 2;
-				width: 200px;
-				height: 520px;
 				background: white;
+				height: 520px;
+				position: relative;
 				top: 43%;
+				width: 200px;
+				z-index: 2;
 			}
 		}
 	}
