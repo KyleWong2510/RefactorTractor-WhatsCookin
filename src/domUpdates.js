@@ -12,8 +12,9 @@ let domUpdates = {
 
   displayPantryInfo(pantry, ingredientsData) {
     let pantryList = document.querySelector(".pantry-list")
-		pantryList.innerHTML = '';
-    pantry.forEach(ingredient => {
+    pantryList.innerHTML = '';
+    const updatedPantry = pantry.filter(item => item.amount > 0);
+    updatedPantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
       const ingredientHtml = `<li>${ingredName}, ${ingredient.amount}</li>`;
       pantryList.insertAdjacentHTML("beforeend",
@@ -183,7 +184,7 @@ let domUpdates = {
   },
 
   openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
-    fullRecipeInfo.style.display = "inline";
+		fullRecipeInfo.style.display = "inline";
     let recipeId = parseInt(event.target.closest(".recipe-card").id);
     let clickedRecipe = allRecipes.find(clickedRecipe => clickedRecipe.id === Number(recipeId));
     this.generateRecipeTitle(clickedRecipe, this.generateIngredients(clickedRecipe, ingredientsData), ingredientsData, pantry, fullRecipeInfo);
@@ -328,23 +329,23 @@ let domUpdates = {
   //   document.querySelector('.menu-close').classList.remove('hide');
   //   document.querySelector('.background').classList.add('gray-1');
   //   document.querySelector('.mobile-filter-btn').addEventListener('click', this.openFilterBar);
-	// },
+  // },
 
-	// openFilterBar() {
-	// 	document.querySelector('.mobile-wrap').classList.remove('hide');
-	// 	document.querySelector('.filter-btn').addEventListener('click', function() {
-	// 		document.querySelector('.mobile-wrap').classList.add('hide');
-	// 	})
-	// },
+  // openFilterBar() {
+  // 	document.querySelector('.mobile-wrap').classList.remove('hide');
+  // 	document.querySelector('.filter-btn').addEventListener('click', function() {
+  // 		document.querySelector('.mobile-wrap').classList.add('hide');
+  // 	})
+  // },
 	
-	// closeMobileMenu() {
-	// 	document.querySelector('.menu-body-text').classList.add('hide');
-	// 	document.querySelector('.menu-body-text').classList.remove('menu-body-style');
-	// 	document.querySelector('.mobile-menu').classList.remove('open-style');
-	// 	document.querySelector('.menu-button').classList.remove('hide');
-	// 	document.querySelector('.menu-close').classList.add('hide');
-	// 	document.querySelector('.background').classList.remove('gray-1');
-	// }
+  // closeMobileMenu() {
+  // 	document.querySelector('.menu-body-text').classList.add('hide');
+  // 	document.querySelector('.menu-body-text').classList.remove('menu-body-style');
+  // 	document.querySelector('.mobile-menu').classList.remove('open-style');
+  // 	document.querySelector('.menu-button').classList.remove('hide');
+  // 	document.querySelector('.menu-close').classList.add('hide');
+  // 	document.querySelector('.background').classList.remove('gray-1');
+  // }
 }
 
 export default domUpdates;
