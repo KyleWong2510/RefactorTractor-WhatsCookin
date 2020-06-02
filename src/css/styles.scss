@@ -738,24 +738,18 @@ main, .recipe-card-container {
 			}
 		}
 	}
+
+	.mobile-cards, 
+	.banner-image {
+		z-index: 3;
+    // position: relative;
+	}
+
+.gray-1 {
+    background: darkgray;
+    opacity: 40%;
+    position: absolute;
+    width: 100%;
+    z-index: 5;
+	}
 }
-
-// 	.mobile-cards {
-// 		z-index: 1;
-//     position: relative;
-// 	}
-
-// 	.banner-image {
-// 		z-index: 1;
-//     position: relative;
-// 	}
-// }
-
-// .gray-1 {
-  //   background: darkgray;
-  //   height: 100%;
-  //   opacity: 80%;
-  //   position: absolute;
-  //   width: 100%;
-  //   z-index: 2;
-	// }
