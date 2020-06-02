@@ -26,10 +26,10 @@ let domUpdates = {
     let cardHtml = `
     <div class="recipe-card" id=${currentRecipe.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
-      <div tabindex="0" class="card-photo-container">
+      <div class="card-photo-container">
         <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
         <div class="text">
-          <div class="instructions">Click for Instructions</div>
+          <div tabindex="0" class="instructions">Click for Instructions</div>
         </div>
 			</div>
       <div>${tagsToList}</div>

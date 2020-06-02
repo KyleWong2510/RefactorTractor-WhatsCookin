@@ -51,7 +51,7 @@ main.addEventListener('keypress', function(e) {
   if (e.key === 'Enter') {
     domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry)
   }
-})
+});
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
 // pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
 pantryBtn.forEach(bt => bt.addEventListener("click", toggleMenu));
