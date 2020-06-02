@@ -33,7 +33,6 @@ const menuButton = document.querySelector('.menu-button');
 const menuCloseButton = document.querySelector('.menu-close');
 const mobileMenu = document.querySelector('.mobile-menu');
 const mobileMenuBody = document.querySelector('.menu-body-text');
-const mobileBackground = document.querySelector('.background');
 
 let users;
 let recipeData;
@@ -104,8 +103,10 @@ function openMobileMenu() {
   mobileMenuBody.classList.add('menu-body-style');
   mobileMenu.classList.add('open-style');
   menuButton.classList.add('hide');
-  menuCloseButton.classList.remove('hide');
-  mobileBackground.classList.add('gray-1');
+	menuCloseButton.classList.remove('hide');
+	main.classList.add('gray-1');
+	document.querySelector('.mobile-cards').classList.add('gray-1');
+	document.querySelector('.banner-image').classList.add('gray-1');
 	document.querySelector('.mobile-filter-btn').addEventListener('click', openFilterBar);
 	document.querySelector('.main-title').addEventListener('click', () => domUpdates.showAllRecipes(allRecipes));
 }
@@ -125,8 +126,9 @@ function closeMobileMenu() {
 	menuCloseButton.classList.add('hide');
 	document.querySelector('.mobile-wrap').classList.add('hide');
 	document.querySelector(".drop-menu").style.display = "none";
-	mobileBackground.classList.remove('gray-1');
-}
+	main.classList.remove('gray-1');
+	document.querySelector('.mobile-cards').classList.remove('gray-1');
+	document.querySelector('.banner-image').classList.remove('gray-1');}
 
 // CREATE RECIPE CARDS
 function createCards() {

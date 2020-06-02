@@ -641,6 +641,10 @@ main, .recipe-card-container {
 		.main-title{
 			display: flex;
 		}
+
+		main {
+			height: 100vh;
+		}
 		
 		.menu-button, 
 		.menu-close,
@@ -667,7 +671,7 @@ main, .recipe-card-container {
 		.open-style {
 			display: flex;
 			flex-direction: column;
-			height: 450px;
+			height: 375px;
 			justify-content: space-between;
 		}
 
@@ -689,7 +693,7 @@ main, .recipe-card-container {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-around;
-			height: 400px;
+			height: 350px;
 			.saved-ingredients-btn,
 			.saved-recipes-to-cook {
 				padding: 5px;
@@ -714,7 +718,7 @@ main, .recipe-card-container {
 			padding: 15px;
 			text-align: center;
 			z-index: 3;
-			top: 38%;
+			top: 30%;
 			right: 26%;
 		}
 
@@ -739,17 +743,9 @@ main, .recipe-card-container {
 		}
 	}
 
-	.mobile-cards, 
-	.banner-image {
-		z-index: 3;
-    // position: relative;
-	}
-
 .gray-1 {
     background: darkgray;
     opacity: 40%;
-    position: absolute;
     width: 100%;
-    z-index: 5;
 	}
 }
