@@ -38,8 +38,8 @@ main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user,
 menuButton.addEventListener('click', openMobileMenu);
 menuCloseButton.addEventListener('click', closeMobileMenu);
 
-document.getElementById("#search").addEventListener("submit", () => {searchRecipes(event)});
-document.getElementById("#mobile-search").addEventListener("submit", () => {searchRecipes(event)});
+document.getElementById("search").addEventListener("submit", () => {searchRecipes(event)});
+document.getElementById("mobile-search").addEventListener("submit", () => {searchRecipes(event)});
 document.getElementById('save-changes-btn').addEventListener('click', hidePostForm);
 document.getElementById('modify-pantry-btn').addEventListener('click', showPostForm);
 
