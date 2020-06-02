@@ -71,6 +71,7 @@ body {
 }
 
 h1 {
+	display: flex;
   align-self: center;
   color: white;
   font-family: "Sulphur Point", sans-serif;
@@ -519,8 +520,8 @@ main, .recipe-card-container {
   padding: 5%;
   position: fixed;
   top: 15%;
-  width: 30%;
-  z-index: 1000;
+	width: 37%;
+	z-index: 1000;
 }
 
 .search-ingredients-btn {

@@ -163,7 +163,7 @@ let domUpdates = {
   },
 
   openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
-    fullRecipeInfo.style.display = "inline";
+		fullRecipeInfo.style.display = "inline";
     let recipeId = parseInt(event.target.closest(".recipe-card").id);
     let clickedRecipe = allRecipes.find(clickedRecipe => clickedRecipe.id === Number(recipeId));
     this.generateRecipeTitle(clickedRecipe, this.generateIngredients(clickedRecipe, ingredientsData), ingredientsData, pantry, fullRecipeInfo);

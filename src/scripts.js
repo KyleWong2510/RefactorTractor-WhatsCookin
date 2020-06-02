@@ -37,6 +37,9 @@ window.addEventListener("load", fetchData);
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
 menuButton.addEventListener('click', openMobileMenu);
 menuCloseButton.addEventListener('click', closeMobileMenu);
+document.addEventListener('click', function(e) {
+  if (e.target.className === 'instructions') closeMobileMenu()
+})
 
 document.getElementById("search").addEventListener("submit", () => {searchRecipes(event)});
 document.getElementById("mobile-search").addEventListener("submit", () => {searchRecipes(event)});
@@ -111,6 +114,7 @@ function fetchData() {
 
 //MOBILE MEDIA QUERY
 function openMobileMenu() {
+	hidePostForm();
   mobileMenuBody.classList.remove('hide');
   mobileMenuBody.classList.add('menu-body-style');
   mobileMenu.classList.add('open-style');
@@ -124,6 +128,8 @@ function openMobileMenu() {
 }
 
 function openFilterBar() {
+	menuOpen = open;
+	toggleMenu();
   document.querySelector('.mobile-wrap').classList.remove('hide');
   document.querySelector('.filter-btn').addEventListener('click', () => {document.querySelector('.mobile-wrap').classList.add('hide')})
 }
@@ -251,6 +257,7 @@ function hidePostForm() {
 }
 
 function toggleMenu() {
+	document.querySelector('.mobile-wrap').classList.add('hide');
   var menuDropdown = document.querySelector(".drop-menu");
   menuOpen = !menuOpen;
   if (menuOpen) {
