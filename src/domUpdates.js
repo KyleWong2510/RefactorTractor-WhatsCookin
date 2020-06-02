@@ -7,15 +7,14 @@ let domUpdates = {
 		</div>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
       welcomeMsg);
-    this.displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name), ingredientsData);
+    this.displayPantryInfo(pantry.data, ingredientsData);
   },
 
   displayPantryInfo(pantry, ingredientsData) {
     let pantryList = document.querySelector(".pantry-list")
-    pantryList.innerHTML = ''
+		pantryList.innerHTML = '';
     pantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
-
       const ingredientHtml = `<li>${ingredName}, ${ingredient.amount}</li>`;
       pantryList.insertAdjacentHTML("beforeend",
         ingredientHtml);
@@ -180,7 +179,7 @@ let domUpdates = {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     });
-    this.showToCookBanner()
+    domUpdates.showToCookBanner()
   },
 
   openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
