@@ -47,7 +47,8 @@ allRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showAl
 savedRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user)));
 recipesToCkBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user)));
 filterBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user)));
-main.addEventListener("keydown", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
+main.addEventListener("submit", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
+main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
 // pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
 pantryBtn.forEach(bt => bt.addEventListener("click", toggleMenu));
 searchBtn.addEventListener("click", () => {searchRecipes(event)});
