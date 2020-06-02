@@ -24,12 +24,10 @@ let domUpdates = {
   displayRecipeCards(currentRecipe, shortRecipeName) {
     let cardContainer = document.querySelector('.recipe-card-container');
     let tagsToList = currentRecipe.tags.map(tag => `<h4>${tag}</h4>`);
-
-    // Div id 'instructions' could be changed to improve aria score.
     let cardHtml = `
     <div class="recipe-card" id=${currentRecipe.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
-      <div class="card-photo-container">
+      <div tabindex="0" class="card-photo-container">
         <img src=${currentRecipe.image} class="card-photo-preview" alt="${currentRecipe.name} recipe" title="${currentRecipe.name} recipe">
         <div class="text">
           <div class="instructions">Click for Instructions</div>
@@ -37,8 +35,8 @@ let domUpdates = {
 			</div>
       <div>${tagsToList}</div>
       <div class="button-holder">
-      	<img src="../images/recipegreen.png" aria-label="Add to recipes to cook" class="recipe-icon-card" alt="recipes to cook icon"/>
-      	<img aria-label="add to favorites" src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      	<img tabindex="0" src="../images/recipegreen.png" aria-label="Add to recipes to cook" class="recipe-icon-card" alt="recipes to cook icon"/>
+      	<img tabindex="0" aria-label="add to favorites" src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </div>
     </div>`
     cardContainer.insertAdjacentHTML("beforeend", cardHtml);
@@ -59,7 +57,6 @@ let domUpdates = {
     }).join(" ");
   },
 
-  //Changes as of 5/28
   filterRecipesOnPage(allRecipes, user, recipeData) {
     if (document.querySelector('.welcome-msg').style.display !== 'none') {
       this.findCheckedBoxes(allRecipes, allRecipes, recipeData, user)
@@ -143,7 +140,6 @@ let domUpdates = {
     document.querySelector('.to-cook-banner').style.display = 'block'
   },
 
-  //similar to user.filterRecipes
   filterRecipes(filtered, arr) {
     let foundRecipes = arr.filter(recipe => {
       return !filtered.includes(recipe);
@@ -239,8 +235,6 @@ let domUpdates = {
       this.openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry)
     }
   },
-  // openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
-
 
   addToCookList(recipeData, user) {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
@@ -265,11 +259,9 @@ let domUpdates = {
       user.removeRecipe(card, 'favoriteRecipes');
     }
   },
-  //SHOULD THERE BE SOMETHING IN THE WHILE?
-  exitRecipe(fullRecipeInfo) {
-    while (fullRecipeInfo.firstChild && fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
 
-    }
+  exitRecipe(fullRecipeInfo) {
+    while (fullRecipeInfo.firstChild && fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)); 
     fullRecipeInfo.style.display = "none";
     document.getElementById("overlay").remove();
   },
@@ -318,33 +310,7 @@ let domUpdates = {
   addIngredientCount(e) {
     let amount = e.target.previousSibling.previousSibling		
     amount.value++
-  },
-
-  // openMobileMenu() {
-  //   document.querySelector('.menu-body-text').classList.remove('hide');
-  //   document.querySelector('.menu-body-text').classList.add('menu-body-style');
-  //   document.querySelector('.mobile-menu').classList.add('open-style');
-  //   document.querySelector('.menu-button').classList.add('hide');
-  //   document.querySelector('.menu-close').classList.remove('hide');
-  //   document.querySelector('.background').classList.add('gray-1');
-  //   document.querySelector('.mobile-filter-btn').addEventListener('click', this.openFilterBar);
-	// },
-
-	// openFilterBar() {
-	// 	document.querySelector('.mobile-wrap').classList.remove('hide');
-	// 	document.querySelector('.filter-btn').addEventListener('click', function() {
-	// 		document.querySelector('.mobile-wrap').classList.add('hide');
-	// 	})
-	// },
-	
-	// closeMobileMenu() {
-	// 	document.querySelector('.menu-body-text').classList.add('hide');
-	// 	document.querySelector('.menu-body-text').classList.remove('menu-body-style');
-	// 	document.querySelector('.mobile-menu').classList.remove('open-style');
-	// 	document.querySelector('.menu-button').classList.remove('hide');
-	// 	document.querySelector('.menu-close').classList.add('hide');
-	// 	document.querySelector('.background').classList.remove('gray-1');
-	// }
+  }
 }
 
 export default domUpdates;
