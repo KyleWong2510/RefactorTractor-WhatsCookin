@@ -45,6 +45,7 @@ describe('domUpdates', function() {
 
     expect(domUpdates.welcomeUser).to.have.been.called(1);
     expect(domUpdates.welcomeUser).to.have.been.called.with(user, pantry, ingredientsData);
-		expect(domUpdates.displayPantryInfo).to.have.been.called(1);
+    //expect dom updates to not have been called
+    expect(domUpdates.displayPantryInfo).to.have.been.called(1);
 	});
 })

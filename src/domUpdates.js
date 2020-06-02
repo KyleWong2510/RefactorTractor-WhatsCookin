@@ -72,7 +72,6 @@ let domUpdates = {
     }
   },
 
-  //not really dom updates...how can this live in scripts?
   findCheckedBoxes(arr, allRecipes, recipeData, user) {
     let tagCheckboxes = document.querySelectorAll(".checked-tag");
     let checkboxInfo = Array.from(tagCheckboxes)
@@ -99,7 +98,7 @@ let domUpdates = {
       this.filterRecipes(filteredResults, arr);
     }
   },
-  // Too many params
+
   showFilteredRecipes(arr, allRecipes, recipeData, user) {
     this.showAllRecipes(allRecipes)
     if (arr !== allRecipes) {
@@ -144,6 +143,7 @@ let domUpdates = {
     document.querySelector('.to-cook-banner').style.display = 'block'
   },
 
+  //similar to user.filterRecipes
   filterRecipes(filtered, arr) {
     let foundRecipes = arr.filter(recipe => {
       return !filtered.includes(recipe);
