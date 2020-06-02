@@ -19,10 +19,7 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  -webkit-font-smoothing: auto;
-  &:focus {
-    border: 1px solid blue;
-  } 
+  -webkit-font-smoothing: auto;  
 }
 
 h1 {
@@ -130,34 +127,34 @@ span {
   }
 }
 
-#search-input:hover,
-#search-ingredients-input:hover,
-#mobile-search-input:hover {
-  box-shadow: inset 0px 0px 0px 0px white;
-  transition: .8s ease;
-}
+// #search-input:hover,
+// #search-ingredients-input:hover,
+// #mobile-search-input:hover {
+//   box-shadow: inset 0px 0px 0px 0px white;
+//   transition: .8s ease;
+// }
 
-#search-input:focus,
-#search-ingredients-input:focus,
-#mobile-search-input:focus {
-  box-shadow: inset 0px 0px 0px 0px white;
-}
+// #search-input:focus,
+// #search-ingredients-input:focus,
+// #mobile-search-input:focus {
+//   box-shadow: inset 0px 0px 0px 0px white;
+// }
 
-#search-input::placeholder,
-#search-ingredients-input::placeholder,
-#mobile-search-input::placeholder {
-  color: #5B7894;
-  font-size: 20px;
-  text-align: right;
-  text-shadow: none;
-}
+// #search-input::placeholder,
+// #search-ingredients-input::placeholder,
+// #mobile-search-input::placeholder {
+//   color: #5B7894;
+//   font-size: 20px;
+//   text-align: right;
+//   text-shadow: none;
+// }
 
-#search-input:focus::placeholder,
-#search-ingredients-input:focus::placeholder,
-#mobile-search-input:focus::placeholder {
-  font-size: 0px;
-  transition: .8s ease;
-}
+// #search-input:focus::placeholder,
+// #search-ingredients-input:focus::placeholder,
+// #mobile-search-input:focus::placeholder {
+//   font-size: 0px;
+//   transition: .8s ease;
+// }
 
 .search-label {
   display: none;
@@ -197,7 +194,11 @@ span {
     text-shadow: 0px 2px 4px black;
     transition: .4s ease;
   }
+  &:focus {
+    border: solid green 2px;
+  }
 }
+
 .nav-btn img,
 .mobile-nav-btn img {
    max-height: 50px;

@@ -50,10 +50,14 @@ filterBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.filterReci
 main.addEventListener("click", () => domUpdates.addToMyRecipes(recipeData, user, fullRecipeInfo, allRecipes, ingredientsData, pantry));
 // pantryBtn.addEventListener("click", () => domUpdates.toggleMenu(menuOpen));
 pantryBtn.forEach(bt => bt.addEventListener("click", toggleMenu));
-searchBtn.addEventListener("click", searchRecipes);
-mobileSearchBtn.addEventListener("click", searchRecipes);
-searchForm.addEventListener("submit", pressEnterSearch);
-mobileSearchForm.addEventListener("submit", pressEnterSearch);
+searchBtn.addEventListener("click", () => {searchRecipes(event)});
+mobileSearchBtn.addEventListener("click", () => {searchRecipes(event)});
+
+searchForm.addEventListener("submit", () => {searchRecipes(event)});
+mobileSearchForm.addEventListener("submit", () => {searchRecipes(event)});
+
+// searchForm.addEventListener("submit", () => {pressEnterSearch(event)});
+// mobileSearchForm.addEventListener("submit", () => {pressEnterSearch(event)});
 menuButton.addEventListener('click', openMobileMenu);
 menuCloseButton.addEventListener('click', closeMobileMenu);
 
@@ -158,18 +162,9 @@ function findTags() {
 }
 
 // SEARCH RECIPES
-function pressEnterSearch(event) {
+function searchRecipes(event) {
   event.preventDefault();
-  let searchinput;
-  if (mobileSearchInput.value) {
-    searchinput = mobileSearchInput.value
-  } else {
-    searchinput = searchInput.value;
-  }
-  searchRecipes(searchinput.toLowerCase());
-}
-
-function searchRecipes(search) {
+  const search = searchInput.value.toLowerCase() || mobileSearchInput.value.toLowerCase()
   if (document.querySelector('.welcome-msg').style.display !== 'none') {
     let results = user.searchForRecipe(search, recipeData);
     filterNonSearched(results);
@@ -186,6 +181,7 @@ function searchRecipes(search) {
 
 function filterNonSearched(filtered) {
   let found = recipeData.filter(recipe => {
+    console.log('f', filtered)
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
   })
@@ -272,6 +268,16 @@ function adjustPantry(ingredID, ingredMod) {
     // .then(console.log('pantry of user', user.pantry))
     // .then(console.log('pantry to display', pantry.data))
     .catch(error => console.log(error))
+}
+
+function toggleMenu() {
+  var menuDropdown = document.querySelector(".drop-menu");
+  menuOpen = !menuOpen;
+  if (menuOpen) {
+    menuDropdown.style.display = "block";
+  } else {
+    menuDropdown.style.display = "none";
+  }
 }
 
 // function capitalize(words) {
@@ -494,16 +500,6 @@ function adjustPantry(ingredID, ingredMod) {
 //     domRecipe.style.display = "none";
 //   });
 // }
-
-function toggleMenu() {
-  var menuDropdown = document.querySelector(".drop-menu");
-  menuOpen = !menuOpen;
-  if (menuOpen) {
-    menuDropdown.style.display = "block";
-  } else {
-    menuDropdown.style.display = "none";
-  }
-}
 
 // function showAllRecipes() {
 //   allRecipes.forEach(recipe => {
