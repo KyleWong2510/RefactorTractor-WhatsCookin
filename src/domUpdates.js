@@ -7,15 +7,14 @@ let domUpdates = {
 		</div>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
       welcomeMsg);
-    this.displayPantryInfo(pantry.data.sort((a, b) => a.name - b.name), ingredientsData);
+    this.displayPantryInfo(pantry.data, ingredientsData);
   },
 
   displayPantryInfo(pantry, ingredientsData) {
     let pantryList = document.querySelector(".pantry-list")
-    pantryList.innerHTML = ''
+		pantryList.innerHTML = '';
     pantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
-
       const ingredientHtml = `<li>${ingredName}, ${ingredient.amount}</li>`;
       pantryList.insertAdjacentHTML("beforeend",
         ingredientHtml);
@@ -38,8 +37,8 @@ let domUpdates = {
 			</div>
       <div>${tagsToList}</div>
       <div class="button-holder">
-      	<img src="../images/recipegreen.png" class="recipe-icon-card" alt="recipes to cook icon"/>
-      	<img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      	<img src="../images/recipegreen.png" aria-label="Add to recipes to cook" class="recipe-icon-card" alt="recipes to cook icon"/>
+      	<img aria-label="add to favorites" src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </div>
     </div>`
     cardContainer.insertAdjacentHTML("beforeend", cardHtml);
@@ -180,7 +179,7 @@ let domUpdates = {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     });
-    this.showToCookBanner()
+    domUpdates.showToCookBanner()
   },
 
   openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {

@@ -44,7 +44,7 @@ let allRecipes = [];
 let menuOpen = false;
 
 window.addEventListener("load", fetchData);
-allRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)));
+allRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)(allRecipes)));
 savedRecipesBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user)));
 recipesToCkBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user)));
 filterBtn.forEach(bt => bt.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user)));
@@ -106,7 +106,8 @@ function openMobileMenu() {
   menuButton.classList.add('hide');
   menuCloseButton.classList.remove('hide');
   // mobileBackground.classList.add('gray-1');
-  document.querySelector('.mobile-filter-btn').addEventListener('click', openFilterBar);
+	document.querySelector('.mobile-filter-btn').addEventListener('click', openFilterBar);
+	document.querySelector('.main-title').addEventListener('click', () => domUpdates.showAllRecipes(allRecipes));
 }
 
 function openFilterBar() {
@@ -196,7 +197,8 @@ function hidePostForm() {
   users = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
     .then(response => response.json())
     .catch(err => alert('Alert, something\'s wrong with your endpoint!', err.message))
-  
+	//for each, if any item in pantry === 0
+	//do a delete fetch request on that item
   return Promise.resolve(users)
     .then(response => {
       users = response.wcUsersData
