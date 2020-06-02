@@ -11,17 +11,17 @@
 	
   <body role="main">
 		<!-- <section class="background"> -->
-		<section class="menu mobile-menu hide">
+		<section aria-label="menu button" class="menu mobile-menu hide">
 			<section class="header-text">
 				<h1 class="main-title">
 					<span>fresh</span>Picks
 					<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon" role="logo"/>
 				</h1>
-				<section class="menu-button">
+				<section aria-label="menu button" class="menu-button">
 					<!-- <img src="images/menu.svg" alt="menu icon" class="feather feather-menu" fill="#fff" stroke="currentColor" /> -->
 					<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
 				</section>
-				<section class="menu-close hide">
+				<section aria-label="close button" class="menu-close hide">
 					<!-- <img src="images/x.svg" alt="close menu icon" class="feather feather-close" fill="#fff" stroke="currentColor" /> -->
 					<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 				</section>
@@ -35,11 +35,11 @@
 					<button class="mobile-nav-btn mobile-search-btn" type="button" name="button"><img src="images/search.png" alt="search button"></button>
 				</form>
 				<section class="mobile-buttons">
-					<button role="button" class="mobile-nav-btn  saved-recipes-btn" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
-					<button  role="button" class="mobile-nav-btn saved-recipes-to-cook h1 ing-pan-btn " type="button" name="button"
+					<button aria-label="saved recipes" role="button" class="mobile-nav-btn  saved-recipes-btn" type="button" name="button"><img src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
+					<button aria-label="recipes to cook" role="button" class="mobile-nav-btn saved-recipes-to-cook h1 ing-pan-btn " type="button" name="button"
 						role="show saved recipes to cook"><img class="recipe-icon" src="../images/recipe.png"
 							alt="fork and knife image">Recipes to Cook</button>
-					<button role="button" class="mobile-nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
+					<button aria-label="my pantry" role="button" class="mobile-nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
 				</section>
 				<button role="button" class="mobile-filter-btn">Filter Recipes by Type</button>
 			</section>
@@ -59,16 +59,17 @@
 				<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon">
 			</h1>
       <form id="search" role="search">
-        <input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
-          <label for="search-input">
+        <input  name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox">
+          <label for="search-input"></label>
         </label>
-        <button role="button" class="nav-btn search-btn" type="button" name="search button"><img src="images/search.png" alt="search button"></button>
+        <button role="button" class="nav-btn search-btn" id="search-mag-btn" type="button" name="search button"><img src="images/search.png" alt="search button"></button>
+        <label for="search-mag-btn"></label>
       </form>
-      <button role="button" class="nav-btn  saved-recipes-btn mobile-button" type="button" name="button"><img role="img" src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
-      <button class="nav-btn saved-recipes-to-cook h1 ing-pan-btn mobile-button" type="button" name="button"
+      <button aria-label="saved recipes" role="button" class="nav-btn  saved-recipes-btn mobile-button" type="button" name="button"><img role="img" src="../images/cookbook.png" class="mobile-button" alt="search button">My Favorite Recipes</button>
+      <button aria-label="recipes to cook" class="nav-btn saved-recipes-to-cook h1 ing-pan-btn mobile-button" type="button" name="button"
         role="button"><img role="img" class="recipe-icon mobile-button" src="../images/recipe.png"
           alt="fork and knife image">Recipes to Cook</button>
-      <button role="button" class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn mobile-button" type="button" name="button"><img role="img" src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
+      <button aria-label="my pantry" role="button" class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn mobile-button" type="button" name="button"><img role="img" src="../images/seasoning.png" class="mobile-button" alt="search button">My Pantry</button>
 		</header>
 		
     <section role="banner" class="banner-image">
@@ -84,7 +85,7 @@
       </section>
 		</section>
 		
-    <section role="menubar" class="drop-menu">
+    <section role="listbox" class="drop-menu">
       <h2>My Pantry</h2>
       <button role="button" class="button" id="modify-pantry-btn">+ / - Ingredients</button>
       <ul class="pantry-list"></ul>
@@ -106,7 +107,7 @@
         <form role="form" id="search-ingredients" role="search">
           <input role="input" id="search-ingredients-input" type="text" autocomplete="off" placeholder="Search Ingredients..."></input>
           <label for="search-ingredients-input" class="search-label"></label>
-          <button role="button" class="search-ingredients-btn" type="button" name="button"><img src="images/search.png" alt="search button" id="search-ingredients-icon" class="search-ingredients-btn"></button>
+          <button aria-label="search button" role="button" class="search-ingredients-btn" type="button" name="button"><img src="images/search.png" alt="search button" id="search-ingredients-icon" class="search-ingredients-btn"></button>
         </form>
         <section role="complementary" id="searched-ingredient-results">
         </section>
