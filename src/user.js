@@ -10,39 +10,28 @@ class User {
 
   saveRecipe(recipe, array) {
     if(!Object.keys(recipe).includes('id') || !Object.keys(recipe).includes('name') || !Object.keys(recipe).includes('ingredients') || !Object.keys(recipe).includes('instructions') || !Object.keys(recipe).includes('tags') || !Object.keys(recipe).includes('image')) {
-      return 'You must pass a valid recipe'
+      return 'You must pass a valid recipe';
     }
     if(array === 'favoriteRecipes' || array === 'recipesToCook') {
-      this[array].push(recipe)
+      this[array].push(recipe);
     } else return 'You must pass a valid array'
   }
 
   removeRecipe(recipe, array) {
     if(!Object.keys(recipe).includes('id') || !Object.keys(recipe).includes('name') || !Object.keys(recipe).includes('ingredients') || !Object.keys(recipe).includes('instructions') || !Object.keys(recipe).includes('tags') || !Object.keys(recipe).includes('image')) {
-      return 'You must pass a valid recipe'
+      return 'You must pass a valid recipe';
     }
     if(array === 'favoriteRecipes' || array === 'recipesToCook') {
       let i = this[array].indexOf(recipe);
       this[array].splice(i, 1);
     } else return 'You must pass a valid array'
   }
-  
-  //does not get called
-  // filterRecipes(tag, array) {
-  //   if(typeof tag !== 'string') return 'You must pass a valid tag that is a string'
-  //   if(array === 'favoriteRecipes' || array === 'recipesToCook') {
-  //     return this[array].filter(recipe => recipe.tags.includes(tag));
-  //   } else return 'You must pass a valid array'
-	// }
 	
   searchForRecipe(keyword, array) {
-    // if(typeof keyword !== 'string') return 'You must pass a valid keyword that is a string'
-    // if(array === 'favoriteRecipes' || array === 'recipesToCook') {
-      let byName = this.searchByName(keyword, array)
-      let byIngredient = this.searchByIngred(keyword, array)
-      let searchedResults = byName.concat(byIngredient)
-      return [... new Set(searchedResults)]
-    // } else return 'You must pass a valid array'
+    let byName = this.searchByName(keyword, array);
+    let byIngredient = this.searchByIngred(keyword, array);
+    let searchedResults = byName.concat(byIngredient);
+    return [... new Set(searchedResults)]
   }
 
   searchByName(keyword, array) {
