@@ -26,27 +26,29 @@ class User {
       this[array].splice(i, 1);
     } else return 'You must pass a valid array'
   }
-	
-  filterRecipes(tag, array) {
-    if(typeof tag !== 'string') return 'You must pass a valid tag that is a string'
-    if(array === 'favoriteRecipes' || array === 'recipesToCook') {
-      return this[array].filter(recipe => recipe.tags.includes(tag));
-    } else return 'You must pass a valid array'
-	}
+  
+  //does not get called
+  // filterRecipes(tag, array) {
+  //   if(typeof tag !== 'string') return 'You must pass a valid tag that is a string'
+  //   if(array === 'favoriteRecipes' || array === 'recipesToCook') {
+  //     return this[array].filter(recipe => recipe.tags.includes(tag));
+  //   } else return 'You must pass a valid array'
+	// }
 	
   searchForRecipe(keyword, array) {
-    if(typeof keyword !== 'string') return 'You must pass a valid keyword that is a string'
-    if(array === 'favoriteRecipes' || array === 'recipesToCook') {
+    // if(typeof keyword !== 'string') return 'You must pass a valid keyword that is a string'
+    // if(array === 'favoriteRecipes' || array === 'recipesToCook') {
       let byName = this.searchByName(keyword, array)
       let byIngredient = this.searchByIngred(keyword, array)
       let searchedResults = byName.concat(byIngredient)
       return [... new Set(searchedResults)]
-    } else return 'You must pass a valid array'
+    // } else return 'You must pass a valid array'
   }
 
   searchByName(keyword, array) {
+    console.log('keyword', keyword)
     const searchedResults = []
-    this[array].forEach(recipe => {
+    array.forEach(recipe => {
       if(recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
         searchedResults.push(recipe)
       }
@@ -73,7 +75,7 @@ class User {
         .map(ingred => ingred.id)
     }
     
-    this[array].forEach(recipe => {
+    array.forEach(recipe => {
       recipe.ingredients.forEach(ingred => {
         if (ingredientIDs.includes(ingred.id)) {
           searchedResults.push(recipe)
