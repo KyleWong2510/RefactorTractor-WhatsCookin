@@ -224,6 +224,7 @@ function hidePostForm() {
 }
 
 function showPostForm() {
+  closeMobileMenu();
   document.getElementById('searched-ingredient-results').innerHTML = ''
   document.getElementById('search-ingredients-input').value = ''
   document.getElementById('post-to-pantry').style.display = 'flex'
