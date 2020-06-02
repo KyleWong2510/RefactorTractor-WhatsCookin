@@ -19,11 +19,7 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  -webkit-font-smoothing: auto;
-  &:focus {
-    border: 1px solid blue;
-  }
-    
+  -webkit-font-smoothing: auto;  
 }
 
 h1 {
@@ -197,6 +193,9 @@ span {
     font-size: 14px;
     text-shadow: 0px 2px 4px black;
     transition: .4s ease;
+  }
+  &:focus {
+    border: solid green 2px;
   }
 }
 .nav-btn img,
