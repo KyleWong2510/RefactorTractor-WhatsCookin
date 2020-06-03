@@ -36,6 +36,8 @@ In your browser, navigate to localhost:8080.
 
 
 ## In Action
+![2020-06-02 17 57 59](https://user-images.githubusercontent.com/59381432/83586481-ccf33100-a509-11ea-91f9-9b2325b271ed.gif)
+
 
 
 ## Wins
