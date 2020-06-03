@@ -88,20 +88,4 @@ describe('User', function() {
 
     expect(user.searchForRecipe('pepper', user.favoriteRecipes)).to.deep.equal([recipe2, recipe3]);
   });
-
-  it('should only accept a string as a keyword', function() {
-    user.saveRecipe(recipe1, 'favoriteRecipes');
-    user.saveRecipe(recipe2, 'favoriteRecipes');
-    user.saveRecipe(recipe3, 'favoriteRecipes');
-
-    expect(user.searchForRecipe([], user.favoriteRecipes)).to.equal('You must pass a valid keyword that is a string');
-  });
-
-  it('should only accept a valid array', function() {
-    user.saveRecipe(recipe1, 'favoriteRecipes');
-    user.saveRecipe(recipe2, 'favoriteRecipes');
-    user.saveRecipe(recipe3, 'favoriteRecipes');
-
-    expect(user.searchForRecipe('pepper', 'myFavorites')).to.equal('You must pass a valid array');
-  });
 });
