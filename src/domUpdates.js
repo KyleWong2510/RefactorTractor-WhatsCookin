@@ -144,18 +144,18 @@ let domUpdates = {
     });
   },
 
-  showSavedRecipes(allRecipes, recipeData, user) {
+	showSavedRecipes(allRecipes, recipeData, user) {
     this.showAllRecipes(allRecipes)
     let unsavedRecipes = recipeData.filter(recipe => {
       return !user.favoriteRecipes.includes(recipe);
-    });
+		});
     unsavedRecipes.forEach(recipe => {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     });
     this.showMyRecipesBanner();
   },
-  
+
   showToCookItems(allRecipes, recipeData, user) {
     domUpdates.showAllRecipes(allRecipes);
     let unsavedRecipes = recipeData.filter(recipe => {

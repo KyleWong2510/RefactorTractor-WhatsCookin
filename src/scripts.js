@@ -46,7 +46,7 @@ document.getElementById('modify-pantry-btn').addEventListener('click', showPostF
 document.querySelector(".search-btn").addEventListener("click", () => {searchRecipes(event)});
 document.querySelector(".mobile-search-btn").addEventListener("click", () => {searchRecipes(event)});
 
-document.querySelectorAll(".show-all-btn").forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)(allRecipes)));
+document.querySelectorAll(".show-all-btn").forEach(bt => bt.addEventListener("click", () => domUpdates.showAllRecipes(allRecipes)));
 document.querySelectorAll(".saved-recipes-btn").forEach(bt => bt.addEventListener("click", () => domUpdates.showSavedRecipes(allRecipes, recipeData, user)));
 document.querySelectorAll(".saved-recipes-to-cook").forEach(bt => bt.addEventListener("click", () => domUpdates.showToCookItems(allRecipes, recipeData, user)));
 document.querySelectorAll(".filter-btn").forEach(bt => bt.addEventListener("click", () => domUpdates.filterRecipesOnPage(allRecipes, user, recipeData)));
@@ -119,7 +119,7 @@ function fetchData() {
 
 //MOBILE MEDIA QUERY
 function openMobileMenu() {
-	hidePostForm();
+  document.getElementById('post-to-pantry').style.display = 'none';
   mobileMenuBody.classList.remove('hide');
   mobileMenuBody.classList.add('menu-body-style');
   mobileMenu.classList.add('open-style');
