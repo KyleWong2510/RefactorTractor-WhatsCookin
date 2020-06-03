@@ -1,5 +1,4 @@
 # Refactor Tractor Whats Cookin: Group Project
-![](https://ca.slack-edge.com/T029P2S9M-U03BVJDPC-gc7c991b22b5-72) ![](https://ca.slack-edge.com/T029P2S9M-UQRM2Q4AH-dbf2840cc06e-72) ![](https://ca.slack-edge.com/T029P2S9M-UTPTTDE84-13b671276cf8-72)  <br> 
 * contributer: __Kyle__ [(github)](https://github.com/KyleWong2510)
 * contributer: __Becca__ [(github)](https://github.com/b-stein)
 * contributer: __Corbin__ [(github)](https://github.com/MarchCorbin)
