@@ -1,14 +1,14 @@
 # Refactor Tractor - Whats Cookin: Group Project
 
 ### Contributors
-* __Kyle Wong__ (GitHub: [KyleWong2510] (https://github.com/KyleWong2510))
+* __Kyle Wong__ (GitHub: [KyleWong2510](https://github.com/KyleWong2510))
 * __Becca Steinbrecher__ (GitHub: [b-stein](https://github.com/b-stein))
 * __Corbin March__ (GitHub: [MarchCorbin](https://github.com/MarchCorbin))
 
 ## Abstract
-	This is a recipe tracking / meal planning application. Users can explore a whole host of recipe options. In this application they can favorite recipes or add them to a to-do list. Opening the recipe card, the user can see exactly what ingredients they own and what they are missing from their pantry. Recipe card also display the cost of recipe ingredients, and instructions.
+This is a recipe tracking / meal planning application. Users can explore a whole host of recipe options. In this application they can favorite recipes or add them to a to-do list. Opening the recipe card, the user can see exactly what ingredients they own and what they are missing from their pantry. Recipe card also display the cost of recipe ingredients, and instructions.
 
-	A user can search for a recipe by genre type, or search by ingredient name. While viewing their pantry, the user can add or subtract items based on if they've just cooked a recipe or went shopping.
+A user can search for a recipe by genre type, or search by ingredient name. While viewing their pantry, the user can add or subtract items based on if they've just cooked a recipe or went shopping.
 
  Working off the codebase of a previously completed project, the goal for this project was to refactor the existing code to be more efficient. Many users stories were incomplete or had broken functionality. After building out the missing functionality, we were tasked with replacing local datasets to endpoints linked to an API. Additionally, we added in SASS to our stylesheets, used spy testing in our chai to make sure DOM updates were called, and added in accessibility qualities to our application.
 
