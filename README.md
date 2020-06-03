@@ -38,6 +38,17 @@ In your browser, navigate to localhost:8080.
 ## In Action
 ![2020-06-02 17 57 59](https://user-images.githubusercontent.com/59381432/83586481-ccf33100-a509-11ea-91f9-9b2325b271ed.gif)
 
+![2020-06-02 17 59 50](https://user-images.githubusercontent.com/59381432/83586516-e8f6d280-a509-11ea-9c71-ec7dd04b38ff.gif)
+
+![2020-06-02 18 00 52](https://user-images.githubusercontent.com/59381432/83586538-f744ee80-a509-11ea-9fee-04275fc9d488.gif)
+
+![2020-06-02 18 06 33](https://user-images.githubusercontent.com/59381432/83586627-3410e580-a50a-11ea-88ad-2e8a93765413.gif)
+
+![2020-06-02 18 07 37](https://user-images.githubusercontent.com/59381432/83586641-3b37f380-a50a-11ea-8cbb-ece33e1a6a28.gif)
+
+![2020-06-02 18 13 00](https://user-images.githubusercontent.com/59381432/83586653-4428c500-a50a-11ea-8310-74020579ef6a.gif)
+
+![2020-06-02 19 49 14](https://user-images.githubusercontent.com/59381432/83586663-4be86980-a50a-11ea-9b71-647a155f75a4.gif)
 
 
 ## Wins
