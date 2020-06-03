@@ -11,12 +11,14 @@ let domUpdates = {
   },
 
   displayPantryInfo(pantry, ingredientsData) {
-    let pantryList = document.querySelector(".pantry-list");
-		pantryList.innerHTML = '';
-    pantry.forEach(ingredient => {
+    let pantryList = document.querySelector(".pantry-list")
+    pantryList.innerHTML = '';
+    const updatedPantry = pantry.filter(item => item.amount !== 0);
+    updatedPantry.forEach(ingredient => {
       const ingredName = ingredientsData.find(ingred => ingred.id === ingredient.ingredient).name;
-      const ingredientHtml = `<li>${ingredName}, ${ingredient.amount}</li>`;
-      pantryList.insertAdjacentHTML("beforeend", ingredientHtml);
+      const ingredientHtml = `<li>${ingredName}, ${Math.floor(ingredient.amount)}</li>`;
+      pantryList.insertAdjacentHTML("beforeend",
+        ingredientHtml);
     });
   },
 
@@ -34,7 +36,7 @@ let domUpdates = {
 			</div>
       <div>${tagsToList}</div>
       <div class="button-holder">
-       <img tabindex="0" src="../images/recipegreen.png"	tabindex="0" aria-label="Add to recipes to cook" class="recipe-icon-card" alt="recipes to cook icon"/>
+      	<img tabindex="0" src="../images/recipegreen.png" aria-label="Add to recipes to cook" class="recipe-icon-card" alt="recipes to cook icon"/>
       	<img tabindex="0" aria-label="add to favorites" src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </div>
     </div>`;
@@ -143,23 +145,27 @@ let domUpdates = {
   },
 
   showSavedRecipes(allRecipes, recipeData, user) {
-    this.showAllRecipes(allRecipes);
-    let unsavedRecipes = recipeData.filter(recipe => !user.favoriteRecipes.includes(recipe));
+    this.showAllRecipes(allRecipes)
+    let unsavedRecipes = recipeData.filter(recipe => {
+      return !user.favoriteRecipes.includes(recipe);
+    });
     unsavedRecipes.forEach(recipe => {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     });
     this.showMyRecipesBanner();
   },
-
+  
   showToCookItems(allRecipes, recipeData, user) {
     domUpdates.showAllRecipes(allRecipes);
-    let unsavedRecipes = recipeData.filter(recipe => !user.recipesToCook.includes(recipe));
+    let unsavedRecipes = recipeData.filter(recipe => {
+      return !user.recipesToCook.includes(recipe);
+    });
     unsavedRecipes.forEach(recipe => {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
     });
-    domUpdates.showToCookBanner();
+    domUpdates.showToCookBanner()
   },
 
   openRecipeInfo(event, fullRecipeInfo, allRecipes, ingredientsData, pantry) {
